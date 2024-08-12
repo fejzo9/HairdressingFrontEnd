@@ -206,6 +206,10 @@ function RegistrationForm() {
         </div>
 
         <button type="submit">Sign Up</button>
+
+        <p className="form-footer">
+          Already has an account? <a href="/login">Login</a>
+        </p>
       </form>
     </div>
   );
