@@ -1,8 +1,12 @@
 // src/TermsOfService.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./TermsOfService.css"
 
 function TermsOfService() {
+
+    const navigate = useNavigate();
+
     return (
         <div className="terms-of-service">
             <h1>Terms of Service</h1>
@@ -18,9 +22,10 @@ function TermsOfService() {
             <h2>Termination</h2>
             <p>We may terminate or suspend your access to our site immediately, without prior notice or liability, for any reason, including if you breach these terms.</p>
             <h2>Governing Law</h2>
-            <p>These terms shall be governed and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.</p>
+            <p>These terms shall be governed and construed in accordance with the laws of Bosnia and Hercegovina, without regard to its conflict of law provisions.</p>
             <h2>Contact Information</h2>
-            <p>For any questions about these terms, please contact us at [your-email@example.com].</p>
+            <p>For any questions about these terms, please contact us at fejzo999@gmail.com.</p>
+            <button onClick={() => navigate('/register')} className="back-button">Back to Registration</button>
         </div>
     );
 }
