@@ -88,4 +88,16 @@ body {
   .registration-form button:hover {
     background-color: #0056b3;
   }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: white;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: underline;
+}
   
