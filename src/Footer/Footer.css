@@ -1,0 +1,50 @@
+.footer {
+    background-color: #2c2c2c;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .social-media {
+    margin-bottom: 10px;
+  }
+  
+  .social-media a {
+    color: #fff;
+    font-size: 24px;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .social-media a:hover {
+    color: #007bff;
+  }
+  
+  .contact {
+    margin-bottom: 10px;
+  }
+  
+  .contact a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .contact a:hover {
+    color: #007bff;
+  }
+  
+  .footer-bottom {
+    font-size: 14px;
+  }
+  
