@@ -47,6 +47,9 @@ function ForgotPassword() {
             required
           />
         </div>
+        <p className="form-footer">
+          <a href="/login">Back To Login</a>
+        </p>
         <button type="submit">Send Reset Link</button>
         {message && <p className="message">{message}</p>}
       </form>
