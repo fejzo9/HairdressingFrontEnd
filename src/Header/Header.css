@@ -1,0 +1,69 @@
+/* Header.css */
+
+/* Postavljanje osnovnog stila za header */
+.home-header {
+  position: fixed; /* Fiksira header na vrh */
+  top: 0; /* Pozicionira header na vrh stranice */
+  left: 0; /* Poravnava header s lijeve strane */
+  width: 100%; /* Širina headera preko cijele stranice */
+  z-index: 1000; /* Osigurava da header bude iznad ostalih elemenata */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333; /* Postavi pozadinsku boju po želji */
+  box-sizing: border-box; /* Osigurava da padding ne utiče na ukupnu širinu */
+}
+
+/* Stil za kontejner loga i naslova */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Stil za logo */
+.site-logo {
+  width: 180px; /* Postavi širinu loga */
+  height: auto; /* Automatski prilagodi visinu */
+  margin-right: 10px; /* Prostor između loga i naslova */
+}
+
+/* Stil za naslov sajta */
+.site-title {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+}
+
+/* Stil za navigacioni meni */
+.nav-links {
+  display: flex;
+  list-style: none; /* Uklanja bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+/* Stil za linkove u navigacionom meniju */
+.nav-links li {
+  margin: 0 15px;
+}
+
+/* Stil za svaki link */
+.nav-links a {
+  color: white; /* Boja fonta */
+  text-decoration: none; /* Uklanja podvlačenje */
+  font-family: 'Arial', sans-serif; /* Izaberi font po želji */
+  transition: all 0.3s ease; /* Glatki prelaz za hover efekat */
+}
+
+/* Hover efekat za linkove */
+.nav-links a:hover {
+  font-size: 18px; /* Povećava font prilikom hovera */
+  cursor: pointer; /* Promjena kursora na pointer */
+  color: #ff6600; /* Možeš promijeniti boju prilikom hovera */
+}
+
+/* Dodavanje margine na sadržaj da ne ide ispod headera */
+body {
+  margin-top: 60px; /* Postavi marginu na vrhu da sadržaj ne bude ispod headera */
+}
