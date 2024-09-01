@@ -16,7 +16,7 @@ const Footer = () => {
         </div>
         <div className="contact">
           <a href="mailto:contact@myemail.com">
-            <FaEnvelope /> contact@myemail.com
+            <FaEnvelope /> contact@hairdressingsalons.com
           </a>
         </div>
       </div>
