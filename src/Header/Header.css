@@ -8,8 +8,7 @@
   width: 100%; /* Širina headera preko cijele stranice */
   z-index: 1000; /* Osigurava da header bude iznad ostalih elemenata */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Vertikalno centriranje elemenata */
   padding: 10px 20px;
   background-color: #333; /* Postavi pozadinsku boju po želji */
   box-sizing: border-box; /* Osigurava da padding ne utiče na ukupnu širinu */
@@ -36,16 +35,31 @@
 }
 
 /* Stil za navigacioni meni */
+.nav-container {
+  flex-grow: 1; /* Rasteže ovaj kontejner kako bi bio centriran */
+  display: flex;
+  justify-content: center; /* Centriranje navigacionih linkova */
+}
+
+/* Stil za navigacioni meni */
 .nav-links {
   display: flex;
   list-style: none; /* Uklanja bullet points */
   padding: 0;
   margin: 0;
+  font-size: 20px;
 }
 
 /* Stil za linkove u navigacionom meniju */
 .nav-links li {
   margin: 0 15px;
+  font-size: 18px;
+}
+
+/* Stil za korisničke linkove (Login, Register) */
+.user-links {
+  display: flex; /* Fleksibilni kontejner */
+  align-items: center; /* Vertikalno centriranje */
 }
 
 /* Stil za svaki link */
@@ -61,9 +75,23 @@
   font-size: 18px; /* Povećava font prilikom hovera */
   cursor: pointer; /* Promjena kursora na pointer */
   color: #ff6600; /* Možeš promijeniti boju prilikom hovera */
+  font-size: 20px;
+  font-weight: 500;
 }
 
 /* Dodavanje margine na sadržaj da ne ide ispod headera */
 body {
   margin-top: 60px; /* Postavi marginu na vrhu da sadržaj ne bude ispod headera */
+}
+
+/* Media querije za manje ekrane */
+@media (max-width: 768px) {
+  .nav-container, .user-links {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .nav-links {
+    flex-direction: column; /* Vertikalno poravnanje na manjim ekranima */
+    margin: 10px 0;
+  }
 }
