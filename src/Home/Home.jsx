@@ -1,8 +1,10 @@
+import "./Home.css";
+import Header from "../Header/Header.jsx";
 
 function Home() {
   return (
-    <div>
-      <h1>Welcome to the Home Page!</h1>
+    <div className="home">
+      <Header />
     </div>
   );
 }
