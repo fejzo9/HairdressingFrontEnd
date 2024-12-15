@@ -7,6 +7,7 @@ import TermsOfService from './TermsOfService/TermsOfService';
 import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword'; 
 import Footer from './Footer/Footer';
+import SalonMap from './Maps/SalonMap';
 
 function App() {
 
@@ -16,11 +17,13 @@ function App() {
       <div className="app">
         <div className="content">
           <Routes>
+          <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/maps" element={<SalonMap />} />
           </Routes>
         </div>
        <Footer />
