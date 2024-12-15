@@ -60,7 +60,7 @@ body {
 
 .password-toggle {
     flex: 1; /* 10% širine */
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 0 4px 4px 0; 
     background-color: #007bff;
@@ -74,6 +74,7 @@ body {
     box-sizing: border-box;
     margin-top: -9px;
     height: 44px;
+    margin-left: 5px;
 }
 
 .login-form button:hover {
