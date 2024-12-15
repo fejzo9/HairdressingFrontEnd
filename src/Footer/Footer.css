@@ -1,7 +1,7 @@
 .footer {
     background-color: #2c2c2c;
     color: #fff;
-    width: 100%;  /* Zauzima cijelu širinu */
+    width: 100vw;  /* Zauzima cijelu širinu prozora  */
     padding: 20px;
     text-align: center;
     margin-top: auto; /* Gura footer na dno */
