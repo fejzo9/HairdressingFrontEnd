@@ -15,7 +15,7 @@ function App() {
     <>
     <Router>
       <div className="app">
-        <div className="content">
+        <main className="content">
           <Routes>
           <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegistrationForm />} />
@@ -25,7 +25,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/maps" element={<SalonMap />} />
           </Routes>
-        </div>
+        </main>
        <Footer />
       </div>
     </Router>
