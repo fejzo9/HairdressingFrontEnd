@@ -1,4 +1,4 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   /*background-image: url('../assets/hairdresser-cover2 (1).jpg');*/
@@ -14,11 +14,14 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  position: relative;
+  width: 100%; /* Osiguraj da glavni kontejner zauzima punu širinu */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .content {
-  flex: 1;
+  flex: 1; /* Zauzima sav preostali prostor između headera i footera */
   padding-top: 150px;
   padding-bottom: 200px;
 }
