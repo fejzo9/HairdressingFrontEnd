@@ -1,0 +1,76 @@
+.about-us {
+    background-color: #422f0c31; /* Tamna pozadina */
+    color: #fff; /* Bijeli tekst */
+    padding: 60px 0;
+    margin: 0;
+    left: 0;
+  }
+
+/* Container za podjelu lijeve i desne strane */
+  .about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: rgba(0, 0, 0, 0.534);
+    padding: 10px;
+    margin: 0;
+    left: 0;
+  }
+
+  /* Lijeva strana - slika */
+.about-left {
+    flex: 1; /* Zauzima 50% prostora */
+  }
+
+  .about-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Zaobljeni rubovi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sjenka za efekt */
+  }
+
+  /* Desna strana - tekst */
+.about-right {
+    flex: 1; /* Zauzima 50% prostora */
+    padding: 20px;
+  }
+
+  .about-heading {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+  }
+
+  .highlight {
+    color: #ffc9bd; /* Boja teksta za "Beauty" */
+    background-color: #f5b68c3d;
+    padding: 10px;
+    border-radius: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 106px;
+    opacity: 0.2;
+    position: absolute;
+    top: -75px;
+    left: -15px;
+    z-index: 1;
+    font-style: italic;
+  }
+  
+.about-heading span {
+    display: block;
+  }
+  
+  .about-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #d4d2d0; /* Svjetliji tekst za bolju čitljivost */
+    text-align: center;
+    padding-top: 10px;
+  }
