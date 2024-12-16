@@ -1,0 +1,12 @@
+.mapa{
+    margin-top: -100px;
+    margin-bottom: 100px;
+}
+
+.mapa h2{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.123);
+    text-align: center;
+    padding: 5px;
+    margin-top: -50px;
+}
