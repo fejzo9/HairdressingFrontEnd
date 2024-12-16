@@ -1,20 +1,22 @@
-import "./Header.css"
+import "./Header.css";
+import { Link } from "react-router-dom";
 
 function Header(){
     return(
         <div className="home-header">
           <div className="logo-container">
-            <img src="src\assets\logoHDS.png" alt="Logo" className="site-logo" />
+            <img src="/logoHDS.png" alt="Logo" className="site-logo" />
             <h1><a href="/Home" className="site-title">Appointment Booking</a></h1>
         </div>
 
+        {/* Navigacija za glavne stranice */}
         <div className="nav-container">
           <nav>
             <ul className="nav-links">
-                <li><a href="/map">Salon Map</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><Link to="/map">Salon Map</Link></li>
+                <li><Link to="/about-us">About Us</Link></li>
+                <li><Link to="/services">Services</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
             </ul>
          </nav>
         </div>
@@ -22,8 +24,8 @@ function Header(){
         <div className="user-links">
           <nav>
             <ul className="nav-links">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li> 
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/register">Register</Link></li> 
             </ul>
           </nav>
         </div>
