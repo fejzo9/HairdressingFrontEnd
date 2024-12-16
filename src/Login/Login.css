@@ -1,23 +1,27 @@
 body {
     margin: 0;
     padding: 0;
-    height: 20vh;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    min-height: 100vh; /* Tijelo zauzima cijelu visinu prozora */
+    position: relative;
 }
 
 .login-form {
     max-width: 400px;
     width: 100%;
-    margin: 50px auto;
+    margin-top: -60px;
     padding: 30px 50px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: rgba(2, 2, 2, 0.8);
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sjenka */
+
+    position: absolute; /* Apsolutno pozicioniranje forme */
+    top: 50%; /* Centriraj po visini */
+    left: 50%; /* Centriraj po širini */
+    transform: translate(-50%, -50%);
 }
 
 .login-form h2 {
