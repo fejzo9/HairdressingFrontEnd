@@ -49,8 +49,8 @@
   }
 
   .highlight {
-    color: #ffc9bd; /* Boja teksta za "Beauty" */
-    background-color: #f5b68c3d;
+    color: hsl(27, 93%, 83%); /* Boja teksta za "Beauty" */
+    background-color: #f5b68c25;
     padding: 10px;
     border-radius: 20px;
     font-family: 'Courier New', Courier, monospace;
