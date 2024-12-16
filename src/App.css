@@ -7,7 +7,7 @@ html, body {
   box-sizing: border-box;
 
  /* background-image: url('../../hairdressing-salons-frontend/src/assets/hairdresser-cover2 (1).jpg'); */
-  background-image: url('../src/assets/cover\ \(1\).jfif');
+  background-image: url('../public/cover\ \(1\).jfif');
   background-size: cover; /* Pokriva cijelu površinu */
   background-position: center;  /* Centrirana slika */
   background-repeat: no-repeat; /* Bez ponavljanja */
