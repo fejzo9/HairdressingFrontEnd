@@ -7,7 +7,8 @@ import TermsOfService from './TermsOfService/TermsOfService';
 import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword'; 
 import Footer from './Footer/Footer';
-import SalonMap from './Maps/SalonMap';
+import SalonMap from './Maps/FakeSalonMap';
+import AboutUs from './AboutUs/AboutUs';
 
 function App() {
 
@@ -24,8 +25,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/maps" element={<SalonMap />} />
+            <Route path="/about-us" element={<AboutUs />} />
           </Routes>
         </main>
+        <SalonMap />
        <Footer />
       </div>
     </Router>
