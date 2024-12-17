@@ -101,13 +101,17 @@ function AboutUs() {
         </div>
       </div>
 
-      <div className="about-contact">
+      <div className="contact-us">
         <h2>Kontaktirajte Nas</h2>
         <p>
           Za sve informacije i saradnju, slobodno nas kontaktirajte putem naše{" "}
-          <a href="/contact">kontakt stranice</a>.
+          <a className="contact-link" href="/contact">kontakt stranice</a>.
         </p>
+        <div className="mission-item">
+          <img src="/contact-icon.png" alt="Doing" width={180} height={180} />
+          </div>
       </div>
+
     </div>
   );
 }
