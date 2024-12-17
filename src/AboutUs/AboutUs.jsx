@@ -3,10 +3,14 @@ import "./AboutUs.css"; // Stilizacija stranice
 import pic1 from "/ena.jpg";
 import pic2 from "/fejzo.png";
 import Card from "../Card/Card.jsx"
+import Header from "../Header/Header.jsx";
 
 function AboutUs() {
   return (
     <div className="about-us">
+      <div className="header">
+        <Header />
+      </div>
       <div className="about-container">
 
             <div className="about-left">
