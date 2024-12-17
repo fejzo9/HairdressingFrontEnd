@@ -7,8 +7,11 @@ body{
     background-color: #422f0c31; /* Tamna pozadina */
     color: #fff; /* Bijeli tekst */
     padding: 60px 0;
-    margin: 0;
-    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Održava sadržaj u koloni */
+    box-sizing: border-box;
   }
 
 /* Container za podjelu lijeve i desne strane */
@@ -16,15 +19,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    background-color: rgba(0, 0, 0, 0.534);
-    padding: 10px;
-    margin: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
+    max-width: 1200px; /* Zadržava širinu sekcije */
+    margin: 0 auto; /* Centriranje na sredinu */
+    padding: 20px; /* Dodaje prostor unutar kontejnera */
+    background-color: rgba(0, 0, 0, 0.534); /* Pozadina */
+    box-sizing: border-box; /* Osigurava da padding ne pređe max-width */
+    
   }
 
   /* Lijeva strana - slika */
@@ -217,3 +217,42 @@ body{
     border-radius: 50%;
     margin-top: 20px;
   }
+
+  /* STORY */
+  .about-story {
+    background-color: #f8f9fa10; 
+    color: #ffffff; 
+    padding: 50px 20px; /* Razmak oko sadržaja */
+    border-radius: 8px;
+    margin: 20px auto; /* Oko glavne sekcije */
+    max-width: 1200px; /* Maksimalna širina */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sjenka */
+    background-color: rgba(0, 0, 0, 0.534);
+  }
+
+  .about-story h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #5555554b;
+    padding: 30px;
+    margin-top: -20px;
+    border-radius: 20px;
+  }
+  
+  .about-story h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    color: #fdfbfb;
+  }
+  
+  .about-story p {
+    font-size: 18px;
+    line-height: 1.8; /* Razmak između linija */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    text-align: center;
+  }
+
