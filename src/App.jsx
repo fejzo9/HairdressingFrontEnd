@@ -9,6 +9,7 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Footer from './Footer/Footer';
 import SalonMap from './Maps/FakeSalonMap';
 import AboutUs from './AboutUs/AboutUs';
+import Header from "./Header/Header.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
     <Router>
       <div className="app">
+      <Header />
         <main className="content">
           <Routes>
           <Route path="/" element={<Home />} />
