@@ -1,10 +1,14 @@
 /* Header.css */
+body {
+  margin: 0; /* Ukloni marginu na vrhu */
+  padding-top: 80px; /* Dodaj prostor jednak visini headera */
+}
 
 /* Postavljanje osnovnog stila za header */
 .home-header {
-  position: fixed; /* Fiksira header na vrh */
-  top: 0; /* Pozicionira header na vrh stranice */
-  left: 0; /* Poravnava header s lijeve strane */
+  position: absolute; /* Header ostaje na vrhu prozora */
+  top: 0;
+  left: 0; /* Poravnanje lijevo */
   width: 100%; /* Širina headera preko cijele stranice */
   z-index: 1000; /* Osigurava da header bude iznad ostalih elemenata */
   display: flex;
@@ -12,6 +16,7 @@
   padding: 10px 20px;
   background-color: #333; /* Postavi pozadinsku boju po želji */
   box-sizing: border-box; /* Osigurava da padding ne utiče na ukupnu širinu */
+  margin-bottom: -150px;
 }
 
 /* Stil za kontejner loga i naslova */
