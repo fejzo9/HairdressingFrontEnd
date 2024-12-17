@@ -1,5 +1,8 @@
 import React from "react";
 import "./AboutUs.css"; // Stilizacija stranice
+import pic1 from "/ena.jpg";
+import pic2 from "/fejzo.png";
+import Card from "../Card/Card.jsx"
 
 function AboutUs() {
   return (
@@ -84,25 +87,18 @@ function AboutUs() {
 
       <div className="about-team">
         <h2>Upoznajte naš tim</h2>
-        <div className="team-member">
-          <img src="/assets/fejzo.jpg" alt="Fejzullah Ždralović" />
-          <h3>Fejzullah Ždralović</h3>
-          <p>Programer i vizionar ovog projekta.</p>
+        <div className="members">
+          <div className="team-member">
+            <a href="https://www.linkedin.com/in/ena-forto-2610a32a2/">
+              <Card pic={pic1} name="Ena Forto" desc="Vlasnica i direktorica Beauty aplikacije. Odgovorna za finansije, prodaju i pravne regulative." />
+            </a>
+          </div>
+          <div className="team-member">
+            <a href="https://github.com/fejzo9">
+              <Card pic={pic2} name="Fejzullah Ždralović" desc="Softver inžinjer, glavni developer, odgovoran za cjelokupni razvoj aplikacije." />
+            </a>
+          </div>
         </div>
-        <div className="team-member">
-          <img src="/assets/ena.jpg" alt="Ena" />
-          <h3>Ena Forto</h3>
-          <p>Koordinator dizajna i UX/UI stručnjak.</p>
-        </div>
-      </div>
-
-      <div className="about-stats">
-        <h2>Naši Rezultati</h2>
-        <ul>
-          <li>Preko 1000 zadovoljnih korisnika</li>
-          <li>Partnerstvo sa 20 najboljih salona</li>
-          <li>5 godina iskustva u industriji</li>
-        </ul>
       </div>
 
       <div className="about-contact">
