@@ -256,3 +256,44 @@ body{
     text-align: center;
   }
 
+/* ABOUT TEAM SECTION */
+/* Container za podjelu lijeve i desne strane */
+.about-team {
+  background-color: #f8f9fa10; 
+  color: #ffffff; 
+  padding: 50px 20px; /* Razmak oko sadržaja */
+  border-radius: 8px;
+  margin: 20px auto; /* Oko glavne sekcije */
+  max-width: 1200px; /* Maksimalna širina */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sjenka */
+  background-color: rgba(0, 0, 0, 0.534);
+  width: 100%;
+}
+
+.about-team h2{
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #5555554b;
+  padding: 30px;
+  margin-top: -20px;
+  border-radius: 20px;
+}
+
+.members{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.about-team p{
+  font-size: 16px;
+  margin-top: 25px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #5555554b;
+  border-radius: 20px;
+  padding: 30px;
+  letter-spacing: 1px;
+  line-height: 22px;
+}
