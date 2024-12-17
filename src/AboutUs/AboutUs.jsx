@@ -62,18 +62,24 @@ function AboutUs() {
                 </div>
         </div>
 
-      <div className="about-story">
+        <div className="about-story">
         <h2>Naša Priča</h2>
         <p>
           Ideja o ovoj aplikaciji nastala je iz potrebe da pojednostavimo proces rezervacije termina 
           u frizerskim salonima i salonima ljepote, te iz potrebe da znamo ko su najbolji zaposleni profesionalci u našem okruženju koji pružaju usluge i koji su prepoznati od strane zajednice, kako bismo mogli na brz i jednostavan način da se rezervišemo u terminu koji nam odgovara.  </p>
+          <div className="mission-item">
+          <img src="/story-icon.png" alt="Doing" width={180} height={180} />
+          </div>
       </div>
 
-      <div className="about-vision">
+      <div className="about-story">
         <h2>Naša Vizija</h2>
         <p>
             Stvariti brend za rezervaciju termina i biti prva aplikacija na koju svi pomisle kada žele brzu i kvalitetnu rezervaciju frizerskih usluga ili usluga salona ljepote.
         </p>
+        <div className="mission-item">
+          <img src="/vision-icon.png" alt="Doing" width={180} height={180} />
+          </div>
       </div>
 
       <div className="about-team">
