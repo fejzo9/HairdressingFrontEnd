@@ -10,6 +10,7 @@ import Footer from './Footer/Footer';
 import SalonMap from './Maps/FakeSalonMap';
 import AboutUs from './AboutUs/AboutUs';
 import Header from "./Header/Header.jsx";
+import Contact from "./Contact/Contact.jsx";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/maps" element={<SalonMap />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
        <Footer />
