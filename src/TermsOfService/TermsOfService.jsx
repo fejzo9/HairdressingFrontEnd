@@ -25,7 +25,6 @@ function TermsOfService() {
             <p>These terms shall be governed and construed in accordance with the laws of Bosnia and Hercegovina, without regard to its conflict of law provisions.</p>
             <h2>Contact Information</h2>
             <p>For any questions about these terms, please contact us at fejzo999@gmail.com.</p>
-            <button onClick={() => navigate('/register')} className="back-button">Back to Registration</button>
         </div>
     );
 }
