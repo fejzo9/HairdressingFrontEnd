@@ -16,12 +16,38 @@ function LoginForm() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate login request
+    
+    try {
+      const response = await fetch('http://localhost:8080/login', { 
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identifier: formData.emailOrUsername, // Ili email ako koristiš email za login
+            password: formData.password, // Slanje pw-a
+          }),
+      });
+
+      if (!response.ok) {
+          throw new Error('Login Failed! Invalid login credentials.');
+      }
+
+      const result = await response.json();
+      console.log('Login successful:', result);
+
+      // Dodaj alert za uspešnu prijavu
+      alert('Login successful! Welcome back, ' + result.firstName + '!');
+      navigate('/home'); // Preusmeravanje na glavnu stranicu nakon prijave
+  } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please check your credentials and try again.');
+  }
+
     console.log('Logging in with:', formData);
     // After successful login, redirect to home page
-    navigate('/home');
   };
 
   return (
