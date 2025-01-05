@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 import './Registration.css'; 
 
 function RegistrationForm() {
@@ -7,7 +10,7 @@ function RegistrationForm() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    birthDate: '2000-01-01',
+    birthDate: '',
     gender: '',
     email: '',
     phoneNumber: '',
@@ -48,8 +51,8 @@ function RegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-       /* try {
-            const response = await fetch('http://localhost:8080/api/register', { 
+        try {
+            const response = await fetch('http://localhost:8080/registration', { 
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -67,9 +70,9 @@ function RegistrationForm() {
           } catch (error) {
             console.error('Registration error:', error);
             alert(error);
-          } */
-            console.log('Registration successful:');
-            navigate('/home');
+          } 
+           
+            navigate('/login');
     }
   };
 
@@ -107,12 +110,14 @@ function RegistrationForm() {
         <label>
           Birth Date:
         </label>
-          <input
-            type="date"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleChange}
-          />
+        <input
+          type="text"
+          name="birthDate"
+          value={formData.birthDate}
+          onChange={handleChange}
+          placeholder="dd/mm/yyyy"
+          className="form-control"
+        />
           {errors.birthDate && <span className="error">{errors.birthDate}</span>}
     </div>
 
