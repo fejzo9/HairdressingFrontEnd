@@ -25,7 +25,7 @@ function Header(){
           <nav>
             <ul className="nav-links">
                 <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li> 
+                <li><Link to="/registration">Register</Link></li> 
             </ul>
           </nav>
         </div>
