@@ -22,7 +22,7 @@ function App() {
         <main className="content">
           <Routes>
           <Route path="/" element={<Home />} />
-            <Route path="/register" element={<RegistrationForm />} />
+            <Route path="/registration" element={<RegistrationForm />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
