@@ -112,7 +112,7 @@ function AboutUs() {
           <a className="contact-link" href="/contact">kontakt stranice</a>.
         </p>
         <div className="mission-item">
-          <img src="/contact-icon.png" alt="Doing" width={180} height={180} />
+        <a className="contact-link" href="/contact"><img src="/contact-icon.png" alt="Doing" width={180} height={180} /> </a>
           </div>
       </div>
 
