@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
-    emailOrUsername: '',
+    identifier: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -17,30 +17,33 @@ function LoginForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Sprečava podrazumijevanu akciju HTML forme (reload stranice)
     
     try {
+      // Šaljemo POST zahtjev na backend s JSON podacima
       const response = await fetch('http://localhost:8080/login', { 
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
+              'Cache-Control': 'no-cache',
           },
-          body: JSON.stringify({
-            identifier: formData.emailOrUsername, // Ili email ako koristiš email za login
-            password: formData.password, // Slanje pw-a
-          }),
+          body: JSON.stringify(formData),
       });
+      
+      
+     if (!response.ok) {
+        throw new Error('Login Failed! Invalid login credentials.');
+    }
 
-      if (!response.ok) {
-          throw new Error('Login Failed! Invalid login credentials.');
-      }
-
+      // Ovdje se čita odgovor koji backend šalje. 
+      // Ako backend ne vraća JSON ili vraća neispravan Content-Type, ovaj korak može izazvati grešku.
       const result = await response.json();
       console.log('Login successful:', result);
-
       // Dodaj alert za uspešnu prijavu
       alert('Login successful! Welcome back, ' + result.firstName + '!');
       navigate('/home'); // Preusmeravanje na glavnu stranicu nakon prijave
+
+      
   } catch (error) {
       console.error('Login error:', error);
       alert('Login failed. Please check your credentials and try again.');
@@ -57,8 +60,8 @@ function LoginForm() {
         <div className="form-group">
           <input
             type="text"
-            name="emailOrUsername"
-            value={formData.emailOrUsername}
+            name="identifier"
+            value={formData.identifier}
             onChange={handleChange}
             placeholder="Email or Username"
           />
