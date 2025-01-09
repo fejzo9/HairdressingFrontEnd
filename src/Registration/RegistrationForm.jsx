@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 import './Registration.css'; 
 
 function RegistrationForm() {
@@ -66,6 +64,7 @@ function RegistrationForm() {
            
             const result = await response.json();
             console.log('Registration successful:', result);
+            alert("Uspješno ste se registrovali, čestitam! Molimo Vas prijavite se.")
             navigate('/home');
           } catch (error) {
             console.error('Registration error:', error);
@@ -111,11 +110,10 @@ function RegistrationForm() {
           Birth Date:
         </label>
         <input
-          type="text"
+          type="date"
           name="birthDate"
           value={formData.birthDate}
           onChange={handleChange}
-          placeholder="dd/mm/yyyy"
           className="form-control"
         />
           {errors.birthDate && <span className="error">{errors.birthDate}</span>}
