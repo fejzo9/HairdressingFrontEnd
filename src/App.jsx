@@ -11,8 +11,11 @@ import SalonMap from './Maps/FakeSalonMap';
 import AboutUs from './AboutUs/AboutUs';
 import Header from "./Header/Header.jsx";
 import Contact from "./Contact/Contact.jsx";
+import AdminPage from './Admin/AdminPage';
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
+  const role = localStorage.getItem("role");
 
   return (
     <>
@@ -30,6 +33,15 @@ function App() {
             <Route path="/maps" element={<SalonMap />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
+
+              <Route
+              path="/admin"
+              element={
+                <PrivateRoute role={role} allowedRoles={["ADMIN"]}>
+                  <AdminPage />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </main>
        <Footer />
