@@ -30,7 +30,6 @@ function LoginForm() {
           body: JSON.stringify(formData),
       });
       
-      
      if (!response.ok) {
         throw new Error('Login Failed! Invalid login credentials.');
     }
@@ -43,6 +42,10 @@ function LoginForm() {
       alert('Login successful! Welcome back, ' + result.firstName + '!');
       navigate('/home'); // Preusmeravanje na glavnu stranicu nakon prijave
 
+      localStorage.setItem("id", result.id);
+      localStorage.setItem("username", result.username);
+      localStorage.setItem("role", result.role);
+      localStorage.setItem("token", result.token);
       
   } catch (error) {
       console.error('Login error:', error);
