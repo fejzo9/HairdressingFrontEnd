@@ -1,0 +1,10 @@
+body{
+    color: white;
+}
+
+.admin-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
