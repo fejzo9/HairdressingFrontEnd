@@ -2,9 +2,15 @@ import React from 'react';
 import './UserTable.css';
 
 function UserTable({ users, setUsers }) {
+
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:8080/users/${id}`, { method: "DELETE" });
+      await fetch(`http://localhost:8080/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -12,6 +18,7 @@ function UserTable({ users, setUsers }) {
   };
 
   return (
+  <>
     <table className="user-table">
       <thead>
         <tr>
@@ -27,7 +34,7 @@ function UserTable({ users, setUsers }) {
         </tr>
       </thead>
       <tbody>
-        {users.map(user => (
+        {users.map((user) => (
           <tr key={user.id}>
             <td>{user.id}</td>
             <td>{user.firstName}</td>
@@ -45,6 +52,11 @@ function UserTable({ users, setUsers }) {
         ))}
       </tbody>
     </table>
+      
+    <button onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}>
+        + Dodaj korisnika
+      </button>
+    </>
   );
 }
 
