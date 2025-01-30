@@ -39,7 +39,7 @@ function LoginForm() {
       const result = await response.json();
       console.log('Login successful:', result);
       // Dodaj alert za uspešnu prijavu
-      alert('Login successful! Welcome back, ' + result.firstName + '!');
+      alert('Login successful! Welcome back, ' + result.username + '!');
       navigate('/home'); // Preusmeravanje na glavnu stranicu nakon prijave
 
       localStorage.setItem("id", result.id);
