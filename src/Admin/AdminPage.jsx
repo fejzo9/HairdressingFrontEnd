@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
 import UserTable from './UserTable';
 import AdminTable from './AdminTable';
-import {fetchUsers} from './fetchUsers.jsx';
+import { fetchUsers } from "./fetchUsers";
 
 function AdminPage({ role }) {
   const [users, setUsers] = useState([]);
@@ -11,25 +11,21 @@ function AdminPage({ role }) {
 
   // Fetch korisnika
   useEffect(() => {
-
-    const getUsers = async () => {
-      const data = await fetchUsers();
-      setUsers(data);
-    };
-
-    getUsers();
-
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Fetch za sve korisnike
-        const usersResponse = await fetch('/users'); // API endpoint za korisnike
-        const usersData = await usersResponse.json();
+        const usersData = await fetchUsers();
         setUsers(usersData);
 
         // Fetch za admine (samo ako je SUPER_ADMIN)
         if (role === 'ADMIN') {
-          const adminsResponse = await fetch('http://localhost:8080/admins'); // API endpoint za admine
+          const adminsResponse = await fetch("http://localhost:8080/admins", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
           const adminsData = await adminsResponse.json();
           setAdmins(adminsData);
         }
@@ -52,7 +48,7 @@ function AdminPage({ role }) {
       <h1>Admin Dashboard</h1>
       
       <h2>Users</h2>
-      <UserTable users={users} setUsers={setUsers} />
+      <UserTable users={users} setUsers={setUsers} /> 
 
       {role === 'ADMIN' && (
         <>
