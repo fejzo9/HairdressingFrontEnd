@@ -89,14 +89,106 @@ body {
   margin-top: 60px; /* Postavi marginu na vrhu da sadržaj ne bude ispod headera */
 }
 
+/* Dropdown stil */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: #fff; /* Bijela boja teksta */
+}
+
+.dropdown-toggle {
+  padding: 10px;
+  background-color: #d38900; 
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  display: block;
+  width: 100%;
+  text-transform: capitalize;
+}
+
+.dropdown-toggle:hover {
+  background-color: #fdba54; /* Tamnija plava kod hovera */
+  color: black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffdf86;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.dropdown-content button {
+  background: none;
+  border: none;
+  color: black;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #6d4508;
+  color: white;
+  font-weight: bold;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 /* Media querije za manje ekrane */
 @media (max-width: 768px) {
-  .nav-container, .user-links {
-    flex-grow: 1;
-    text-align: center;
+  .home-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
   }
+
+  .nav-container {
+    text-align: center;
+    width: 100%;
+  }
+
   .nav-links {
     flex-direction: column; /* Vertikalno poravnanje na manjim ekranima */
-    margin: 10px 0;
+    text-align: center;
+  }
+
+  .user-links {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .dropdown {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-toggle {
+    display: block;
+    width: auto;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .dropdown-content {
+    position: static;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-content button {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
   }
 }
