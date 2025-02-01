@@ -49,7 +49,7 @@ function Header(){
                 <li><Link to="/services">Services</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
                  {/* ✅ Prikazuj "Admin" samo ako je korisnik ADMIN */}
-            {role === "ADMIN" && (
+            {(role === "ADMIN" || role === "SUPER_ADMIN") && (
               <li><Link to="/admin">Admin</Link></li>
             )}
              {role === "OWNER" && (
