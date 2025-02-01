@@ -3,6 +3,7 @@ import './AdminPage.css';
 import UserTable from './UserTable';
 import AdminTable from './AdminTable';
 import { fetchUsers } from "./fetchUsers";
+import { fetchAdmins } from "./fetchAdmins";
 
 function AdminPage({ role }) {
   const [users, setUsers] = useState([]);
@@ -17,18 +18,8 @@ function AdminPage({ role }) {
         const usersData = await fetchUsers();
         setUsers(usersData);
 
-        // Fetch za admine (samo ako je SUPER_ADMIN)
-        if (role === 'ADMIN') {
-          const adminsResponse = await fetch("http://localhost:8080/admins", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
-          const adminsData = await adminsResponse.json();
-          setAdmins(adminsData);
-        }
+        const adminsData = await fetchAdmins();
+        setAdmins(adminsData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -50,12 +41,9 @@ function AdminPage({ role }) {
       <h2>Users</h2>
       <UserTable users={users} setUsers={setUsers} /> 
 
-      {role === 'ADMIN' && (
-        <>
-          <h2>Admins</h2>
-          <AdminTable admins={admins} setAdmins={setAdmins} />
-        </>
-      )}
+      <h2>Admins</h2>
+      <AdminTable admins={admins} setAdmins={setAdmins} />
+        
     </div>
   );
 }
