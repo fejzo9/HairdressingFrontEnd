@@ -9,6 +9,7 @@ function AdminTable({ admins, setAdmins }) {
   };
 
   return (
+    <>
     <table className="admin-table">
       <thead>
         <tr>
@@ -16,6 +17,7 @@ function AdminTable({ admins, setAdmins }) {
           <th>Username</th>
           <th>Email</th>
           <th>Role</th>
+          <th>Akcije</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +35,11 @@ function AdminTable({ admins, setAdmins }) {
         ))}
       </tbody>
     </table>
+
+     <button onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}>
+     + Dodaj admina
+   </button>
+   </>
   );
 }
 
