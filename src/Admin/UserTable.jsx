@@ -19,6 +19,7 @@ function UserTable({ users, setUsers }) {
 
   return (
   <>
+   <div className="table-container">
     <table className="user-table">
       <thead>
         <tr>
@@ -46,13 +47,13 @@ function UserTable({ users, setUsers }) {
             <td>{user.role}</td>
             <td>
               <button onClick={() => handleDelete(user.id)}>Delete</button>
-              <button>Edit</button>
+              <button onClick={() => alert("Uređivanje korisnika još nije implementirano!")}>Edit</button>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
-      
+    </div>  
     <button onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}>
         + Dodaj korisnika
       </button>
