@@ -37,7 +37,7 @@ function App() {
               <Route
               path="/admin"
               element={
-                <PrivateRoute role={role} allowedRoles={["ADMIN"]}>
+                <PrivateRoute role={role} allowedRoles={["ADMIN","SUPER_ADMIN"]}>
                   <AdminPage />
                 </PrivateRoute>
               }
