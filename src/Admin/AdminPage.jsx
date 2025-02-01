@@ -9,7 +9,7 @@ function AdminPage({ role }) {
   const [users, setUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-
+ 
   // Fetch korisnika
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +40,12 @@ function AdminPage({ role }) {
       
       <h2>Users</h2>
       <UserTable users={users} setUsers={setUsers} /> 
-
-      <h2>Admins</h2>
-      <AdminTable admins={admins} setAdmins={setAdmins} />
+   
+      {role === "SUPER_ADMIN" && (<>
+                                   <h2>Admins</h2>
+                                   <AdminTable admins={admins} setAdmins={setAdmins} />
+                                  </>)
+      }             
         
     </div>
   );
