@@ -38,9 +38,12 @@ function AdminPage({ role }) {
     <div className="admin-page">
       <h1>Admin Dashboard</h1>
       
-      <h2>Users</h2>
-      <UserTable users={users} setUsers={setUsers} /> 
-   
+      {(role === "ADMIN" || role === "SUPER_ADMIN") && (<>
+                                  <h2>Users</h2>
+                                  <UserTable users={users} setUsers={setUsers} /> 
+                                 </>)
+      }  
+
       {role === "SUPER_ADMIN" && (<>
                                    <h2>Admins</h2>
                                    <AdminTable admins={admins} setAdmins={setAdmins} />
