@@ -29,7 +29,7 @@ function AdminTable({ admins, setAdmins }) {
             <td>{admin.role}</td>
             <td>
               <button onClick={() => handleDelete(admin.id)}>Delete</button>
-              <button>Edit</button>
+              <button onClick={() => alert("Uređivanje korisnika još nije implementirano!")}>Edit</button>
             </td>
           </tr>
         ))}
