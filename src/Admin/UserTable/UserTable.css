@@ -1,5 +1,4 @@
 .table-container{
- 
   overflow-x: auto;
 }
 
@@ -39,6 +38,20 @@
   .user-table button:hover {
     background-color: #007b63;
     font-weight: bold;
+  }
+
+  .dodaj-korisnika {
+    display: block;
+    margin: 20px auto; /* Centriranje dugmeta */
+    padding: 10px 15px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dodaj-korisnika:hover {
+    background-color: #007b63;
   }
 
   /* Na manjim ekranima omogući horizontalni scroll */
