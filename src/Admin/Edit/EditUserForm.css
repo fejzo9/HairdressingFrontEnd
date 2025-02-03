@@ -1,0 +1,13 @@
+.edit-user-form{
+    background-color: rgba(0, 0, 0, 0.306);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+select{
+    font-size: 17px;
+}
+
+select option{
+    font-size: 15px;
+}
