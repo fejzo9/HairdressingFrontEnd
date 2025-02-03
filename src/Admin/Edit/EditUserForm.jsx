@@ -83,7 +83,7 @@ function EditUserForm({ user, onSave, onCancel }) {
         </label>
         <label>
           Phone:
-          <input type="text" name="phone" value={formData.phoneNumber} onChange={handleChange} required />
+          <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
         </label>
         <label>
           Username:
