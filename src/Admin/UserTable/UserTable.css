@@ -55,7 +55,7 @@
   }
 
   /* Na manjim ekranima omogući horizontalni scroll */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .table-container {
       overflow-x: auto;
       white-space: nowrap; /* Sprječava prelamanje teksta */
