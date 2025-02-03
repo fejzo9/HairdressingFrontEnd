@@ -8,6 +8,7 @@ function EditUserForm({ user, onSave, onCancel }) {
     birthDate: user.birthDate,
     gender: user.gender,
     email: user.email,
+    phoneNumber: user.phoneNumber,
     username: user.username,
     role: user.role
   });
