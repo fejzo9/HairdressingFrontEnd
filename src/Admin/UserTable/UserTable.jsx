@@ -64,8 +64,8 @@ function UserTable({ users, setUsers }) {
             <td>{user.username}</td>
             <td>{user.role}</td>
             <td>
-              <button onClick={() => handleDelete(user.id)}>Delete</button>
               <button onClick={() => handleEdit(user)}>Edit</button>
+              <button onClick={() => handleDelete(user.id)}>Delete</button>
             </td>
           </tr>
         ))}

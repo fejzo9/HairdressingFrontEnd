@@ -76,8 +76,8 @@ function AdminTable({ admins, setAdmins }) {
             <td>{admin.email}</td>
             <td>{admin.role}</td>
             <td>
-              <button onClick={() => handleDelete(admin.id)}>Delete</button>
               <button onClick={() => handleEdit(admin)}>Edit</button>
+              <button onClick={() => handleDelete(admin.id)}>Delete</button>
             </td>
           </tr>
         ))}
