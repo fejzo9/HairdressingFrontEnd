@@ -47,6 +47,7 @@ function UserTable({ users, setUsers }) {
           <th>Datum rođenja</th>
           <th>Spol</th>
           <th>Email</th>
+          <th>Broj Telefona</th>
           <th>Username</th>
           <th>Uloga</th>
           <th>Akcije</th>
@@ -61,6 +62,7 @@ function UserTable({ users, setUsers }) {
             <td>{user.birthDate}</td>
             <td>{user.gender}</td>
             <td>{user.email}</td>
+            <td>{user.phoneNumber}</td>
             <td>{user.username}</td>
             <td>{user.role}</td>
             <td>
