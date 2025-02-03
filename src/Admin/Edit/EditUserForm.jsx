@@ -19,6 +19,7 @@ function EditUserForm({ user, onSave, onCancel }) {
       birthDate: user.birthDate,
       gender: user.gender,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       username: user.username,
       role: user.role
     });
@@ -78,6 +79,10 @@ function EditUserForm({ user, onSave, onCancel }) {
         <label>
           Email:
           <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        </label>
+        <label>
+          Phone:
+          <input type="text" name="phone" value={formData.phoneNumber} onChange={handleChange} required />
         </label>
         <label>
           Username:
