@@ -11,7 +11,7 @@ import SalonMap from './Maps/FakeSalonMap';
 import AboutUs from './AboutUs/AboutUs';
 import Header from "./Header/Header.jsx";
 import Contact from "./Contact/Contact.jsx";
-import AdminPage from './Admin/AdminPage';
+import AdminPage from './Admin/AdminPage/AdminPage.jsx';
 import PrivateRoute from "./PrivateRoute";
 
 function App() {
