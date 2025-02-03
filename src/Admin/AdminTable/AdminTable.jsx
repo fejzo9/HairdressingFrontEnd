@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './AdminTable.css';
 import EditAdminForm from '../Edit/EditAdminForm';
+import AddAdminForm from '../Add/AddAdminForm';
 
 function AdminTable({ admins, setAdmins }) {
   const [editingAdmin, setEditingAdmin] = useState(null); // Drži trenutno uređivanog admina
+  const [addingAdmin, setAddingAdmin] = useState(false); // Da li dodajemo novog admina
 
   const handleDelete = async (id) => {
     try {
@@ -21,6 +23,7 @@ function AdminTable({ admins, setAdmins }) {
 
   const handleEdit = (admin) => {
     setEditingAdmin(admin); // Postavljamo admina koji se uređuje
+    setAddingAdmin(false); // Ako je otvorena forma za dodavanje, zatvori je
   };
 
   const handleSave = (updatedAdmin) => {
@@ -28,15 +31,33 @@ function AdminTable({ admins, setAdmins }) {
     setEditingAdmin(null); // Zatvaramo formu
   };
 
-  const handleCancel = () => {
+  const handleCancelEdit = () => {
     setEditingAdmin(null); // Zatvaramo formu bez promjena
   };
+
+  const handleAddNew = () => {
+    setAddingAdmin(true);
+    setEditingAdmin(null); // Ako je otvorena forma za edit, zatvori je
+  };
+
+  const handleSaveNewAdmin = (newAdmin) => {
+    setAdmins([...admins, newAdmin]); // Dodaj novog admina u listu
+    setAddingAdmin(false);
+  };
+
+  const handleCancelAdd = () => {
+    setAddingAdmin(false);
+  };
+
 
   return (
     <>
     {editingAdmin ? (
-        <EditAdminForm admin={editingAdmin} onSave={handleSave} onCancel={handleCancel} />
+        <EditAdminForm admin={editingAdmin} onSave={handleSave} onCancel={handleCancelEdit} />
+      ) : addingAdmin ? (
+        <AddAdminForm onSave={handleSaveNewAdmin} onCancel={handleCancelAdd} />
       ) : (
+        <>
     <table className="admin-table">
       <thead>
         <tr>
@@ -62,11 +83,10 @@ function AdminTable({ admins, setAdmins }) {
         ))}
       </tbody>
     </table>
-    )}
-     <button onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}>
-     + Dodaj admina
-   </button>
+     <button onClick={handleAddNew}>+ Dodaj admina</button>
    </>
+    )}
+  </>
   );
 }
 
