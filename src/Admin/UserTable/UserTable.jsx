@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UserTable.css';
+import EditUserForm from "../Edit/EditUserForm";
 
 function UserTable({ users, setUsers }) {
+  const [editingUser, setEditingUser] = useState(null);
 
   const handleDelete = async (id) => {
     try {
@@ -17,8 +19,24 @@ function UserTable({ users, setUsers }) {
     }
   };
 
+  const handleEdit = (user) => {
+    setEditingUser(user);
+  };
+
+  const handleSave = (updatedUser) => {
+    setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
+    setEditingUser(null);
+  };
+
+  const handleCancel = () => {
+    setEditingUser(null);
+  };
+
   return (
   <>
+   {editingUser ? (
+        <EditUserForm user={editingUser} onSave={handleSave} onCancel={handleCancel} />
+      ) : (
    <div className="table-container">
     <table className="user-table">
       <thead>
@@ -47,16 +65,15 @@ function UserTable({ users, setUsers }) {
             <td>{user.role}</td>
             <td>
               <button onClick={() => handleDelete(user.id)}>Delete</button>
-              <button onClick={() => alert("Uređivanje korisnika još nije implementirano!")}>Edit</button>
+              <button onClick={() => handleEdit(user)}>Edit</button>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
+    <button className='dodaj-korisnika' onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}> + Dodaj korisnika </button>
     </div>  
-    <button onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}>
-        + Dodaj korisnika
-      </button>
+      )}
     </>
   );
 }
