@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './UserTable.css';
 import EditUserForm from "../Edit/EditUserForm";
+import AddUserForm from "../Add/AddUserForm";
 
 function UserTable({ users, setUsers }) {
   const [editingUser, setEditingUser] = useState(null);
+  const [addingUser, setAddingUser] = useState(false);
 
   const handleDelete = async (id) => {
     try {
@@ -23,19 +25,27 @@ function UserTable({ users, setUsers }) {
     setEditingUser(user);
   };
 
-  const handleSave = (updatedUser) => {
+  const handleSaveEdit = (updatedUser) => {
     setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
     setEditingUser(null);
   };
 
+  const handleSaveNewUser = (newUser) => {
+    setUsers([...users, newUser]);
+    setAddingUser(false);
+  };
+
   const handleCancel = () => {
     setEditingUser(null);
+    setAddingUser(false);
   };
 
   return (
   <>
    {editingUser ? (
-        <EditUserForm user={editingUser} onSave={handleSave} onCancel={handleCancel} />
+        <EditUserForm user={editingUser} onSave={handleSaveEdit} onCancel={handleCancel} />
+      ) : addingUser ? (
+        <AddUserForm onSave={handleSaveNewUser} onCancel={handleCancel} />
       ) : (
    <div className="table-container">
     <table className="user-table">
@@ -54,7 +64,8 @@ function UserTable({ users, setUsers }) {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
+        {users && users.length > 0 ? (
+          users.map((user) => (
           <tr key={user.id}>
             <td>{user.id}</td>
             <td>{user.firstName}</td>
@@ -70,10 +81,15 @@ function UserTable({ users, setUsers }) {
               <button onClick={() => handleDelete(user.id)}>Delete</button>
             </td>
           </tr>
-        ))}
+        ))
+      ) : (
+        <tr>
+          <td colSpan="9">Nema korisnika</td>
+        </tr>
+      )}
       </tbody>
     </table>
-    <button className='dodaj-korisnika' onClick={() => alert("Dodavanje novog korisnika još nije implementirano!")}> + Dodaj korisnika </button>
+    <button className='dodaj-korisnika' onClick={() => setAddingUser(true)}> + Dodaj korisnika </button>
     </div>  
       )}
     </>
