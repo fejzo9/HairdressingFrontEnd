@@ -6,8 +6,8 @@
   background-color: rgba(0, 0, 0, 0.631);
   margin: 10px 0;
   font-size: 16px;
-  text-align: left;
-  width: 1100px;
+  text-align: center;
+  width: fit-content;
   border-collapse: collapse;
   }
 
