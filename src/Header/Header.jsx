@@ -70,6 +70,7 @@ function Header(){
               <li className="dropdown">
                 <span className="dropdown-toggle">Zdravo, {username}!</span>
                 <div className="dropdown-content">
+                  <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
                   <button onClick={handleLogout}>Logout</button>
                 </div>
               </li>
