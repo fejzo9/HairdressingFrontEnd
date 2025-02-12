@@ -10,7 +10,7 @@ function AddUserForm({ onSave, onCancel }) {
     email: "",
     phoneNumber: "",
     username: "",
-    role: "USER",
+    role: "",
     password: "user123!"
   });
 
