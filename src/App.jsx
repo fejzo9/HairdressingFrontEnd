@@ -13,6 +13,7 @@ import Header from "./Header/Header.jsx";
 import Contact from "./Contact/Contact.jsx";
 import AdminPage from './Admin/AdminPage/AdminPage.jsx';
 import PrivateRoute from "./PrivateRoute";
+import ChangePasswordForm from "./ChangePassword/ChangePasswordForm";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -33,7 +34,7 @@ function App() {
             <Route path="/maps" element={<SalonMap />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
-
+            <Route path="/change-password" element={<ChangePasswordForm />} />
               <Route
               path="/admin"
               element={
