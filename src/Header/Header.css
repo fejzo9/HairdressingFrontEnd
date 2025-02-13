@@ -118,7 +118,6 @@ body {
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 8px;
-  transition: background 0.2s;
 }
 
 .user-info:hover {
@@ -162,7 +161,9 @@ body {
 }
 
 .dropdown-content a, .dropdown-content button{
-  padding: 8px 12px;
+  display: block;
+  padding: 16px;
+  font-size: 18px;
   text-align: left;
   background: none;
   border: none;
@@ -172,7 +173,7 @@ body {
 }
 
 .dropdown-content a:hover, .dropdown-content button:hover {
-  font-size: 18px; /* Povećava font prilikom hovera */
+  font-size: 20px; /* Povećava font prilikom hovera */
   cursor: pointer; /* Promjena kursora na pointer */
   font-weight: bold;
   /*background-color: #6d4508; */
