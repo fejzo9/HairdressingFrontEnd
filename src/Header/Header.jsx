@@ -6,7 +6,7 @@ function Header(){
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [role, setRole] = useState(localStorage.getItem("role"));
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("/user-photo.png");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -19,22 +19,21 @@ function Header(){
 
   // Dohvati profilnu sliku korisnika
   useEffect(() => {
-    if (isLoggedIn) {
-      fetch(`http://localhost:8080/users/${localStorage.getItem("userId")}/profile-picture`)
-        .then(response => {
-          if (response.ok) {
-            return response.blob();
+      const fetchProfilePicture = async () => {
+        if (isLoggedIn) {
+          try {
+            const response = await fetch(`http://localhost:8080/users/${localStorage.getItem("id")}/profile-picture`);
+            if (response.ok) {
+              const blob = await response.blob();
+              setProfilePicture(URL.createObjectURL(blob));
+            }
+          } catch (error) {
+            console.error("Greška pri dohvaćanju profilne slike:", error);
           }
-          throw new Error("Nema slike");
-        })
-        .then(blob => {
-          setProfilePicture(URL.createObjectURL(blob));
-        })
-        .catch(() => {
-          setProfilePicture("/user-photo.png"); // Postavi default sliku ako nema korisničke slike
-        });
-    }
-  }, [isLoggedIn]);
+        }
+      };
+      fetchProfilePicture();
+    }, [isLoggedIn]);
 
    // Osluškujemo promjene u localStorage, dodaje event listener, ažurira stanje prijavljenog korisnika u app
    useEffect(() => {
@@ -96,6 +95,7 @@ function Header(){
                 </div>
                 {dropdownOpen && (
                   <div className="dropdown-content">
+                    <Link className="profil" to="/profile">Profil</Link>
                     <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
                     <button onClick={handleLogout}>Logout</button>
                   </div>
