@@ -23,18 +23,22 @@ body {
 .logo-container {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 /* Stil za logo */
 .site-logo {
-  width: 180px; /* Postavi širinu loga */
+  width: 150px; /* Postavi širinu loga */
   height: auto; /* Automatski prilagodi visinu */
   margin-right: 10px; /* Prostor između loga i naslova */
+ 
+  object-fit: cover; /* Osigurava da slika ispuni krug */
+  border: 2px solid #fff; /* Dodaje bijeli okvir oko loga */
 }
 
 /* Stil za naslov sajta */
 .site-title {
-  font-size: 24px;
+  font-size: 20px;
   color: white;
   text-decoration: none;
 }
