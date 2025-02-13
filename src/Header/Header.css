@@ -65,6 +65,7 @@ body {
 .user-links {
   display: flex; /* Fleksibilni kontejner */
   align-items: center; /* Vertikalno centriranje */
+  justify-content: flex-end;
 }
 
 /* Stil za svaki link */
@@ -77,7 +78,7 @@ body {
 
 /* Hover efekat za linkove */
 .nav-links a:hover {
-  font-size: 18px; /* Povećava font prilikom hovera */
+  font-size: 20px; /* Povećava font prilikom hovera */
   cursor: pointer; /* Promjena kursora na pointer */
   color: #ff6600; /* Možeš promijeniti boju prilikom hovera */
   font-size: 20px;
@@ -93,8 +94,41 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  align-items: center;
   cursor: pointer;
   color: #fff; /* Bijela boja teksta */
+}
+
+.dropdown:hover{
+  font-size: 20px; /* Povećava font prilikom hovera */
+  cursor: pointer; /* Promjena kursora na pointer */
+  color: #ff6600; /* Možeš promijeniti boju prilikom hovera */
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* Kontejner za profilnu sliku i username */
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.user-info:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Profilna slika korisnika */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #007bff;
 }
 
 .dropdown-toggle {
@@ -123,29 +157,23 @@ body {
   border-radius: 5px;
 }
 
-.dropdown-content, .dropdown-content button{
+.dropdown-content a, .dropdown-content button{
+  padding: 8px 12px;
+  text-align: left;
   background: none;
   border: none;
   color: black;
-  padding: 10px;
-  text-align: left;
   width: 100%;
   cursor: pointer;
 }
 
-.dropdown-content:hover {
-  background-color: #6d4508;
-  color: white;
-}
-
-
-.dropdown-content button:hover {
+.dropdown-content a:hover, .dropdown-content button:hover {
   font-size: 18px; /* Povećava font prilikom hovera */
   cursor: pointer; /* Promjena kursora na pointer */
-  color: #ff6600; /* Možeš promijeniti boju prilikom hovera */
-  font-size: 20px;
-  font-weight: 500;
-  background-color: #6d4508;
+  font-weight: bold;
+  /*background-color: #6d4508; */
+  background: rgba(0, 0, 255, 0.1); 
+  color: #ff6600;
 }
 
 .dropdown:hover .dropdown-content {
@@ -207,5 +235,10 @@ body {
     width: 100%;
     text-align: center;
     font-size: 14px;
+  }
+
+  .profile-pic {
+    width: 35px;
+    height: 35px;
   }
 }
