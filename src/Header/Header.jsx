@@ -1,11 +1,13 @@
-import "./Header.css";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import "./Header.css";
 
 function Header(){
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [role, setRole] = useState(localStorage.getItem("role"));
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   // Funkcija za ažuriranje statusa logovanja
@@ -14,6 +16,25 @@ function Header(){
     setUsername(localStorage.getItem("username"));
     setRole(localStorage.getItem("role"));
   };
+
+  // Dohvati profilnu sliku korisnika
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetch(`http://localhost:8080/users/${localStorage.getItem("userId")}/profile-picture`)
+        .then(response => {
+          if (response.ok) {
+            return response.blob();
+          }
+          throw new Error("Nema slike");
+        })
+        .then(blob => {
+          setProfilePicture(URL.createObjectURL(blob));
+        })
+        .catch(() => {
+          setProfilePicture("/user-photo.png"); // Postavi default sliku ako nema korisničke slike
+        });
+    }
+  }, [isLoggedIn]);
 
    // Osluškujemo promjene u localStorage, dodaje event listener, ažurira stanje prijavljenog korisnika u app
    useEffect(() => {
@@ -30,6 +51,7 @@ function Header(){
     localStorage.removeItem("username");
     localStorage.removeItem("role");
     updateAuthStatus();
+    setIsLoggedIn(false);
     navigate("/login");
   };
 
@@ -68,11 +90,16 @@ function Header(){
             <ul className="nav-links">
             {isLoggedIn ? (
               <li className="dropdown">
-                <span className="dropdown-toggle">Zdravo, {username}!</span>
-                <div className="dropdown-content">
-                  <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
-                  <button onClick={handleLogout}>Logout</button>
+                 <div className="user-info" onClick={() => setDropdownOpen(!dropdownOpen)}>
+                  <img className="profile-pic" src={profilePicture} alt="Profilna slika" />
+                  <span>{username}</span>
                 </div>
+                {dropdownOpen && (
+                  <div className="dropdown-content">
+                    <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
+                    <button onClick={handleLogout}>Logout</button>
+                  </div>
+                )}
               </li>
             ) : (
               <>
