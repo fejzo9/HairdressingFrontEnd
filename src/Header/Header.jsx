@@ -58,9 +58,9 @@ function Header(){
     return(
         <div className="home-header">
           <div className="logo-container">
-            <img src="/logoHDS.png" alt="Logo" className="site-logo" />
-            <h1><a href="/Home" className="site-title">Appointment Booking</a></h1>
-        </div>
+         <a href="/Home"> <img src="/logoHDS.png" alt="Logo" className="site-logo" /></a>
+            <h1><a href="/Home" className="site-title">Appointment App</a></h1>
+        </div>   
 
         {/* Navigacija za glavne stranice */}
         <div className="nav-container">
