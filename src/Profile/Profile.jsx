@@ -16,6 +16,7 @@ function Profile() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    document.body.classList.add("profile-page");
     const userId = localStorage.getItem("id");
 
     if (!userId) {
@@ -42,6 +43,11 @@ function Profile() {
     };
 
     fetchUserData();
+
+    return () => {
+        // Ukloni klasu kada korisnik napusti Profile stranicu
+        document.body.classList.remove("profile-page");
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -75,14 +81,14 @@ function Profile() {
   return (
     <div className="profile-container">
       <h2>Profil</h2>
-      <img src={userData.profilePicture || "/user-photo.jpg"} alt="Profilna slika" className="profile-image" />
+      <img src={userData.profilePicture || "/user-photo.png"} alt="Profilna slika" className="profile-image" />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="formaProfil">
         <label>Ime:</label>
-        <input type="text" value={userData.firstName} disabled />
+        <input type="text" value={userData.firstName} disabled/>
 
         <label>Prezime:</label>
-        <input type="text" value={userData.lastName} disabled />
+        <input type="text" value={userData.lastName} disabled/>
 
         <label>Datum rođenja:</label>
         <input type="text" value={userData.birthDate} disabled />
