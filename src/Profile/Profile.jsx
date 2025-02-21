@@ -9,7 +9,13 @@ function Profile() {
     email: "",
     phoneNumber: "",
     username: "",
+    role: "",
     profilePicture: null,
+  });
+
+  const[adminData, setAdminData] = useState({
+    username: "",
+    email: "",
   });
 
   const [newProfilePicture, setNewProfilePicture] = useState(null);
@@ -18,6 +24,7 @@ function Profile() {
   useEffect(() => {
     document.body.classList.add("profile-page");
     const userId = localStorage.getItem("id");
+    const username = localStorage.getItem("username");
 
     if (!userId) {
         console.error("❌ ID korisnika nije pronađen u localStorage!");
@@ -36,13 +43,34 @@ function Profile() {
           const data = await response.json();
           setUserData(data);
           fetchProfilePicture(userId);
+          if(data.role === "ADMIN" || data.role === "SUPER_ADMIN"){
+            setAdminData(data);
+          }
         }
       } catch (error) {
         console.error("Greška pri dohvaćanju podataka:", error);
       }
     };
 
+    const fetchAdminData = async (adminUsername) => {
+      try {
+        const response = await fetch(`http://localhost:8080/admins/${adminUsername}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("Greška pri dohvaćanju admin podataka!");
+
+        const adminInfo = await response.json();
+        setAdminData(adminInfo);
+      } catch (error) {
+        console.error("❌ Greška pri dohvaćanju admin podataka:", error);
+      }
+    };
+
     fetchUserData();
+    fetchAdminData();
 
     return () => {
         // Ukloni klasu kada korisnik napusti Profile stranicu
@@ -94,7 +122,7 @@ function Profile() {
         <input type="text" value={userData.birthDate} disabled />
 
         <label>Email:</label>
-        <input type="email" value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
+        <input type="email" value={userData.email || adminData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
 
         <label>Broj telefona:</label>
         <input type="text" value={userData.phoneNumber} onChange={(e) => setUserData({ ...userData, phoneNumber: e.target.value })} />
