@@ -1,18 +1,72 @@
+
 .profile-container {
-    width: 60%;
-    margin: auto;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.027);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin-top: 530px;
+    margin-bottom: -600px;
+    padding: 30px 50px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: rgba(2, 2, 2, 0.8);
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sjenka */
+    position: relative; /* Apsolutno pozicioniranje forme */
+    top: 50%; /* Centriraj po visini */
+    left: 50%; /* Centriraj po širini */
+    transform: translate(-50%, -50%);
+}
+
+.profile-container h2 {
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 5px; 
+    font-size: 25px;
+}
+
+.profile-container button{
+    font-size: 17px;
+}
+
+  h2{
+    background-color: rgba(0, 0, 0, 0.226);
+    padding: 10px;
   }
-  
+
   .profile-image {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     display: block;
     margin: auto;
-    border: 2px solid #333;
+    border: 2px solid #ffffff;
+    margin-bottom: 20px;
   }
   
+  .formaProfil input{
+    text-align: center;
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+
+/* ✅ Stil za disabled input polja */
+.formaProfil input:disabled {
+    background-color: rgba(0, 0, 0, 0.5); /* Tamna transparent pozadina */
+    color: rgba(255, 255, 255, 0.514); /* Slaba bijela boja teksta */
+    border: 1px solid #444;
+    cursor: not-allowed;
+}
+
+.profile-page {
+    overflow-y: auto; /* ✅ Omogućava skrol samo na Profile stranici */
+}
+
+
+
+
+
