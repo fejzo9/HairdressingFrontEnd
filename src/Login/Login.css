@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-
     min-height: 100vh; /* Tijelo zauzima cijelu visinu prozora */
     position: relative;
 }
@@ -10,7 +9,6 @@ body {
 .login-form {
     max-width: 400px;
     width: 100%;
-    margin-top: 5px;
     padding: 30px 50px;
     border: 1px solid #ccc;
     border-radius: 8px;
