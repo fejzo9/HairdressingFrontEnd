@@ -1,9 +1,9 @@
 import React from "react";
-import "./AboutUs.css"; // Stilizacija stranice
 import pic1 from "/ena.jpg";
 import pic2 from "/fejzo.png";
-import Card from "../Card/Card.jsx"
+import Card from "../Card/Card.jsx";
 import Header from "../Header/Header.jsx";
+import "./AboutUs.css"; 
 
 function AboutUs() {
   return (
