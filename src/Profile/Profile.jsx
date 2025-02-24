@@ -34,23 +34,31 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         
-        const response = await fetch(`http://localhost:8080/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await fetch(`http://localhost:8080/users/${userId}`);
         if (response.ok) {
           const data = await response.json();
           setUserData(data);
-          fetchProfilePicture(userId);
-          if(data.role === "ADMIN" || data.role === "SUPER_ADMIN"){
-            setAdminData(data);
-          }
+          fetchProfilePicture(data.profilePicture);
         }
       } catch (error) {
         console.error("Greška pri dohvaćanju podataka:", error);
       }
     };
+
+    const fetchProfilePicture = async () => {
+      if (isLoggedIn) {
+        try {
+          const response = await fetch(`http://localhost:8080/users/${localStorage.getItem("id")}/profile-picture`);
+          if (response.ok) {
+            const blob = await response.blob();
+            setNewProfilePicture(URL.createObjectURL(blob));
+          }
+        } catch (error) {
+          console.error("Greška pri dohvaćanju profilne slike:", error);
+        }
+      }
+    };
+    fetchProfilePicture();
 
     const fetchAdminData = async (adminUsername) => {
       try {
@@ -135,7 +143,12 @@ function Profile() {
   return (
     <div className="profile-container">
       <h2>Profil</h2>
-      <img src={userData.profilePicture || "/user-photo.png"} alt="Profilna slika" className="profile-image" />
+      {console.log("🔍 Profilna slika URL:", userData.profilePicture)}
+      <img src={userData.profilePicture 
+           ? `http://localhost:8080/users/${userData.id}/profile-picture?timestamp=${new Date().getTime()}` 
+           : "/user-photo.png"} 
+     alt="Profilna slika" 
+     className="profile-image" />
 
       <form onSubmit={handleSubmit} className="formaProfil">
         <label>Ime:</label>
