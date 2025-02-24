@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from "react";
-import SalonCard from "/SalonCard.jsx";
+import SalonCard from "./SalonCard";
 
-function SalonPage(){
-    const [salons, setSalons] = useState({
-        id: "",
-        name: "",
-        address: "",
-        phone: "",
-        email: "",
-        photos: "",
-        employees: "",
-        ownerId: "",
-        ownerName: "",
-        ownerSurname: "",
-    });
+function SalonsPage(){
+    const [salons, setSalons] = useState([]);
 
     useEffect(() => {
         const fetchSalons = async () => {
@@ -27,18 +16,32 @@ function SalonPage(){
                 console.error("Greška pri dohvaćanju podataka:", error);
               }
         };
-    });
+        fetchSalons();
+    }, []);
 
     return(
             <>
-                <div className="salon">
-                <a href="#">
-                <SalonCard pic={salons.photos} name={salons.name} 
-                        address={salons.address} phone={salons.phone}
-                        email={salons.email} photos={salons.photos}
-                        employees={salons.employees} ownerName={salons.ownerName} />
-                </a>
-                </div>
+            <div className="salons-container">
+            {salons.length > 0 ? (
+                salons.map((salon) => (
+                <div key={salon.id} className="salon">
+                  <a href="#">
+                    <SalonCard 
+                                pic={salons.photos} 
+                                name={salons.name} 
+                                address={salons.address} 
+                                phone={salons.phone}
+                                email={salons.email} 
+                                photos={salons.photos}
+                                employees={salons.employees} 
+                                ownerName={salons.ownerName} />
+                  </a>
+                </div> 
+                ))
+            ) : (
+                <p>Nema dostupnih salona.</p>
+            )}
+            </div>
             </>
     )
 }
