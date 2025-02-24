@@ -65,7 +65,7 @@ function Header(){
         <div className="nav-container">
           <nav>
             <ul className="nav-links">
-                <li><Link to="/map">Salon Map</Link></li>
+                <li><Link to="/maps">Salon Map</Link></li>
                 <li><Link to="/about-us">About Us</Link></li>
                 <li><Link to="/services">Services</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
