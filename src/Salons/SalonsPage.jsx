@@ -27,14 +27,14 @@ function SalonsPage(){
                 <div key={salon.id} className="salon">
                   <a href="#">
                     <SalonCard 
-                                pic={salons.photos} 
-                                name={salons.name} 
-                                address={salons.address} 
-                                phone={salons.phone}
-                                email={salons.email} 
-                                photos={salons.photos}
-                                employees={salons.employees} 
-                                ownerName={salons.ownerName} />
+                                key={salon.id}
+                                pic={salon.photos?.length ? salon.photos[0] : null} 
+                                name={salon.name} 
+                                address={salon.address} 
+                                phone={salon.phone}
+                                email={salon.email} 
+                                employees={salon.employees} 
+                                ownerName={salon.ownerName} />
                   </a>
                 </div> 
                 ))
