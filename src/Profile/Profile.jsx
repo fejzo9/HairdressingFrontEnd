@@ -81,24 +81,50 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (newProfilePicture) {
-      const formData = new FormData();
-      formData.append("file", newProfilePicture);
+    const token = localStorage.getItem("token");
 
-      const response = await fetch(`http://localhost:8080/users/${userId}/upload-profile-picture`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: formData,
-      });
+    try {
+        // 1️⃣ Prvo ažuriramo korisničke podatke (email, telefon)
+        const userUpdateResponse = await fetch(`http://localhost:8080/users/${userData.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                email: userData.email,
+                phoneNumber: userData.phoneNumber,
+            }),
+        });
 
-      if (response.ok) {
-        setMessage("✅ Profilna slika uspješno promijenjena!");
+        if (!userUpdateResponse.ok) {
+            throw new Error("❌ Greška pri ažuriranju korisničkih podataka!");
+        }
+
+        // 2️⃣ Ako je odabrana nova profilna slika, šaljemo je
+        if (newProfilePicture) {
+            const formData = new FormData();
+            formData.append("file", newProfilePicture);
+
+            const imageResponse = await fetch(`http://localhost:8080/users/${userData.id}/upload-profile-picture`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            if (!imageResponse.ok) {
+                throw new Error("❌ Greška pri postavljanju profilne slike!");
+            }
+        }
+
+        // 3️⃣ Postavljamo poruku o uspjehu i reloadujemo stranicu
+        setMessage("✅ Podaci su uspješno ažurirani!");
         setTimeout(() => window.location.reload(), 1500);
-      } else {
-        setMessage("❌ Greška pri ažuriranju slike.");
-      }
+    } catch (error) {
+        setMessage(error.message);
+        console.error(error);
     }
   };
 
