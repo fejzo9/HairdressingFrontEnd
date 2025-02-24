@@ -7,7 +7,8 @@ import TermsOfService from './TermsOfService/TermsOfService';
 import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword'; 
 import Footer from './Footer/Footer';
-import SalonMap from './Maps/FakeSalonMap';
+import FakeSalonMap from './Maps/FakeSalonMap';
+import SalonsPage from './Salons/SalonsPage';
 import AboutUs from './AboutUs/AboutUs';
 import Header from "./Header/Header.jsx";
 import Contact from "./Contact/Contact.jsx";
@@ -32,7 +33,8 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/maps" element={<SalonMap />} />
+            <Route path="/maps" element={<FakeSalonMap />} />
+            <Route path="/salons" element={<SalonsPage />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/change-password" element={<ChangePasswordForm />} />
