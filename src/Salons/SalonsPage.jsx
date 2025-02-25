@@ -39,11 +39,25 @@ function SalonsPage(){
                 </div> 
                 ))
             ) : (
-                <p>Nema dostupnih salona.</p>
+                <p style={styles.message} >Nema dostupnih salona.</p>
             )}
             </div>
             </>
     )
 }
+
+// Definisanje stilova kao JavaScript objekat
+const styles = {
+  message: {
+    textAlign: "center",
+    color: "red",
+    margin: "70px", 
+    padding: "20px",
+    borderRadius: "10px",
+    backgroundColor: "rgba(0, 0, 0, 0.8)", // Tamnija crna pozadina sa većom transparentnošću
+    fontSize: "24px",
+    fontWeight: "bold"
+  },
+};
 
 export default SalonsPage
