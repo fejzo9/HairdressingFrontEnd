@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SalonCard from "./SalonCard";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function SalonsPage(){
     const [salons, setSalons] = useState([]);
@@ -21,10 +22,12 @@ function SalonsPage(){
 
     return(
             <>
-            <div className="salons-container">
+            <div className="container mt-4">
+            <h1 className="text-center mb-4">Frizerski saloni</h1>
+            <div className="row">
             {salons.length > 0 ? (
                 salons.map((salon) => (
-                <div key={salon.id} className="salon">
+                <div key={salon.id} className="salon col-md-4 col-sm-6 mb-4">
                   <a href="#">
                     <SalonCard 
                                 key={salon.id}
@@ -41,6 +44,7 @@ function SalonsPage(){
             ) : (
                 <p style={styles.message} >Nema dostupnih salona.</p>
             )}
+            </div>
             </div>
             </>
     )
