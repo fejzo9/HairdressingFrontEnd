@@ -1,5 +1,6 @@
 
 import './App.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 import RegistrationForm from './Registration/RegistrationForm'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
