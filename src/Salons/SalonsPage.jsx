@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function SalonsPage(){
     const [salons, setSalons] = useState([]);
+    const [salonImages, setSalonImages] = useState({});
 
     useEffect(() => {
         const fetchSalons = async () => {
@@ -12,26 +13,48 @@ function SalonsPage(){
                 if (response.ok) {
                   const data = await response.json();
                   setSalons(data);
+
+                   // Nakon što dobijemo salone, dohvatimo slike za svaki salon
+                   data.forEach(salon => fetchSalonImage(salon.id));
                 }
               } catch (error) {
                 console.error("Greška pri dohvaćanju podataka:", error);
               }
         };
+
         fetchSalons();
     }, []);
 
+    const fetchSalonImage = async (salonId) => {
+      try{
+        const response = await fetch(`http://localhost:8080/salons/${salonId}/images/0`);
+        if(response.ok){
+          const blob = await response.blob();  // Dohvati sliku kao Blob
+          const imageUrl = URL.createObjectURL(blob); // Kreiraj URL za sliku
+
+            // Postavi sliku u state (objekat { salonId: imageUrl })
+            setSalonImages(prevState => ({
+              ...prevState,
+              [salonId]: imageUrl
+            }));
+        }
+      } catch(error){
+        console.error(`❌ Greška pri dohvaćanju slike za salon ${salonId}:`, error);
+      }
+    };
+
     return(
-            <>
-            <div className="container mt-4">
+            
+          <div className="container mt-4">
             <h1 className="text-center mb-4">Frizerski saloni</h1>
             <div className="row">
             {salons.length > 0 ? (
                 salons.map((salon) => (
-                <div key={salon.id} className="salon col-md-4 col-sm-6 mb-4">
+                <div key={salon.id} className="salon col-md-6 col-sm-8 mb-6">
                   <a href="#">
                     <SalonCard 
                                 key={salon.id}
-                                pic={salon.photos?.length ? salon.photos[0] : null} 
+                                pic={salonImages[salon.id] || "/default-salon.png"} 
                                 name={salon.name} 
                                 address={salon.address} 
                                 phone={salon.phone}
@@ -45,8 +68,8 @@ function SalonsPage(){
                 <p style={styles.message} >Nema dostupnih salona.</p>
             )}
             </div>
-            </div>
-            </>
+          </div>
+          
     )
 }
 
