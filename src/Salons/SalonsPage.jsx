@@ -13,7 +13,7 @@ function SalonsPage(){
                 if (response.ok) {
                   const data = await response.json();
                   setSalons(data);
-
+                  console.log(data);
                    // Nakon što dobijemo salone, dohvatimo slike za svaki salon
                    data.forEach(salon => fetchSalonImage(salon.id));
                 }
@@ -45,7 +45,7 @@ function SalonsPage(){
 
     return(
             
-          <div className="container mt-4">
+          <div className="container mt-4 bg-dark p-4 bg-opacity-50 rounded-4">
             <h1 className="text-center mb-4">Frizerski saloni</h1>
             <div className="row">
             {salons.length > 0 ? (
@@ -57,10 +57,10 @@ function SalonsPage(){
                                 pic={salonImages[salon.id] || "/default-salon.png"} 
                                 name={salon.name} 
                                 address={salon.address} 
-                                phone={salon.phone}
+                                phone={salon.phoneNumber}
                                 email={salon.email} 
                                 employees={salon.employees} 
-                                ownerName={salon.ownerName} />
+                                ownerName={salon.ownerFirstName + ' ' + salon.ownerLastName} />
                   </a>
                 </div> 
                 ))
