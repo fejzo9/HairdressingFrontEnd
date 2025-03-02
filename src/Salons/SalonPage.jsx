@@ -16,13 +16,34 @@ function SalonPage() {
                 if (response.ok) {
                     const data = await response.json();
                     setSalon(data);
-                    setEmployees(data.employees);
+
+                     // Ako postoji lista username-a uposlenika, dohvatimo njihove podatke
+                     if (data.employeeNames) {
+                        fetchEmployeesData(data.employeeNames);
+                    }
                 }
             } catch (error) {
                 console.error("Greška pri dohvaćanju salona:", error);
             }
         };
 
+        const fetchEmployeesData = async (employeeUsernames) => {
+            try {
+                const employeePromises = employeeUsernames.map(async (username) => {
+                    const response = await fetch(`http://localhost:8080/users/username/${username}`);
+                    if (response.ok) {
+                        return response.json(); // Vrati podatke o uposleniku
+                    }
+                    return null; // Ako ne uspije, vrati null
+                });
+
+                const employeesData = await Promise.all(employeePromises);
+                setEmployees(employeesData.filter(emp => emp !== null)); // Filtriraj neuspjele zahtjeve
+            } catch (error) {
+                console.error("Greška pri dohvaćanju podataka o uposlenicima:", error);
+            }
+        };
+        
         const fetchImages = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/salons/${id}/images`);
@@ -72,8 +93,8 @@ function SalonPage() {
             <div className="row">
                 {employees.map((employee) => (
                     <div key={employee.id} className="col-md-4">
-                        <div className="card text-center">
-                            <img src={`http://localhost:8080/employees/${employee.id}/profile-picture`} className="card-img-top" alt={employee.name} />
+                        <div className="card text-center bg-dark bg-opacity-50 m-2">
+                            <img src={`http://localhost:8080/users/${employee.id}/profile-picture`} className="card-img-top" alt={employee.name} />
                             <div className="card-body">
                                 <h5 className="card-title">{employee.name} {employee.surname}</h5>
                                 <p className="card-text">📞 {employee.phoneNumber}</p>
