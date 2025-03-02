@@ -63,7 +63,7 @@ function SalonPage() {
             {/* Podaci o salonu */}
             <div className="mt-4 text-center">
                 <p><strong>Adresa:</strong> {salon.address}</p>
-                <p><strong>Telefon:</strong> {salon.phone}</p>
+                <p><strong>Telefon:</strong> {salon.phoneNumber}</p>
                 <p><strong>Email:</strong> {salon.email}</p>
             </div>
 
@@ -76,7 +76,7 @@ function SalonPage() {
                             <img src={`http://localhost:8080/employees/${employee.id}/profile-picture`} className="card-img-top" alt={employee.name} />
                             <div className="card-body">
                                 <h5 className="card-title">{employee.name} {employee.surname}</h5>
-                                <p className="card-text">📞 {employee.phone}</p>
+                                <p className="card-text">📞 {employee.phoneNumber}</p>
                                 <p className="card-text">✉️ {employee.email}</p>
                                 <a href={`/rezervacija/${employee.id}`} className="btn btn-primary">Rezerviši termin</a>
                             </div>
