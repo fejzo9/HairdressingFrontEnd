@@ -54,6 +54,7 @@ function SalonsPage(){
                   <a href="#">
                     <SalonCard 
                                 key={salon.id}
+                                id={salon.id}
                                 pic={salonImages[salon.id] || "/default-salon.png"} 
                                 name={salon.name} 
                                 address={salon.address} 
