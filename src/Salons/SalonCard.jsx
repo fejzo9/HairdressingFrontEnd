@@ -1,6 +1,6 @@
 import "./SalonCard.css";
 
-function SalonCard({ pic, name, address, phone, email }) {
+function SalonCard({ pic, name, address, phone, email, ownerName }) {
     return (
         <div className="salon-card">
             <img className="card-image" 
@@ -11,6 +11,7 @@ function SalonCard({ pic, name, address, phone, email }) {
             <p className="card-text">{address}</p>
             <p className="card-text">{phone}</p>
             <p className="card-text">{email}</p>
+            <p className="card-text">vlasnik: {ownerName}</p>
         </div>
     );
 }
