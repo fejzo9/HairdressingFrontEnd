@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import "./SalonCard.css";
 
-function SalonCard({ pic, name, address, phone, email, ownerName }) {
+function SalonCard({id, pic, name, address, phone, email, ownerName }) {
+    const navigate = useNavigate();
+    
+    const handleClick = () => {
+        navigate(`/salon/${id}`); // Redirect na salon/{id}
+    };
+
     return (
-        <div className="salon-card">
+        <div className="salon-card" onClick={handleClick} style={{cursor: "pointer"}}>
             <img className="card-image" 
                  src={pic || "/default-salon.png"} 
                  alt="Salon Slika" 
