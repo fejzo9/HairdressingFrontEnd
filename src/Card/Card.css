@@ -7,6 +7,7 @@
     text-align: center;
     max-width: 250px;
     display: inline-block;
+    background-color: rgba(56, 25, 4, 0.788);
     transition: 
     transform 0.3s ease, 
     border 0.3s ease, 
@@ -33,7 +34,7 @@
   
   .card:hover{
     cursor: pointer;
-    background-color: rgba(189, 111, 65, 0.233);
+    background-color: rgba(199, 127, 85, 0.103);
     transform: translateY(-5px);
   }
 
