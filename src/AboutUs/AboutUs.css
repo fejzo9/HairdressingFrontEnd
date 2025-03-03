@@ -1,5 +1,5 @@
 body{
-    background-color: rgba(0, 0, 0, 0.534);
+    background-color: rgba(7, 7, 7, 0.534);
 }
 
 /* ABOUT US */
@@ -24,7 +24,6 @@ body{
     padding: 20px; /* Dodaje prostor unutar kontejnera */
     background-color: rgba(0, 0, 0, 0.534); /* Pozadina */
     box-sizing: border-box; /* Osigurava da padding ne pređe max-width */
-    
   }
 
   /* Lijeva strana - slika */
