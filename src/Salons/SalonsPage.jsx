@@ -43,8 +43,12 @@ function SalonsPage(){
       }
     };
 
-    return(
-            
+     // ✅ Briše salon iz prikaza nakon DELETE
+     const handleDelete = (deletedId) => {
+      setSalons(salons.filter(salon => salon.id !== deletedId));
+  };
+
+    return(    
           <div className="container mg-3 bg-dark p-4 bg-opacity-50 rounded-4">
             <h1 className="text-center mb-4">Frizerski saloni</h1>
             <div className="row">
@@ -61,7 +65,9 @@ function SalonsPage(){
                                 phone={salon.phoneNumber}
                                 email={salon.email} 
                                 employees={salon.employees} 
-                                ownerName={salon.ownerFirstName + ' ' + salon.ownerLastName} />
+                                ownerName={salon.ownerFirstName + ' ' + salon.ownerLastName} 
+                                onDelete={handleDelete} // 🔹 Prosljeđujemo funkciju za ažuriranje
+                                />
                   </a>
                 </div> 
                 ))
