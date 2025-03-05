@@ -13,6 +13,7 @@ function AddSalon() {
     const [selectedHairdressers, setSelectedHairdressers] = useState([]); // Odabrani frizeri
     const [message, setMessage] = useState(""); // Poruka o uspjehu ili grešci
     const [selectedImages, setSelectedImages] = useState([]); 
+    const [isSubmitting, setIsSubmitting] = useState(false); // Za spriječavanje kreiranje duplikata salona
 
     // ✅ Dohvati sve korisnike sa ulogom OWNER i HAIRDRESSER
     useEffect(() => {
@@ -57,10 +58,15 @@ function AddSalon() {
     // ✅ Funkcija za dodavanje salona
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return; // ✅ Ako se već šalje, spriječi dupliciranje
+        setIsSubmitting(true); // 🚀 Spriječi ponovni klik
+
+
         const token = localStorage.getItem("token");
 
         if (!token) {
             setMessage("❌ Autorizacija neuspješna!");
+            setIsSubmitting(false);
             return;
         }
 
@@ -74,6 +80,7 @@ function AddSalon() {
         };
 
         try {
+            console.log("🔹 Šaljem zahtjev za kreiranje salona...");
             const response = await fetch("http://localhost:8080/salons", {
                 method: "POST",
                 headers: {
@@ -86,45 +93,36 @@ function AddSalon() {
             if (response.ok) {
                 const createdSalon = await response.json(); // ✅ Dobijemo kreirani salon iz odgovora
                 const salonId = createdSalon.id; // 🔹 Dohvatimo ID salona
-                
+                console.log(`✅ Salon kreiran: ID ${salonId}`);
+
                 // 🔹 Ako su frizeri odabrani, dodaj ih u salon
                 if (selectedHairdressers.length > 0) {
                     await addHairdressersToSalon(salonId, selectedHairdressers, token);
                 }
                 
-                // 2️⃣ Ako su slike dodane, upload-aj ih
+                // 🚀 Dodaj slike ako postoje
                 if (selectedImages.length > 0) {
-                    const formData = new FormData();
-                    selectedImages.forEach((image) => {
-                        formData.append("files", image);
-                    });
-
-                    const imageUploadResponse = await fetch(`http://localhost:8080/salons/${createdSalon.id}/upload-images`, {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${token}`, // Autentifikacija
-                        },
-                        body: formData,
-                    });
-
-                    if (!imageUploadResponse.ok) {
-                        setMessage("❌ Greška pri dodavanju slika.");
-                        return;
-                    }
+                    await uploadSalonImages(salonId, selectedImages, token);
                 }
                 
                 setMessage("✅ Salon uspješno dodan!");
                 setTimeout(() => navigate("/maps"), 1500); // Redirect na /salons
             } else {
                 setMessage("❌ Greška pri dodavanju salona.");
+                setIsSubmitting(false);
+                return;
             }
         } catch (error) {
             console.error("Greška pri slanju zahtjeva:", error);
+        } finally {
+            setIsSubmitting(false); // ✅ Omogućiti ponovni klik nakon završetka
         }
     };
 
     const addHairdressersToSalon = async (salonId, hairdresserUsernames, token) => {
         try {
+            console.log("🔹 Dodajem frizere u salon...");
+            
             // 🔹 Dohvati ID-ove frizera na osnovu username-a
             const hairdresserIds = await fetchHairdresserIds(hairdresserUsernames, token);
     
@@ -173,6 +171,28 @@ function AddSalon() {
         } catch (error) {
             console.error("❌ Greška pri dohvaćanju ID-ova frizera:", error);
             return [];
+        }
+    };
+
+    const uploadSalonImages = async (salonId, images, token) => {
+        try {
+            console.log("🔹 Upload slika započeo...");
+            const formData = new FormData();
+            images.forEach((image) => formData.append("files", image));
+
+            const response = await fetch(`http://localhost:8080/salons/${salonId}/upload-images`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData,
+            });
+
+            if (response.ok) {
+                console.log(`✅ Slike uspješno dodane u salon ID ${salonId}`);
+            } else {
+                console.log("❌ Greška pri dodavanju slika.");
+            }
+        } catch (error) {
+            console.error("❌ Greška pri uploadu slika:", error);
         }
     };
 
@@ -230,7 +250,7 @@ function AddSalon() {
                     <input type="file" className="form-control" multiple onChange={handleImageChange} />
                 </div>
 
-                <button type="submit" className="btn btn-success w-100">Dodaj Salon</button>
+                <button type="submit" className="btn btn-success w-100" disabled={isSubmitting}>{isSubmitting ? "Dodavanje..." : "Dodaj Salon"}</button>
             </form>
             {message && <p className="text-center mt-3">{message}</p>}
         </div>
