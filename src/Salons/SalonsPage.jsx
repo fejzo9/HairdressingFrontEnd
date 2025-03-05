@@ -45,12 +45,12 @@ function SalonsPage(){
 
     return(
             
-          <div className="container mt-4 bg-dark p-4 bg-opacity-50 rounded-4">
+          <div className="container mg-3 bg-dark p-4 bg-opacity-50 rounded-4">
             <h1 className="text-center mb-4">Frizerski saloni</h1>
             <div className="row">
             {salons.length > 0 ? (
                 salons.map((salon) => (
-                <div key={salon.id} className="salon col-md-6 col-sm-8 mb-6">
+                <div key={salon.id} className="salon col-lg-4 col-md-6 col-sm-8 mb-6">
                   <a href="#">
                     <SalonCard 
                                 key={salon.id}
