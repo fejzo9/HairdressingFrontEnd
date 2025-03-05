@@ -63,7 +63,6 @@ function AddSalon() {
             phoneNumber,
             email,
             ownerUsername: selectedOwner, // Slanje username-a vlasnika
-            employeeUsernames: selectedHairdressers, // Slanje username-a frizera
         };
 
         try {
@@ -77,13 +76,74 @@ function AddSalon() {
             });
 
             if (response.ok) {
+                const createdSalon = await response.json(); // ✅ Dobijemo kreirani salon iz odgovora
+                const salonId = createdSalon.id; // 🔹 Dohvatimo ID salona
                 setMessage("✅ Salon uspješno dodan!");
+
+                // 🔹 Ako su frizeri odabrani, dodaj ih u salon
+                if (selectedHairdressers.length > 0) {
+                    await addHairdressersToSalon(salonId, selectedHairdressers, token);
+                }
+
                 setTimeout(() => navigate("/maps"), 1500); // Redirect na /salons
             } else {
                 setMessage("❌ Greška pri dodavanju salona.");
             }
         } catch (error) {
             console.error("Greška pri slanju zahtjeva:", error);
+        }
+    };
+
+    const addHairdressersToSalon = async (salonId, hairdresserUsernames, token) => {
+        try {
+            // 🔹 Dohvati ID-ove frizera na osnovu username-a
+            const hairdresserIds = await fetchHairdresserIds(hairdresserUsernames, token);
+    
+            if (hairdresserIds.length === 1) {
+                // ✅ Ako je samo jedan frizer, koristimo "/employees/add"
+                await fetch(`http://localhost:8080/salons/${salonId}/employees/add`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(hairdresserIds[0]), // Šaljemo samo jedan ID
+                });
+            } else if (hairdresserIds.length > 1) {
+                // ✅ Ako su više frizeri, koristimo "/employees"
+                await fetch(`http://localhost:8080/salons/${salonId}/employees`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(hairdresserIds), // Šaljemo niz ID-ova
+                });
+            }
+        } catch (error) {
+            console.error("❌ Greška pri dodavanju frizera u salon:", error);
+        }
+    };
+    
+    const fetchHairdresserIds = async (usernames, token) => {
+        try {
+            const requests = usernames.map(async (username) => {
+                const response = await fetch(`http://localhost:8080/users/username/${username}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+    
+                if (response.ok) {
+                    const userData = await response.json();
+                    return userData.id; // ✅ Vraćamo ID frizera
+                }
+                return null; // Ako ne pronađe frizera, vraćamo null
+            });
+    
+            const ids = await Promise.all(requests);
+            return ids.filter((id) => id !== null); // ✅ Filtriramo null vrijednosti
+        } catch (error) {
+            console.error("❌ Greška pri dohvaćanju ID-ova frizera:", error);
+            return [];
         }
     };
 
