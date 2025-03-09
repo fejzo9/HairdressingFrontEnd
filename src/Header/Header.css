@@ -193,6 +193,45 @@ body {
   text-align: left;
 }
 
+.navbar-toggler {
+  margin-left: auto;  /* Gura ga skroz desno */
+  border: none;  /* Uklanja border */
+  background: none; /* Transparentna pozadina */
+}
+
+/* 🔹 Stilizacija ikone hamburger menija */
+.navbar-toggler-icon {
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+}
+
+/* ❗ Primijeni stilove SAMO kada je meni otvoren */
+.navbar-collapse.show {
+  position: absolute;
+  top: 140px; /* Pomiče ispod headera */
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.322); /* Tamna pozadina */
+  text-align: center;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
+
+/* 🔹 Stavke u meniju kada je otvoren */
+.navbar-collapse.show .nav-links {
+  display: flex;
+  flex-direction: column; /* Raspoređuje stavke vertikalno */
+}
+
+/* 🔹 Linkovi u otvorenom meniju */
+.navbar-collapse.show .nav-links li {
+  padding: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /* Media querije za manje ekrane */
 @media (max-width: 768px) {
   .home-header {
@@ -245,5 +284,10 @@ body {
   .profile-pic {
     width: 35px;
     height: 35px;
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: flex-end; /* Pomiče hamburger desno */
   }
 }
