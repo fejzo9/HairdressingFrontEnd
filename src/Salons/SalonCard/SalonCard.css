@@ -1,0 +1,51 @@
+.salon-card{
+    border: 1px solid rgb(184, 178, 178);
+    border-radius: 10px;
+    box-shadow: 11px 11px 11px hsla(0, 20%, 99%, 0.699);
+    padding: 30px;
+    margin: 10px;
+    text-align: center;
+    max-width: 550px;
+    margin-bottom: 30px;
+    display: block;
+    transition: transform 0.3s ease, 
+    border 0.3s ease, 
+    box-shadow 0.3s ease; /* Tranzicija za sve promjene */
+  }
+  
+  .salon-card .card-image{
+    width: 260px;
+    height: auto;
+    margin-bottom: 20px;
+    border: 1px solid white;
+    border-radius: 10px;
+  }
+  
+  .salon-card .card-title{
+    font-family: Arial, sens-serif;
+    margin: 0;
+    color: hsl(0, 2%, 77%);
+  }
+  
+  .salon-card .card-text{
+    font-family: Arial, sans-serif;
+    color: hsl(0, 4%, 84%);
+    margin-top: 20px;
+  }
+  
+  .salon-card:hover{
+    cursor: pointer;
+    background-color: rgba(189, 111, 65, 0.233);
+    transform: translateY(-5px);
+  }
+
+  .salon-card:hover .card-title {
+    color: white; /* Boja naslova i paragrafa na hover */
+    font-weight: 600;
+    font-size: 30px;
+  }
+
+.salon-card:hover .card-text {
+    color: white; /* Boja naslova i paragrafa na hover */
+    font-weight: 600;
+  }
