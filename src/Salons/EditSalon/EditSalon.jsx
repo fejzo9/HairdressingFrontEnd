@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "./EditSalon.css";
 
 function EditSalon() {
     const { id } = useParams(); // Dohvati ID salona iz URL-a
     const navigate = useNavigate();
     const [salon, setSalon] = useState(null);
-    const [owners, setOwners] = useState([]); // Lista vlasnika
     const [hairdressers, setHairdressers] = useState([]); // Lista frizera
     const [selectedHairdressers, setSelectedHairdressers] = useState([]); // Odabrani frizeri
     const [message, setMessage] = useState(""); 
@@ -13,6 +13,8 @@ function EditSalon() {
     const [isSubmitting, setIsSubmitting] = useState(false); // Sprječavanje duplih zahtjeva
     const [salonImages, setSalonImages] = useState([]); // Već postojeće slike
     const [selectedImages, setSelectedImages] = useState([]); // Nove slike
+    const [showModal, setShowModal] = useState(false); // Modal state
+    const [imageToDelete, setImageToDelete] = useState(null); // Index slike za brisanje
 
     // ✅ Dohvati podatke o salonu i korisnicima
     useEffect(() => {
@@ -43,20 +45,6 @@ function EditSalon() {
             }
         };
 
-        const fetchOwners = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/users/role/OWNER", {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setOwners(data);
-                }
-            } catch (error) {
-                console.error("❌ Greška pri dohvaćanju vlasnika:", error);
-            }
-        };
-
         const fetchHairdressers = async () => {
             try {
                 const response = await fetch("http://localhost:8080/users/role/HAIRDRESSER", {
@@ -73,7 +61,6 @@ function EditSalon() {
 
         fetchSalonDetails();
         fetchSalonImages();
-        fetchOwners();
         fetchHairdressers();
         setLoading(false);
     }, [id]);
@@ -155,6 +142,38 @@ function EditSalon() {
         }
     };
 
+     // ✅ Prikaži modal prije brisanja slike
+     const confirmDeleteImage = (imageIndex) => {
+        setImageToDelete(imageIndex);
+        setShowModal(true);
+    };
+
+    // ✅ Funkcija za brisanje slike
+    const handleDeleteImage = async (imageIndex) => {
+        if (imageIndex === null) return; // Ako nije postavljena slika, izađi
+
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await fetch(`http://localhost:8080/salons/${id}/images/${imageIndex}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.ok) {
+                setMessage("✅ Slika uspješno obrisana.");
+                // 🔹 Ažuriraj prikaz tako što brišemo sliku iz state-a
+                setSalonImages(salonImages.filter((_, index) => index !== imageIndex));
+            } else {
+                setMessage("❌ Greška pri brisanju slike.");
+            }
+        } catch (error) {
+            console.error("❌ Greška pri brisanju slike:", error);
+        }
+
+        setShowModal(false);
+    };
+
     if (loading) return <p className="text-center">Učitavanje...</p>;
     if (!salon) return <p className="text-center text-danger">❌ Salon nije pronađen.</p>;
 
@@ -164,14 +183,22 @@ function EditSalon() {
             <form onSubmit={handleSubmit} className="bg-dark p-4 rounded text-light bg-opacity-50">
                  {/* 📸 Prikaz postojećih slika */}
                  <div className="mb-3">
-                    <h5>Postojeće slike:</h5>
-                    <div className="d-flex flex-wrap justify-content-center">
+                 <div className="d-flex flex-wrap justify-content-center">
                         {salonImages.map((image, index) => (
-                            <img key={index} src={image} alt={`Salon Slika ${index}`} className="m-2 rounded" style={{ width: "150px", height: "150px", objectFit: "cover" }} />
+                            <div key={index} className="m-2 position-relative">
+                                <img src={image} alt={`Salon Slika ${index}`} className="rounded" style={{ width: "150px", height: "150px", objectFit: "cover" }} />
+                                <button
+                                    type="button"
+                                    className="btn btn-danger btn-sm position-absolute top-0 mt-1 end-0"
+                                    onClick={() => confirmDeleteImage(index)}
+                                >
+                                    ❌
+                                </button>
+                            </div>
                         ))}
                     </div>
                 </div>
-                
+
                  {/* 📸 Sekcija za dodavanje slika */}
                  <div className="mb-3">
                     <label className="form-label">Dodaj slike salona (po želji)</label>
@@ -211,7 +238,33 @@ function EditSalon() {
                     {isSubmitting ? "Ažuriranje..." : "Ažuriraj Salon"}
                 </button>
             </form>
+
             {message && <p className="text-center mt-3">{message}</p>}
+               {/* 🛑 MODAL ZA POTVRDU BRISANJA */}
+            {showModal && (
+                <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title text-dark">Brisanje slike</h5>
+                                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                            </div>
+                            <div className="modal-body text-dark">
+                                <p>Jeste li sigurni da želite obrisati ovu sliku?</p> 
+                                <p>(Slika će trajno biti obrisana)</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                                    Odustani
+                                </button>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteImage(imageToDelete)}>
+                                    Obriši
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
