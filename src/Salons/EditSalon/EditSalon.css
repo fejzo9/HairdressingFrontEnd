@@ -1,0 +1,8 @@
+.position-relative .btn-danger {
+    opacity: 0; /* Sakrij dugme po defaultu */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.position-relative:hover .btn-danger {
+    opacity: 1; /* Prikaži dugme kada se hovera */
+}
