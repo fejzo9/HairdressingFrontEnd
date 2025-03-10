@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SalonCard from "./SalonCard";
+import SalonCard from "./SalonCard/SalonCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function SalonsPage(){
