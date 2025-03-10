@@ -10,7 +10,7 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Footer from './Footer/Footer';
 import FakeSalonMap from './Maps/FakeSalonMap';
 import SalonsPage from './Salons/SalonsPage';
-import SalonPage from "./Salons/SalonPage";
+import SalonPage from "./Salons/SalonPage/SalonPage.jsx";
 import AboutUs from './AboutUs/AboutUs';
 import Header from "./Header/Header.jsx";
 import Contact from "./Contact/Contact.jsx";
@@ -18,7 +18,8 @@ import AdminPage from './Admin/AdminPage/AdminPage.jsx';
 import PrivateRoute from "./PrivateRoute";
 import ChangePasswordForm from "./ChangePassword/ChangePasswordForm";
 import Profile from "./Profile/Profile";
-import AddSalon from "./Salons/AddSalon"; 
+import AddSalon from "./Salons/AddSalon/AddSalon.jsx"; 
+import EditSalon from "./Salons/EditSalon/EditSalon";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -44,6 +45,7 @@ function App() {
             <Route path="/change-password" element={<ChangePasswordForm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addSalon" element={<AddSalon />} />
+            <Route path="/edit-salon/:id" element={<EditSalon />} />  
               <Route
               path="/admin"
               element={
