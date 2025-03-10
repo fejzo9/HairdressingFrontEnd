@@ -83,14 +83,19 @@ function SalonsPage(){
 // Definisanje stilova kao JavaScript objekat
 const styles = {
   message: {
+    display: "flex",            // Omogućava flexbox
+    justifyContent: "center",   // Centriranje po horizontali
+    alignItems: "center",       // Centriranje po vertikali
     textAlign: "center",
     color: "red",
-    margin: "70px", 
+    margin: "auto", 
     padding: "20px",
     borderRadius: "10px",
+    width: "fit-content",
     backgroundColor: "rgba(0, 0, 0, 0.8)", // Tamnija crna pozadina sa većom transparentnošću
     fontSize: "24px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginBottom: "20px"
   },
 };
 
