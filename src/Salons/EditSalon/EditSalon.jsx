@@ -11,7 +11,8 @@ function EditSalon() {
     const [message, setMessage] = useState(""); 
     const [loading, setLoading] = useState(true); // Stanje učitavanja
     const [isSubmitting, setIsSubmitting] = useState(false); // Sprječavanje duplih zahtjeva
-    const [selectedImages, setSelectedImages] = useState([]); 
+    const [salonImages, setSalonImages] = useState([]); // Već postojeće slike
+    const [selectedImages, setSelectedImages] = useState([]); // Nove slike
 
     // ✅ Dohvati podatke o salonu i korisnicima
     useEffect(() => {
@@ -27,6 +28,18 @@ function EditSalon() {
                 console.error("❌ Greška pri dohvaćanju salona:", error);
             } finally {
                 setLoading(false);
+            }
+        };
+
+        const fetchSalonImages = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/salons/${id}/images`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setSalonImages(data.map((_, index) => `http://localhost:8080/salons/${id}/images/${index}`));
+                }
+            } catch (error) {
+                console.error("❌ Greška pri dohvaćanju slika:", error);
             }
         };
 
@@ -59,8 +72,10 @@ function EditSalon() {
         };
 
         fetchSalonDetails();
+        fetchSalonImages();
         fetchOwners();
         fetchHairdressers();
+        setLoading(false);
     }, [id]);
 
     // ✅ Funkcija za slanje ažuriranih podataka
@@ -93,6 +108,12 @@ function EditSalon() {
 
             if (response.ok) {
                 setMessage("✅ Salon uspješno ažuriran!");
+
+                 // ✅ Ako su dodane nove slike, pošalji ih na backend
+                 if (selectedImages.length > 0) {
+                    await uploadSalonImages();
+                }
+
                 setTimeout(() => navigate("/maps"), 1500); // Redirect
             } else {
                 setMessage("❌ Greška pri ažuriranju salona.");
@@ -104,26 +125,28 @@ function EditSalon() {
         }
     };
 
-      // ✅ Obradi odabir slika
+      // ✅ Obradi odabir novih slika
       const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setSelectedImages(files);
     };
 
-    const uploadSalonImages = async (salonId, images, token) => {
+    // ✅ Funkcija za upload novih slika
+    const uploadSalonImages = async () => {
         try {
             console.log("🔹 Upload slika započeo...");
+            const token = localStorage.getItem("token");
             const formData = new FormData();
-            images.forEach((image) => formData.append("files", image));
+            selectedImages.forEach((image) => formData.append("files", image));
 
-            const response = await fetch(`http://localhost:8080/salons/${salonId}/upload-images`, {
+            const response = await fetch(`http://localhost:8080/salons/${id}/upload-images`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
             });
 
             if (response.ok) {
-                console.log(`✅ Slike uspješno dodane u salon ID ${salonId}`);
+                console.log(`✅ Nove slike uspješno dodane u salon ID ${id}`);
             } else {
                 console.log("❌ Greška pri dodavanju slika.");
             }
@@ -139,6 +162,22 @@ function EditSalon() {
         <div className="container mt-4 text-center">
             <h1 className="text-center">Uredi salon</h1>
             <form onSubmit={handleSubmit} className="bg-dark p-4 rounded text-light bg-opacity-50">
+                 {/* 📸 Prikaz postojećih slika */}
+                 <div className="mb-3">
+                    <h5>Postojeće slike:</h5>
+                    <div className="d-flex flex-wrap justify-content-center">
+                        {salonImages.map((image, index) => (
+                            <img key={index} src={image} alt={`Salon Slika ${index}`} className="m-2 rounded" style={{ width: "150px", height: "150px", objectFit: "cover" }} />
+                        ))}
+                    </div>
+                </div>
+                
+                 {/* 📸 Sekcija za dodavanje slika */}
+                 <div className="mb-3">
+                    <label className="form-label">Dodaj slike salona (po želji)</label>
+                    <input type="file" className="form-control" multiple onChange={handleImageChange} />
+                </div>
+                
                 <div className="mb-3">
                     <label className="form-label">Ime salona</label>
                     <input type="text" className="form-control text-center" value={salon.name} onChange={(e) => setSalon({...salon, name: e.target.value})} required />
@@ -167,11 +206,6 @@ function EditSalon() {
                     </select>
                 </div>
 
-                 {/* 📸 Sekcija za dodavanje slika */}
-                 <div className="mb-3">
-                    <label className="form-label">Dodaj slike salona (po želji)</label>
-                    <input type="file" className="form-control" multiple onChange={handleImageChange} />
-                </div>
 
                 <button type="submit" className="btn btn-warning w-100" disabled={isSubmitting}>
                     {isSubmitting ? "Ažuriranje..." : "Ažuriraj Salon"}
