@@ -15,6 +15,8 @@ function EditSalon() {
     const [selectedImages, setSelectedImages] = useState([]); // Nove slike
     const [showModal, setShowModal] = useState(false); // Modal state
     const [imageToDelete, setImageToDelete] = useState(null); // Index slike za brisanje
+    const [role, setRole] = useState(localStorage.getItem("role"));
+    const [owners, setOwners] = useState([]); // Lista vlasnika
 
     // ✅ Dohvati podatke o salonu i korisnicima
     useEffect(() => {
@@ -64,6 +66,28 @@ function EditSalon() {
         fetchHairdressers();
         setLoading(false);
     }, [id]);
+
+    //Za dohvaćanje svih vlasnika salona
+    useEffect(() => {
+        const fetchOwners = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/users/role/OWNER", {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setOwners(data);
+                }
+            } catch (error) {
+                console.error("❌ Greška pri dohvaćanju vlasnika:", error);
+            }
+        };
+    
+        if (role === "ADMIN" || role === "SUPER_ADMIN") {
+            fetchOwners();
+        }
+    }, [role]);
+    
 
     // ✅ Funkcija za slanje ažuriranih podataka
     const handleSubmit = async (e) => {
@@ -233,6 +257,26 @@ function EditSalon() {
                     </select>
                 </div>
 
+                {(role === "ADMIN" || role === "SUPER_ADMIN") && (
+                    <div className="mb-3">
+                        <label className="form-label">Vlasnik salona</label>
+                        <select 
+                            className="form-select text-center" 
+                            value={salon.ownerUsername} 
+                            onChange={(e) => setSalon({...salon, ownerUsername: e.target.value})} 
+                            required
+                        >
+                            <option value={salon.ownerUsername}>
+                                {salon.ownerFirstName} {salon.ownerLastName} ({salon.ownerUsername})
+                            </option>
+                            {owners.map((owner) => (
+                                <option key={owner.username} value={owner.username}>
+                                    {owner.firstName} {owner.lastName} ({owner.username})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
 
                 <button type="submit" className="btn btn-warning w-100" disabled={isSubmitting}>
                     {isSubmitting ? "Ažuriranje..." : "Ažuriraj Salon"}
