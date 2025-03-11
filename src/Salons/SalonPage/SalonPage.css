@@ -1,6 +1,7 @@
 .salon-gallery {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
+    margin-top: 30px;
   }
 
   .salon-gallery img {
@@ -11,7 +12,33 @@
     image-rendering: -webkit-optimize-contrast;
   }
   
-  
+    /* 📸 Stilizacija slike zaposlenih */
+  .employee-image {
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  /* 🎨 Stilizacija kartice */
+  .employee-card {
+    width: 100%;
+    max-width: 380px; /* ✅ Ograničava širinu na većim ekranima */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .employee-card:hover {
+    transform: scale(1.05); /* ✅ Efekat povećanja na hover */
+  }
+
+  .salon-data{
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.295);
+    padding: 20px;
+    border-radius: 10px;
+  }
+
   /* 📱 Za manje ekrane */
   @media (max-width: 576px) {
     .salon-gallery {
@@ -25,4 +52,18 @@
       max-width: 1000px;
     }
   }
+
+  /* 🛠️ Responsive stilizacija - Širenje kartice na srednjim ekranima */
+@media (min-width: 768px) and (max-width: 991px) {
+  .employee-card {
+      max-width: 400px; /* ✅ Šire kartice na srednjim ekranima */
+  }
+}
+
+/* 🛠️ Responsive grid: */
+@media (max-width: 576px) {
+  .employee-card {
+      max-width: 100%; /* ✅ Puna širina na manjim ekranima */
+  }
+}
   
