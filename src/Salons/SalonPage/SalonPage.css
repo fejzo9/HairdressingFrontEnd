@@ -1,0 +1,19 @@
+.salon-gallery {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* 📱 Za manje ekrane */
+  @media (max-width: 576px) {
+    .salon-gallery {
+      max-width: 100%;
+    }
+  }
+  
+  /* 💻 Za velike ekrane */
+  @media (min-width: 1200px) {
+    .salon-gallery {
+      max-width: 1000px;
+    }
+  }
+  
