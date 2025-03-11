@@ -83,29 +83,38 @@ function SalonPage() {
             </div>
 
             {/* Podaci o salonu */}
-            <div className="mt-4 text-center">
+            <div className="salon-data mt-4 text-center">
                 <p><strong>Adresa:</strong> {salon.address}</p>
                 <p><strong>Telefon:</strong> {salon.phoneNumber}</p>
                 <p><strong>Email:</strong> {salon.email}</p>
             </div>
 
             {/* Lista zaposlenih */}
-            <h2 className="text-center mt-5">Frizeri i uposlenici</h2>
-            <div className="row">
+            <h2 className="text-center mt-5 text-light">Frizeri i uposlenici</h2>
+            <div className="row justify-content-center">
                 {employees.map((employee) => (
-                    <div key={employee.id} className="col-md-4">
-                        <div className="card text-center bg-dark bg-opacity-50 m-2">
-                            <img src={`http://localhost:8080/users/${employee.id}/profile-picture`} className="card-img-top" alt={employee.name} />
+                    <div key={employee.id} className="col-12 col-sm-6 col-md-6 col-lg-4 d-flex justify-content-center">
+                        <div className="card text-center bg-dark bg-opacity-50 m-2 employee-card">
+                            {/* ✅ Profilna slika */}
+                            <img 
+                                src={`http://localhost:8080/users/${employee.id}/profile-picture`} 
+                                className="card-img-top employee-image" 
+                                alt={employee.name || employee.username} 
+                            />
                             <div className="card-body">
-                                <h5 className="card-title">{employee.name} {employee.surname}</h5>
-                                <p className="card-text">📞 {employee.phoneNumber}</p>
-                                <p className="card-text">✉️ {employee.email}</p>
+                                {/* ✅ Prikaz imena (ili username-a ako nema imena) */}
+                                <h5 className="card-title text-white mb-3">
+                                    {employee.name ? `${employee.name} ${employee.surname || ''}` : employee.username}
+                                </h5>
+                                <p className="card-text text-light">📞phone: {employee.phoneNumber}</p>
+                                <p className="card-text text-light">✉️email: {employee.email}</p>
                                 <a href={`/rezervacija/${employee.id}`} className="btn btn-primary">Rezerviši termin</a>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
         </div>
     );
 }
