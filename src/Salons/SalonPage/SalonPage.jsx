@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./SalonPage.css";
 
 function SalonPage() {
     const { id } = useParams();
@@ -75,9 +76,9 @@ function SalonPage() {
             <h1 className="text-center">{salon.name}</h1>
 
             {/* Galerija slika */}
-            <div className="position-relative text-center">
+            <div className="position-relative text-center salon-gallery">
                 <button className="btn btn-dark position-absolute start-0 top-50" onClick={prevImage}>&lt;</button>
-                <img src={images[currentImageIndex]} className="img-fluid rounded" alt="Salon" />
+                <img src={images[currentImageIndex]} className="w-100 rounded" alt="Salon" />
                 <button className="btn btn-dark position-absolute end-0 top-50" onClick={nextImage}>&gt;</button>
             </div>
 
