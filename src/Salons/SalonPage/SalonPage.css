@@ -2,6 +2,15 @@
     max-width: 800px;
     margin: 0 auto;
   }
+
+  .salon-gallery img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+  }
+  
   
   /* 📱 Za manje ekrane */
   @media (max-width: 576px) {
