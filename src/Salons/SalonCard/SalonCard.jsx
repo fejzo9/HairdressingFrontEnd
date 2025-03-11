@@ -39,7 +39,7 @@ function SalonCard({id, pic, name, address, phone, email, ownerName, onDelete })
 
     return (
         <div className="salon-card" onClick={handleClick} style={{cursor: "pointer"}}>
-            <img className="card-image" 
+            <img className="card-image img-fluid" 
                  src={pic || "/default-salon.png"} 
                  alt="Salon Slika" 
                 />
