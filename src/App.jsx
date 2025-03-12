@@ -20,6 +20,7 @@ import ChangePasswordForm from "./ChangePassword/ChangePasswordForm";
 import Profile from "./Profile/Profile";
 import AddSalon from "./Salons/AddSalon/AddSalon.jsx"; 
 import EditSalon from "./Salons/EditSalon/EditSalon";
+import OwnerPage from "./Salons/OwnerPage/OwnerPage.jsx";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -45,7 +46,8 @@ function App() {
             <Route path="/change-password" element={<ChangePasswordForm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addSalon" element={<AddSalon />} />
-            <Route path="/edit-salon/:id" element={<EditSalon />} />  
+            <Route path="/edit-salon/:id" element={<EditSalon />} /> 
+            <Route path="/owner" element={<OwnerPage />} /> 
               <Route
               path="/admin"
               element={
