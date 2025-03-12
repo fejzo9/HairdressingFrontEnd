@@ -87,7 +87,7 @@ function Header(){
                                     <li className="nav-item"><Link className="nav-link" to="/addSalon">Add Salon</Link></li>
                                 </>
                             )}
-                            {role === "OWNER" && <li className="nav-item"><Link className="nav-link" to="/salon">Salon</Link></li>}
+                            {role === "OWNER" && <li className="nav-item"><Link className="nav-link" to="/owner">Salon</Link></li>}
                             {role === "HAIRDRESSER" && <li className="nav-item"><Link className="nav-link" to="/calendar">Calendar</Link></li>}
                         </ul>
                     </div>
