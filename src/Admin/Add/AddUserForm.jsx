@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddUserForm.css";
 
 function AddUserForm({ onSave, onCancel }) {
@@ -13,6 +14,8 @@ function AddUserForm({ onSave, onCancel }) {
     role: "",
     password: "user123!"
   });
+
+  const role2 = localStorage.getItem("role");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -77,6 +80,8 @@ function AddUserForm({ onSave, onCancel }) {
           Username:
           <input type="text" name="username" value={formData.username} onChange={handleChange} required />
         </label>
+
+        {(role2 === "ADMIN" || role2 === "SUPER_ADMIN") && (
         <label>
           Role:
           <select name="role" value={formData.role} onChange={handleChange} required>
@@ -85,6 +90,7 @@ function AddUserForm({ onSave, onCancel }) {
             <option value="OWNER">OWNER</option>
           </select>
         </label>
+        )}
         <button type="submit" onClick={handleSubmit}>Sačuvaj</button>
         <button type="button" onClick={onCancel}>Otkaži</button>
       </form>
