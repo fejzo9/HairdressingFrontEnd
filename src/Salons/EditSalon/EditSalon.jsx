@@ -17,6 +17,7 @@ function EditSalon() {
     const [imageToDelete, setImageToDelete] = useState(null); // Index slike za brisanje
     const [role, setRole] = useState(localStorage.getItem("role"));
     const [owners, setOwners] = useState([]); // Lista vlasnika
+    const [employedHairdressers, setEmployedHairdressers] = useState([]); // Lista zaposlenih frizera u salonu
 
     // ✅ Dohvati podatke o salonu i korisnicima
     useEffect(() => {
@@ -87,6 +88,34 @@ function EditSalon() {
             fetchOwners();
         }
     }, [role]);
+
+    useEffect(() => {
+        const fetchHairdresserDetails = async () => {
+            if (!salon || !salon.employeeNames || salon.employeeNames.length === 0) return;
+            
+            try {
+                const token = localStorage.getItem("token");
+                const requests = salon.employeeNames.map(async (username) => {
+                    const response = await fetch(`http://localhost:8080/users/username/${username}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+    
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    return null; // Ako ne pronađe frizera, vrati null
+                });
+    
+                const hairdressersData = await Promise.all(requests);
+                setEmployedHairdressers(hairdressersData.filter((h) => h !== null)); // Filtriraj null vrijednosti
+            } catch (error) {
+                console.error("❌ Greška pri dohvaćanju frizera:", error);
+            }
+        };
+    
+        fetchHairdresserDetails();
+    }, [salon]); // 👈 Ovaj useEffect će se pokrenuti svaki put kada se salon ažurira
+    
     
     // ✅ Funkcija za slanje ažuriranih podataka
     const handleSubmit = async (e) => {
@@ -308,11 +337,25 @@ function EditSalon() {
                 <div className="mb-3">
                     <label className="form-label">Frizeri</label>
                     <select className="form-select text-center" multiple value={selectedHairdressers} onChange={(e) => setSelectedHairdressers([...e.target.selectedOptions].map(option => option.value))}>
-                        {hairdressers.map((hairdresser) => (
+                    {role === "ADMIN" || role === "SUPER_ADMIN" ? (
+                    // ADMIN i SUPER_ADMIN vide sve frizere
+                        hairdressers.map((hairdresser) => (
                             <option key={hairdresser.username} value={hairdresser.username}>
                                 {hairdresser.firstName} {hairdresser.lastName} ({hairdresser.username})
                             </option>
-                        ))}
+                        ))
+                    ) : (
+                         // OWNER vidi samo frizere svog salona, ali prvo provjeravamo da li `salon.hairdressers` postoji
+                            employedHairdressers.length > 0 ? (
+                                employedHairdressers.map((hairdresser) => (
+                                    <option key={hairdresser.username} value={hairdresser.username}>
+                                        {hairdresser.firstName} {hairdresser.lastName} ({hairdresser.username})
+                                    </option>
+                                ))
+                            ) : (
+                                <option disabled>Nema dostupnih frizera</option>
+                            )
+                    )}
                     </select>
                 </div>
 
