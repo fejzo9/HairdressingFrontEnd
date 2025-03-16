@@ -81,7 +81,7 @@ function OwnerPage() {
     };
 
     return (
-        <div className="container mg-3 bg-dark p-4 bg-opacity-50 rounded-4">
+        <div className="container mt-4 bg-dark p-4 bg-opacity-50 rounded-4" style={{ marginBottom: "-130px" }}>
             <h1 className="text-center mb-4">Moji frizerski saloni</h1>
             
             {loading ? (
@@ -89,9 +89,9 @@ function OwnerPage() {
             ) : message ? (
                 <p style={styles.message}>{message}</p>
             ) : (
-                <div className="row">
+                <div className="row justify-content-center">
                     {salons.map((salon) => (
-                        <div key={salon.id} className="salon col-lg-4 col-md-6 col-sm-8 mb-6">
+                        <div key={salon.id} className="salon col-lg-4 col-md-6 col-sm-8 d-flex justify-content-center">
                             <a href={`/edit-salon/${salon.id}`}>
                                 <SalonCard 
                                     key={salon.id}
