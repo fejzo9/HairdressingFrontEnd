@@ -21,7 +21,7 @@ import Profile from "./Profile/Profile";
 import AddSalon from "./Salons/AddSalon/AddSalon.jsx"; 
 import EditSalon from "./Salons/EditSalon/EditSalon";
 import OwnerPage from "./Salons/OwnerPage/OwnerPage.jsx";
-import AddUserForm from "./Admin/Add/AddUserForm.jsx";
+import AddHairdresserPage from "./Admin/Add/AddHairdresserPage.jsx";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -49,7 +49,7 @@ function App() {
             <Route path="/addSalon" element={<AddSalon />} />
             <Route path="/edit-salon/:id" element={<EditSalon />} /> 
             <Route path="/owner" element={<OwnerPage />} /> 
-            <Route path="/add-hairdresser" element={<AddUserForm />} />
+            <Route path="/add-hairdresser" element={<AddHairdresserPage />} />
               <Route
               path="/admin"
               element={
