@@ -366,6 +366,16 @@ function EditSalon() {
                         Dodaj Frizera
                     </button>
                 </div>
+
+                <div className="text-center mb-3" style={{marginTop:"-15px"}}>
+                    <button 
+                        className="btn btn-primary"
+                        onClick={() => navigate(`/add-service/${id}`)}
+                    >
+                        Dodaj usluge
+                    </button>
+                </div>
+
                 {(role === "ADMIN" || role === "SUPER_ADMIN") && (
                     <div className="mb-3">
                         <label className="form-label">Vlasnik salona</label>
