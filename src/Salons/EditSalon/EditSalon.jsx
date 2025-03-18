@@ -397,6 +397,13 @@ function EditSalon() {
                     </div>
                 )}
 
+                <button 
+                    className="btn btn-info mt-2"
+                    onClick={() => navigate(`/salon/${id}/services`)}
+                >
+                    Pogledaj Cjenovnik 💇‍♂️
+                </button>
+
                 <button type="submit" className="btn btn-warning w-100" disabled={isSubmitting}>
                     {isSubmitting ? "Ažuriranje..." : "Ažuriraj Salon"}
                 </button>
