@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import SalonServices from "../SalonServices/SalonServices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SalonPage.css";
 
@@ -114,6 +115,8 @@ function SalonPage() {
                     </div>
                 ))}
             </div>
+
+            <SalonServices salonId={id} />
 
         </div>
     );
