@@ -358,9 +358,9 @@ function EditSalon() {
                     )}
                     </select>
                 </div>
-                <div className="text-center mb-3" style={{marginTop:"-15px"}}>
+                <div className="text-center mb-3 mt-2" style={{marginTop:"-15px"}}>
                     <button 
-                        className="btn btn-primary"
+                        className="btn btn-primary w-100"
                         onClick={() => navigate("/add-hairdresser")}
                     >
                         Dodaj Frizera
@@ -369,7 +369,7 @@ function EditSalon() {
 
                 <div className="text-center mb-3" style={{marginTop:"-15px"}}>
                     <button 
-                        className="btn btn-primary"
+                        className="btn btn-primary w-100"
                         onClick={() => navigate(`/add-service/${id}`)}
                     >
                         Dodaj usluge
