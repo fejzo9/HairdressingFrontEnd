@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 
-function SalonServices(){
-    const { salonId } = useParams(); // Dohvaća salonId iz URL-a
+function SalonServices({salonId}){
+    const { salonId: paramSalonId } = useParams(); // Dohvati salonId iz URL-a ako nema prop
+    const finalSalonId = salonId || paramSalonId; // Koristi ono što je dostupno
     const [services, setServices] = useState([]); // Lista usluga
     const [loading, setLoading] = useState(true); // Status učitavanja
     const [error, setError] = useState(null); // Greška pri dohvaćanju
@@ -10,7 +11,7 @@ function SalonServices(){
     useEffect(() => {
         const fetchServices = async () => {
             try{
-                const response = await fetch(`http://localhost:8080/services/salon/${salonId}`);
+                const response = await fetch(`http://localhost:8080/services/salon/${finalSalonId}`);
                 if (!response.ok) {
                     throw new Error("❌ Greška pri dohvaćanju usluga.");
                 }
@@ -40,7 +41,7 @@ function SalonServices(){
         if(!confirmDelete) return;
 
         try{
-            const response = await fetch(`http://localhost:8080/services/salon/${salonId}/${serviceId}`, {
+            const response = await fetch(`http://localhost:8080/services/salon/${finalSalonId}/${serviceId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
