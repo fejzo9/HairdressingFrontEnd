@@ -15,7 +15,17 @@ function SalonServices(){
                     throw new Error("❌ Greška pri dohvaćanju usluga.");
                 }
                 const data = await response.json();
-                setServices(data);
+                // 🔹 Prepravka podataka u camelCase
+
+                const formattedData = data.map(service => ({
+                    id: service.id,
+                    nazivUsluge: service.naziv_usluge,
+                    trajanjeUsluge: service.trajanje_usluge,
+                    cijenaUsluge: service.cijena_usluge
+                }));
+
+                console.log("✅ Transformirani podaci:", formattedData);
+                setServices(formattedData);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -24,6 +34,32 @@ function SalonServices(){
         };
         fetchServices();
     }, [salonId]);
+
+    const handleDeleteService = async (serviceId) => {
+        const confirmDelete = window.confirm("Jeste li sigurni da želite obrisati ovu uslugu?");
+        if(!confirmDelete) return;
+
+        try{
+            const response = await fetch(`http://localhost:8080/services/salon/${salonId}/${serviceId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            
+            if(!response.ok){
+                throw new Error("❌ Greška pri brisanju usluge.");
+            }
+
+            // ✅ Uklanjamo obrisanu uslugu iz liste bez ponovnog dohvaćanja podataka
+            setServices(services.filter(service => service.id !== serviceId));
+
+            alert("✅ Usluga uspješno obrisana!");
+        } catch (error){
+            console.error("❌ Greška pri brisanju usluge:", error);
+            alert("❌ Greška pri brisanju usluge. Pokušajte ponovo.");
+        }
+    }
 
     return(
         <div className="container mt-4">
@@ -35,25 +71,39 @@ function SalonServices(){
             ) : services.length === 0 ? (
                 <p className="text-center">⚠️ Trenutno nema dostupnih usluga.</p>
             ) : (
-                <div className="row">
-                    {services.length > 0 ? (
-                    services.map((service) => (
-                        <div key={service.id} className="col-lg-4 col-md-6 col-sm-12 mb-4">
-                            <div className="card shadow-sm p-3 bg-light rounded bg-opacity-50 text-center">
-                                <h5 className="card-title text-dark">{service.nazivUsluge}</h5>
-                                <p className="card-text">
-                                    ⏳ Trajanje: <strong>{service.trajanjeUsluge} min</strong>
-                                </p>
-                                <p className="card-text">
-                                    💰 Cijena: <strong>{service.cijenaUsluge ? Number(service.cijenaUsluge).toFixed(2) : "N/A"} KM</strong>
-                                </p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-center">⚠️ Trenutno nema dostupnih usluga.</p>
-                )}
-                </div>
+                    <div className="table-responsive">
+                    <table className="table table-striped table-hover text-center">
+                        <thead className="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Naziv usluge</th>
+                                <th>Trajanje (min)</th>
+                                <th>Cijena (KM)</th>
+                                {["ADMIN", "SUPER_ADMIN", "OWNER"].includes(localStorage.getItem("role")) && <th>Akcija</th>}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {services.map((service, index) => (
+                                <tr key={service.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{service.nazivUsluge}</td>
+                                    <td>{service.trajanjeUsluge} min</td>
+                                    <td>{service.cijenaUsluge ? Number(service.cijenaUsluge).toFixed(2) : "N/A"} KM</td>
+                                    {["ADMIN", "SUPER_ADMIN", "OWNER"].includes(localStorage.getItem("role")) && (
+                                    <td>
+                                        <button 
+                                            className="btn btn-danger btn-sm" 
+                                            onClick={() => handleDeleteService(service.id)}
+                                        >
+                                            🗑️
+                                        </button>
+                                    </td>
+                                )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    </div>
             )}
         </div>
     );
