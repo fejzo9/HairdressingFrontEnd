@@ -7,6 +7,8 @@ function SalonServices({salonId}){
     const [services, setServices] = useState([]); // Lista usluga
     const [loading, setLoading] = useState(true); // Status učitavanja
     const [error, setError] = useState(null); // Greška pri dohvaćanju
+    const [salonOwnerId, setSalonOwnerId] = useState(null); // ID vlasnika salona
+    const currentUserId = localStorage.getItem("userId"); // Trenutno prijavljeni korisnik
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -35,6 +37,26 @@ function SalonServices({salonId}){
         };
         fetchServices();
     }, [salonId]);
+
+    useEffect(() => {
+        const fetchSalonOwner = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/salons/${finalSalonId}`);
+                if (!response.ok) {
+                    throw new Error("❌ Greška pri dohvaćanju podataka o salonu.");
+                }
+                const data = await response.json();
+                setSalonOwnerId(data.ownerId); // ✅ Postavi vlasnika salona
+            } catch (err) {
+                console.error("❌ Greška pri dohvaćanju vlasnika salona:", err);
+            }
+        };
+    
+        if (finalSalonId) {
+            fetchSalonOwner();
+        }
+    }, [finalSalonId]); // 🔹 Poziva se kada se promijeni finalSalonId
+    
 
     const handleDeleteService = async (serviceId) => {
         const confirmDelete = window.confirm("Jeste li sigurni da želite obrisati ovu uslugu?");
@@ -80,7 +102,7 @@ function SalonServices({salonId}){
                                 <th>Naziv usluge</th>
                                 <th>Trajanje (min)</th>
                                 <th>Cijena (KM)</th>
-                                {["ADMIN", "SUPER_ADMIN", "OWNER"].includes(localStorage.getItem("role")) && <th>Akcija</th>}
+                                {(["ADMIN", "SUPER_ADMIN"].includes(localStorage.getItem("role")) || currentUserId == salonOwnerId) && <th>Akcija</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -90,15 +112,15 @@ function SalonServices({salonId}){
                                     <td>{service.nazivUsluge}</td>
                                     <td>{service.trajanjeUsluge} min</td>
                                     <td>{service.cijenaUsluge ? Number(service.cijenaUsluge).toFixed(2) : "N/A"} KM</td>
-                                    {["ADMIN", "SUPER_ADMIN", "OWNER"].includes(localStorage.getItem("role")) && (
-                                    <td>
-                                        <button 
-                                            className="btn btn-danger btn-sm" 
-                                            onClick={() => handleDeleteService(service.id)}
-                                        >
-                                            🗑️
-                                        </button>
-                                    </td>
+                                    {(["ADMIN", "SUPER_ADMIN"].includes(localStorage.getItem("role")) || currentUserId == salonOwnerId) && (
+                                        <td>
+                                            <button 
+                                                className="btn btn-danger btn-sm" 
+                                                onClick={() => handleDeleteService(service.id)}
+                                            >
+                                                🗑️
+                                            </button>
+                                        </td>
                                 )}
                                 </tr>
                             ))}
