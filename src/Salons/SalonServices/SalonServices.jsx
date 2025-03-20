@@ -8,7 +8,7 @@ function SalonServices({salonId}){
     const [loading, setLoading] = useState(true); // Status učitavanja
     const [error, setError] = useState(null); // Greška pri dohvaćanju
     const [salonOwnerId, setSalonOwnerId] = useState(null); // ID vlasnika salona
-    const currentUserId = localStorage.getItem("userId"); // Trenutno prijavljeni korisnik
+    const currentUserId = localStorage.getItem("id"); // Trenutno prijavljeni korisnik
 
     useEffect(() => {
         const fetchServices = async () => {
