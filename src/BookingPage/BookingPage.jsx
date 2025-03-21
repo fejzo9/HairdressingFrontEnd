@@ -13,6 +13,7 @@ function BookingPage() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
     
+        // Prvi useEffect: dohvaća calendar
     useEffect(() => {
         const fetchCalendar = async () => {
             try {
@@ -25,21 +26,28 @@ function BookingPage() {
             }
         };
 
+        fetchCalendar();
+    }, [hairdresserId]); // ✅ Samo hairdresserId
+
+        // Drugi useEffect: kad imamo calendar, dohvaćamo usluge
+    useEffect(() => {
         const fetchServices = async () => {
             try {
                 const response = await fetch(`http://localhost:8080/services/salon/${salonId}`);
                 if (!response.ok) throw new Error("Neuspješno dohvaćanje usluga.");
                 const data = await response.json();
                 setServices(data);
+                setLoading(false);
             } catch (error) {
                 console.error("❌ Greška pri dohvaćanju usluga:", error);
+                setLoading(false);
             }
         };
 
-        fetchCalendar();
-        if (calendar) fetchServices();
-        setLoading(false);
-    }, [hairdresserId, calendar]);
+        if (calendar) {
+            fetchServices();
+        }
+    }, [calendar, salonId]); // ✅ kad calendar postoji, onda dohvaćamo usluge
 
     const handleBooking = async () => {
         if (!selectedDate || !selectedTime || !selectedService) {
