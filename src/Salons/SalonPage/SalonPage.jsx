@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SalonServices from "../SalonServices/SalonServices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SalonPage.css";
 
 function SalonPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [salon, setSalon] = useState(null);
     const [images, setImages] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -109,7 +111,12 @@ function SalonPage() {
                                 </h5>
                                 <p className="card-text text-light">📞phone: {employee.phoneNumber}</p>
                                 <p className="card-text text-light">✉️email: {employee.email}</p>
-                                <a href={`/rezervacija/${employee.id}`} className="btn btn-primary">Rezerviši termin</a>
+                                <button 
+                                className="btn btn-primary"
+                                onClick={() => navigate(`/rezervacija/${id}/${employee.id}`)}
+                                >
+                                Rezerviši termin
+                                </button>
                             </div>
                         </div>
                     </div>
