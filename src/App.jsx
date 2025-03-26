@@ -25,6 +25,7 @@ import AddHairdresserPage from "./Admin/Add/AddHairdresserPage.jsx";
 import AddSalonServices from "./Salons/AddSalonServices/AddSalonServices.jsx";
 import SalonServices from "./Salons/SalonServices/SalonServices";
 import BookingPage from "./BookingPage/BookingPage";
+import HairdresserSchedule from "./HairdresserSchedule/HairdresserSchedule";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -56,7 +57,8 @@ function App() {
             <Route path="/add-service/:salonId" element={<AddSalonServices />} />
             <Route path="/salon/:salonId/services" element={<SalonServices />} />
             <Route path="/rezervacija/:salonId/:hairdresserId" element={<BookingPage />} />
-              <Route
+            <Route path="/schedule/:hairdresserId" element={<HairdresserSchedule />} />
+             <Route
               path="/admin"
               element={
                 <PrivateRoute role={role} allowedRoles={["ADMIN","SUPER_ADMIN"]}>
