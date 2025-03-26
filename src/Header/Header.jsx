@@ -88,7 +88,14 @@ function Header(){
                                 </>
                             )}
                             {role === "OWNER" && <li className="nav-item"><Link className="nav-link" to="/owner">Salon</Link></li>}
-                            {role === "HAIRDRESSER" && <li className="nav-item"><Link className="nav-link" to="/calendar">Calendar</Link></li>}
+                            {role === "HAIRDRESSER" && (
+                                <li className="nav-item">
+                                  <Link className="nav-link" to={`/schedule/${localStorage.getItem("id")}`}>
+                                    Kalendar
+                                  </Link>
+                                </li>
+                              )}
+
                         </ul>
                     </div>
 
