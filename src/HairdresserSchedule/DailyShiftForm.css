@@ -1,0 +1,8 @@
+.form-check-label{
+    margin-left: 10px;
+}
+
+.form-label{
+    display: flex;
+    justify-content: center;
+}
