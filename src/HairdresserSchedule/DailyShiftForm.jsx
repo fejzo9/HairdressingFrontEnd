@@ -8,14 +8,19 @@ function DailyShiftForm({ onSubmit, onCancel }) {
   const [endTime, setEndTime] = useState("16:00");
   const [isDayOff, setIsDayOff] = useState(false);
 
+  const parseTime = (timeStr) => {
+    const [hour, minute] = timeStr.split(":").map(Number);
+    return [hour, minute];
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
   
     const data = {
       dayOfWeek,
-      startTime,
-      endTime,
-      isDayOff
+      isDayOff,
+      startTime: isDayOff ? null : parseTime(startTime),
+      endTime: isDayOff ? null : parseTime(endTime) 
     };
   
     console.log("📤 Šaljem dnevne podatke:", data);
