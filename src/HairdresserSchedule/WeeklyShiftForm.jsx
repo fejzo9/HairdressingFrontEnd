@@ -6,13 +6,13 @@ function WeeklyShiftForm({ onSubmit }) {
   const [selectedDays, setSelectedDays] = useState([]);
 
   const daysOfWeek = [
-    "PONEDJELJAK",
-    "UTORAK",
-    "SRIJEDA",
-    "ČETVRTAK",
-    "PETAK",
-    "SUBOTA",
-    "NEDJELJA",
+    "MONDAY",
+    "TUESDAY", 
+    "WEDNESDAY", 
+    "THURSDAY", 
+    "FRIDAY", 
+    "SATURDAY", 
+    "SUNDAY"
   ];
 
   const handleDayChange = (day) => {
