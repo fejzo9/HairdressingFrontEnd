@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import WeeklyShiftForm from "./WeeklyShiftForm";
 import "./HairdresserSchedule.css";
 
 const days = ["PON", "UTO", "SRI", "CET", "PET", "SUB", "NED"];
@@ -15,15 +16,51 @@ for (let hour = startHour; hour < endHour; hour++) {
 function HairdresserSchedule() {
 
     const { hairdresserId } = useParams();
+    const [showWeeklyForm, setShowWeeklyForm] = useState(false);
+
+    const handleWeeklySubmit = async (weeklyData) => {
+        try {
+          const response = await fetch(`http://localhost:8080/working-hours/hairdresser/${hairdresserId}/weekly`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(weeklyData),
+          });
+      
+          if (!response.ok) throw new Error("Greška prilikom slanja podataka.");
+          
+          alert("✅ Radna sedmica uspješno postavljena!");
+          setShowWeeklyForm(false);
+          console.log("🔹 Weekly data za slanje:", weeklyData);
+        } catch (error) {
+          console.error("❌ Greška:", error);
+          alert("❌ Došlo je do greške. Pokušajte ponovo.");
+          console.log("🔹 Weekly data za slanje:", weeklyData);
+        }
+      };
+      
 
     return (
         <div className="container mt-4">
             <h2 className="text-center mb-4">Frizerski Kalendar</h2>
 
             <div className="d-flex justify-content-evenly mb-4">
-                <button className="btn btn-success me-2">Unesi sedmičnu smjenu</button>
+            <button 
+            className="btn btn-success me-2" 
+            onClick={() => setShowWeeklyForm(!showWeeklyForm)}
+            >
+            {showWeeklyForm ? "Zatvori formu" : "Unesi sedmičnu smjenu"}
+            </button>
+
                 <button className="btn btn-primary">Unesi smjenu po danima</button>
             </div>
+
+            {showWeeklyForm && (
+            <WeeklyShiftForm onSubmit={handleWeeklySubmit} />
+            )}
+
 
             <div className="calendar-table-wrapper rounded-3 bg-light bg-opacity-25 shadow p-2">
                 <table className="table table-bordered calendar-table text-center">
