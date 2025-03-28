@@ -6,13 +6,13 @@ function WeeklyShiftForm({ onSubmit }) {
   const [selectedDays, setSelectedDays] = useState([]);
 
   const daysOfWeek = [
-    "MONDAY",
-    "TUESDAY",
-    "WEDNESDAY",
-    "THURSDAY",
-    "FRIDAY",
-    "SATURDAY",
-    "SUNDAY",
+    "PONEDJELJAK",
+    "UTORAK",
+    "SRIJEDA",
+    "ČETVRTAK",
+    "PETAK",
+    "SUBOTA",
+    "NEDJELJA",
   ];
 
   const handleDayChange = (day) => {
@@ -33,7 +33,7 @@ function WeeklyShiftForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-light text-black p-4 rounded shadow-sm mb-4">
+    <form onSubmit={handleSubmit} className="bg-dark text-light p-4 rounded shadow-sm mb-4 bg-opacity-50">
       <h5 className="text-center mb-3">Unesi sedmičnu smjenu</h5>
       <div className="mb-3">
         <label className="form-label">Vrijeme početka</label>
