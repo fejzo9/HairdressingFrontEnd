@@ -125,20 +125,20 @@ function BookingPage() {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/appointments/book", {
+            const params = new URLSearchParams({
+                calendarId: calendar.id,
+                serviceId: selectedService,
+                customerId: localStorage.getItem("id"),
+                date: selectedDate,
+                startTime: selectedTime
+            });
+            
+            const response = await fetch(`http://localhost:8080/appointments/book?${params.toString()}`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    calendarId: calendar.id,
-                    serviceId: selectedService,
-                    customerId: localStorage.getItem("id"),
-                    date: selectedDate,
-                    startTime: selectedTime,
-                }),
-            });
+                    Authorization: `Bearer ${token}`
+                }
+            });            
 
             if (!response.ok) throw new Error("Neuspješno kreiranje rezervacije.");
             setMessage("✅ Uspješno ste rezervisali termin! Hvala vam.");
