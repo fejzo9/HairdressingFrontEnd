@@ -201,9 +201,15 @@ function HairdresserSchedule() {
                                     ? "bg-success bg-opacity-50"
                                     : "";
                                   
-                                    const tooltipText = isBooked && appointment?.customer && appointment?.service
-                                    ? `${appointment.customer.firstName} ${appointment.customer.lastName}\n${appointment.service.nazivUsluge}\n📞 ${appointment.customer.phoneNumber}`
-                                    : "";                                  
+                                    let tooltipText = "";
+
+                                    if (isBooked && appointment?.customer && appointment?.service) {
+                                    tooltipText = `${appointment.customer.firstName} ${appointment.customer.lastName}\n${appointment.service.nazivUsluge}\n📞 ${appointment.customer.phoneNumber}\nPočetak usluge: ${appointment.startTime}\nTrajanje usluge: ${appointment.service.trajanjeUsluge} min`;
+                                    } else if (isDayOff) {
+                                    tooltipText = "🚫 Neradni dan";
+                                    } else if (isActive) {
+                                    tooltipText = "✅ Slobodan termin";
+                                    }                                
                                   
                                 return <td key={colIndex} className={cellClass} title={tooltipText}>                                
                                 </td>;
