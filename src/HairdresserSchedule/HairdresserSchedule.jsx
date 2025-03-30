@@ -21,6 +21,8 @@ function HairdresserSchedule() {
     const [showWeeklyForm, setShowWeeklyForm] = useState(false);
     const [showDailyForm, setShowDailyForm] = useState(false);
     const [workingHours, setWorkingHours] = useState([]);
+    const [calendar, setCalendar] = useState(null);
+    const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
         const fetchWorkingHours = async () => {
@@ -36,7 +38,24 @@ function HairdresserSchedule() {
                 console.error("❌ Greška pri dohvatu radnog vremena:", error);
             }
         };
+
+        const getAppointmentsFromCalendar = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/calendars/hairdresser/${hairdresserId}`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                });
+                if (!response.ok) throw new Error("Greška pri dohvaćanju kalendara sa terminima frizera");
+                const data = await response.json();
+                setCalendar(data);
+                setAppointments(data.appointments || []);
+                console.log("Dohvaćeni podaci o zauzetim terminima: ", data.appointments);
+            } catch (error){
+                console.log("Greškka, nije moguće dohvatiti kalendar sa terminima frizera: ", error);
+            }
+        }
+
         fetchWorkingHours();
+        getAppointmentsFromCalendar();
     }, [hairdresserId]);
 
     const handleWeeklySubmit = async (weeklyData) => {
@@ -94,7 +113,12 @@ function HairdresserSchedule() {
             return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
         };
   
-      
+        const formatDateArray = (dateArray) => {
+            if (!Array.isArray(dateArray) || dateArray.length !== 3) return null;
+            const [year, month, day] = dateArray;
+            const date = new Date(year, month - 1, day);
+            return date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase(); // Vrati: "MONDAY", "TUESDAY", ...
+        };
 
     return (
         <div className="container mt-4">
@@ -136,25 +160,34 @@ function HairdresserSchedule() {
                             <tr key={rowIndex}>
                                 <td className="fw-bold">{slot}</td>
                                 {days.map((dayKey, colIndex) => {
-                                    const wh = workingHours.find(w => w.dayOfWeek === dayKey);
-                                    const start = wh?.startTime;
-                                    const end = wh?.endTime;
-                                    const currentHour = slot;
+                                const wh = workingHours.find(w => w.dayOfWeek === dayKey);
+                                const start = wh?.startTime;
+                                const end = wh?.endTime;
+                                const formattedStart = formatTimeArray(start);
+                                const formattedEnd = formatTimeArray(end);
+                                const isDayOff = wh?.dayOff;
+                                const currentHour = slot;
 
-                                    const formattedStart = formatTimeArray(start);
-                                    const formattedEnd = formatTimeArray(end);
-                                    const isActive = formattedStart && formattedEnd && currentHour >= formattedStart && currentHour < formattedEnd;
-                                    
-                                    const isDayOff = wh?.dayOff;
-                                    const cellClass = isDayOff
+                                const isActive = formattedStart && formattedEnd &&
+                                    currentHour >= formattedStart && currentHour < formattedEnd;
+
+                                const isBooked = appointments.some(app => {
+                                    const appDay = formatDateArray(app.date); // konvertuj datum u "MONDAY"
+                                    const appTime = formatTimeArray(app.startTime);
+                                    return appDay === dayKey && appTime === currentHour;
+                                });
+
+                                const cellClass = isDayOff
                                     ? "bg-secondary bg-opacity-25"
+                                    : isBooked
+                                    ? "bg-danger bg-opacity-50"
                                     : isActive
                                     ? "bg-success bg-opacity-50"
                                     : "";
 
-                                    return <td key={colIndex} className={cellClass}></td>;
-                                    
-                                })}
+                                return <td key={colIndex} className={cellClass}></td>;
+                            })}
+
                             </tr>
                         ))}
                     </tbody>
