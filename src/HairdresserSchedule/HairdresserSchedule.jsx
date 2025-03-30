@@ -21,7 +21,7 @@ function HairdresserSchedule() {
     const [showWeeklyForm, setShowWeeklyForm] = useState(false);
     const [showDailyForm, setShowDailyForm] = useState(false);
     const [workingHours, setWorkingHours] = useState([]);
-    const [calendar, setCalendar] = useState(null);
+    const [calendarId, setCalendarId] = useState(null);
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
@@ -39,23 +39,33 @@ function HairdresserSchedule() {
             }
         };
 
-        const getAppointmentsFromCalendar = async () => {
-            try{
-                const response = await fetch(`http://localhost:8080/calendars/hairdresser/${hairdresserId}`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                });
-                if (!response.ok) throw new Error("Greška pri dohvaćanju kalendara sa terminima frizera");
-                const data = await response.json();
-                setCalendar(data);
-                setAppointments(data.appointments || []);
-                console.log("Dohvaćeni podaci o zauzetim terminima: ", data.appointments);
-            } catch (error){
-                console.log("Greškka, nije moguće dohvatiti kalendar sa terminima frizera: ", error);
+        const fetchCalendarAndAppointments = async () => {
+            try {
+              // 1. Dohvati calendar ID
+              const calendarRes = await fetch(`http://localhost:8080/calendars/hairdresser/${hairdresserId}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              });
+        
+              if (!calendarRes.ok) throw new Error("Neuspješno dohvaćanje kalendara");
+              const calendarData = await calendarRes.json();
+              setCalendarId(calendarData.id);
+        
+              // 2. Dohvati sve termine za taj kalendar
+              const appointmentRes = await fetch(`http://localhost:8080/appointments/calendar/${calendarData.id}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              });
+        
+              if (!appointmentRes.ok) throw new Error("Neuspješno dohvaćanje termina");
+              const appointmentsData = await appointmentRes.json();
+              setAppointments(appointmentsData);
+              console.log("📅 Termini sa detaljima:", appointmentsData);
+            } catch (err) {
+              console.error("❌ Greška:", err);
             }
-        }
-
-        fetchWorkingHours();
-        getAppointmentsFromCalendar();
+          };
+        
+          fetchWorkingHours();
+          fetchCalendarAndAppointments();
     }, [hairdresserId]);
 
     const handleWeeklySubmit = async (weeklyData) => {
@@ -117,7 +127,7 @@ function HairdresserSchedule() {
             if (!Array.isArray(dateArray) || dateArray.length !== 3) return null;
             const [year, month, day] = dateArray;
             const date = new Date(year, month - 1, day);
-            return date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase(); // Vrati: "MONDAY", "TUESDAY", ...
+            return date.toLocaleDateString("bs-BA", { weekday: "long" }).toUpperCase(); // Vrati: "MONDAY", "TUESDAY", ...
         };
 
     return (
@@ -171,21 +181,32 @@ function HairdresserSchedule() {
                                 const isActive = formattedStart && formattedEnd &&
                                     currentHour >= formattedStart && currentHour < formattedEnd;
 
-                                const isBooked = appointments.some(app => {
-                                    const appDay = formatDateArray(app.date); // konvertuj datum u "MONDAY"
-                                    const appTime = formatTimeArray(app.startTime);
-                                    return appDay === dayKey && appTime === currentHour;
-                                });
-
-                                const cellClass = isDayOff
-                                    ? "bg-secondary bg-opacity-25"
-                                    : isBooked
+                                const appointment = appointments.find(appt => {
+                                    const apptDate = new Date(appt.date[0], appt.date[1] - 1, appt.date[2]);
+                                    const apptDay = apptDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+                                    const [apptHour, apptMin] = appt.startTime;
+                                    const slotHour = parseInt(slot.split(":")[0]);
+                                    const slotMin = parseInt(slot.split(":")[1]);
+                                  
+                                    return apptDay === dayKey && apptHour === slotHour && apptMin === slotMin;
+                                  });
+                                  
+                                  const isBooked = !!appointment;
+                                  
+                                  const cellClass = isBooked
                                     ? "bg-danger bg-opacity-50"
+                                    : isDayOff
+                                    ? "bg-secondary bg-opacity-25"
                                     : isActive
                                     ? "bg-success bg-opacity-50"
                                     : "";
-
-                                return <td key={colIndex} className={cellClass}></td>;
+                                  
+                                    const tooltipText = isBooked && appointment?.customer && appointment?.service
+                                    ? `${appointment.customer.firstName} ${appointment.customer.lastName}\n${appointment.service.nazivUsluge}\n📞 ${appointment.customer.phoneNumber}`
+                                    : "";                                  
+                                  
+                                return <td key={colIndex} className={cellClass} title={tooltipText}>                                
+                                </td>;
                             })}
 
                             </tr>
