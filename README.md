@@ -4,12 +4,28 @@
 
 This project is a web-based frontend application built using React. The app allows users to find and book appointments at hairdressing salons. Users can search for salons based on their location using an interactive map, view available stylists and their ratings, select desired services, check prices, and easily reserve a time slot at the chosen salon.
 
-### 🏠 Početna stranica
+### 🏠 Home Page
 ![Početna](public/slike-README/1_pocetna.png)
 ![Početna](public/slike-README/2_pocetna.png)
 
-### O nama
+### About Us
 ![AboutUs](public/slike-README/3_oNama.png)
+
+### Contact
+![Contact](public/slike-README/4_contact.png)
+
+### Login
+![Login](public/slike-README/5_login.png)
+
+### Salon
+![Salon](public/slike-README/6_salon.png)
+![Salon](public/slike-README/7_salon.png)
+
+### Reservation
+![Reservation](public/slike-README/8_rezervacija.png)
+
+### Calendar
+![Calendar](public/slike-README/9_calendar.png)
 
 ## Features
 
