@@ -1,11 +1,11 @@
 .contact-container {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
     padding: 20px;
     box-sizing: border-box;
     background-color: #f8f8f8;
-    margin: 60px auto -250px;
+    margin: 50px;
+    margin-bottom: -150px;
   }
   
   .contact-left,
