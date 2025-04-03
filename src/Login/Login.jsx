@@ -96,7 +96,7 @@ function LoginForm() {
         <button type="submit">Login</button>
         
         <p className="form-footer">
-          Don't have an account? <a href="/register">Register</a>
+          Don't have an account? <a href="/registration">Register</a>
         </p>
       </form>
     </div>
