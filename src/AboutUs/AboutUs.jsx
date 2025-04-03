@@ -93,7 +93,9 @@ function AboutUs() {
         <div className="members">
           <div className="team-member">
             <a href="https://www.linkedin.com/in/ena-forto-2610a32a2/">
-              <Card pic={pic1} name="Ena Forto-Ždralović" desc="Vlasnica i direktorica Beauty aplikacije. Odgovorna za finansije, prodaju i pravne regulative." />
+            {
+              //  <Card pic={pic1} name="Ena Forto-Ždralović" desc="Vlasnica i direktorica Beauty aplikacije. Odgovorna za finansije, prodaju i pravne regulative." />
+            } 
             </a>
           </div>
           <div className="team-member">
