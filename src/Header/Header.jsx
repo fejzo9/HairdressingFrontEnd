@@ -53,6 +53,7 @@ function Header(){
     localStorage.removeItem("role");
     updateAuthStatus();
     setIsLoggedIn(false);
+    location.reload();
     navigate("/login");
   };
  
@@ -74,7 +75,8 @@ function Header(){
           {/* Navigacija - sakriva se na malim ekranima */}
           <div className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`} id="navbarNav">
                     <div className="nav-container ms-auto">
-                        <ul className="navbar-nav nav-links">
+                        <ul className="navbar-nav nav-links w-100 justify-content-center text-center">
+
                             <li className="nav-item"><Link className="nav-link" to="/maps">Salon Map</Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/about-us">About Us</Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/services">Services</Link></li>
@@ -91,7 +93,7 @@ function Header(){
                             {role === "HAIRDRESSER" && (
                                 <li className="nav-item">
                                   <Link className="nav-link" to={`/schedule/${localStorage.getItem("id")}`}>
-                                    Kalendar
+                                    Calendar
                                   </Link>
                                 </li>
                               )}
@@ -118,14 +120,27 @@ function Header(){
                     )}
                   </li>
                 ) : (
-                  <>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/registration">Register</Link></li>
-                  </>
+                 
+                    <>
+                      <li className="nav-item d-lg-none text-center w-100">
+                        <Link className="nav-link" to="/login">Login</Link>
+                      </li>
+                      <li className="nav-item d-lg-none text-center w-100">
+                        <Link className="nav-link" to="/registration">Register</Link>
+                      </li>
+                    </>
+                       
                 )}
-          </ul>
-        </nav>
-      </div>
+            </ul>
+            {!isLoggedIn && (
+            <ul className="nav-links d-none d-lg-flex">
+              <li><Link to="/login">Login</Link></li>
+              <li><Link to="/registration">Register</Link></li>
+            </ul>
+          )}
+
+          </nav>  
+        </div>
     </div>
     </div>
   </div>
