@@ -45,7 +45,7 @@ This project is a web-based frontend application built using React. The app allo
 
 - **React Router**: For handling navigation and routing within the app.
 
-- **Tailwind CSS**: For styling and ensuring a responsive, modern design.
+- **Bootstrap**: For styling and ensuring a responsive, modern design.
 
 - **Axios**: For handling HTTP requests to the backend (to be integrated).
 
@@ -80,7 +80,6 @@ npm start
 ```
 
 ## Future Enhancements
-- **Backend Integration:** Connect the frontend to a backend server to handle data storage, user authentication, and appointment management.
 
 - **Payment Integration:** Enable users to pay for services online when booking an appointment.
 
