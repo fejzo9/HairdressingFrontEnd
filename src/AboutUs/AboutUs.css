@@ -282,7 +282,7 @@ body{
 
 .members{
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .about-team p{

@@ -91,16 +91,14 @@ function AboutUs() {
       <div className="about-team">
         <h2>Upoznajte naš tim</h2>
         <div className="members">
-          <div className="team-member">
-            <a href="https://www.linkedin.com/in/ena-forto-2610a32a2/">
-            {
-              //  <Card pic={pic1} name="Ena Forto-Ždralović" desc="Vlasnica i direktorica Beauty aplikacije. Odgovorna za finansije, prodaju i pravne regulative." />
-            } 
-            </a>
-          </div>
+           {/* <div className="team-member">
+           <a href="https://www.linkedin.com/in/ena-forto-2610a32a2/">
+             <Card pic={pic1} name="Ena Forto-Ždralović" desc="Vlasnica i direktorica Beauty aplikacije. Odgovorna za finansije, prodaju i pravne regulative." /> 
+            </a>  
+          </div> */}
           <div className="team-member">
             <a href="https://github.com/fejzo9">
-              <Card pic={pic2} name="Fejzullah Ždralović" desc="Softver inžinjer, glavni developer, odgovoran za cjelokupni razvoj aplikacije." />
+              <Card pic={pic2} name="Fejzullah Ždralović" desc="Inžinjer elektrotehnike, glavni developer, odgovoran za cjelokupni razvoj aplikacije." />
             </a>
           </div>
         </div>
