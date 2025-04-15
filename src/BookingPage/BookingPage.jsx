@@ -16,7 +16,7 @@ function BookingPage() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
 
-        // Prvi useEffect: dohvaća calendar
+        // Prvi useEffect: dohvaća calendar i radno vrijeme frizera
     useEffect(() => {
         const fetchCalendar = async () => {
             try {
