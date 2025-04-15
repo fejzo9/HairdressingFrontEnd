@@ -79,7 +79,7 @@ function Header(){
 
                             <li className="nav-item"><Link className="nav-link" to="/maps">Salon Map</Link></li>
                             <li className="nav-item"><Link className="nav-link" to="/about-us">About Us</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/services">Services</Link></li>
+                           {/*  <li className="nav-item"><Link className="nav-link" to="/services">Services</Link></li> */}
                             <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
 
                             {/* Admin opcije */}
@@ -115,7 +115,7 @@ function Header(){
                       <div className="dropdown-content">
                         <Link className="profil" to="/profile">Profil</Link>
                         <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout}>Odjava</button>
                       </div>
                     )}
                   </li>
