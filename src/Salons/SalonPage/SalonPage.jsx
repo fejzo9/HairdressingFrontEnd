@@ -36,7 +36,9 @@ function SalonPage() {
                 const employeePromises = employeeUsernames.map(async (username) => {
                     const response = await fetch(`http://localhost:8080/users/username/${username}`);
                     if (response.ok) {
-                        return response.json(); // Vrati podatke o uposleniku
+                        const employeeData = await response.json();
+                        console.log("Employee Data:", employeeData); // Debug log
+                        return employeeData;
                     }
                     return null; // Ako ne uspije, vrati null
                 });
@@ -107,9 +109,9 @@ function SalonPage() {
                             <div className="card-body">
                                 {/* ✅ Prikaz imena (ili username-a ako nema imena) */}
                                 <h5 className="card-title text-white mb-3">
-                                    {employee.name ? `${employee.name} ${employee.surname || ''}` : employee.username}
+                                    {employee.firstName ? `${employee.firstName} ${employee.lastName || ''}` : employee.username}
                                 </h5>
-                                <p className="card-text text-light">📞phone: {employee.phoneNumber}</p>
+                                <p className="card-text text-light">📞phone: {employee.phoneNumber || "N/A"}</p>
                                 <p className="card-text text-light">✉️email: {employee.email}</p>
                                 <button 
                                 className="btn btn-primary"
