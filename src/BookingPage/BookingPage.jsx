@@ -222,6 +222,10 @@ function BookingPage() {
                             setSelectedDate(isoDate);
                             }
                         }}
+                        shouldDisableDate={(date) => {
+                            const isoDate = date.format("YYYY-MM-DD");
+                            return !getWorkingDates().includes(isoDate); // disable ako NIJE radni dan
+                          }}
                         sx={{
                             backgroundColor: 'white',
                             borderRadius: 2,
