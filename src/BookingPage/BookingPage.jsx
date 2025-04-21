@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import dayjs from 'dayjs';
+
 
 function BookingPage() {
     const { hairdresserId } = useParams();
@@ -15,8 +21,9 @@ function BookingPage() {
     const [availableTimes, setAvailableTimes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
-
-        // Prvi useEffect: dohvaća calendar i radno vrijeme frizera
+    const [token, setToken] = useState(localStorage.getItem("token"));
+       
+    // Prvi useEffect: dohvaća calendar i radno vrijeme frizera
     useEffect(() => {
         const fetchCalendar = async () => {
             try {
@@ -118,7 +125,8 @@ function BookingPage() {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        setToken(localStorage.getItem("token"));
+
         if (!token) {
             setMessage("❌ Morate biti prijavljeni za rezervaciju termina.");
             return;
@@ -188,7 +196,7 @@ function BookingPage() {
                 <p className="text-center">🔄 Učitavanje...</p>
             ) : (
                 <>
-                    <label className="form-label">Odaberite datum:</label>
+                 {/*  <label className="form-label">Odaberite datum:</label>
                     <select
                     className="form-select mb-3 text-center"
                     value={selectedDate}
@@ -200,7 +208,67 @@ function BookingPage() {
                             {formatDate(date)}
                             </option>
                     ))}
+                    </select> */}  
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <div className="mb-3">
+                        <label className="form-label">Odaberite datum putem kalendara:</label>
+                        <DateCalendar
+                        disablePast
+                        value={selectedDate ? dayjs(selectedDate) : null}
+                        onChange={(newValue) => {
+                            const isoDate = newValue.format("YYYY-MM-DD");
+                            const availableDates = getWorkingDates();
+                            if (availableDates.includes(isoDate)) {
+                            setSelectedDate(isoDate);
+                            }
+                        }}
+                        sx={{
+                            backgroundColor: 'white',
+                            borderRadius: 2,
+                            boxShadow: 3,
+                            p: { xs: 1, sm: 2, md: 3 },
+                            pb: 4,
+                            color: 'black',
+                            width: 570,
+                            '.MuiPickersDay-root': {
+                                fontSize: '1.3rem',  // datumi: 1, 2, 3...
+                                width: 48,
+                                height: 48,
+                                margin: '3px'
+                              },
+                              '.MuiPickersCalendarHeader-label': {
+                                fontSize: '1.6rem', // mjesec i godina
+                                fontWeight: 'bold',
+                                color: 'black'
+                              },
+                              '.MuiPickersArrowSwitcher-button': {
+                                color: 'black' // strelice
+                              },
+                              '.MuiDayCalendar-monthContainer': {
+                                paddingBottom: '24px' // 👈 Daje prostor ispod zadnje sedmice
+                                }
+                            }}
+                        />
+                    </div>
+                    </LocalizationProvider>
+
+                    {/* Ovdje ostavljamo i stari select ako korisnik više voli taj način */}
+                    <div className="mb-3">
+                    <label className="form-label">Ili odaberite iz liste:</label>
+                    <select
+                        className="form-select text-center"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                    >
+                        <option value="">-- Odaberite datum --</option>
+                        {getWorkingDates().map(date => (
+                        <option key={date} value={date}>
+                            {formatDate(date)}
+                        </option>
+                        ))}
                     </select>
+                    </div>
+
                     {!selectedDate && (
                     <p className="text-danger d-flex justify-content-center">⚠️ Molimo prvo odaberite datum kako bi se prikazale dostupne satnice.</p>
                     )}
@@ -225,6 +293,23 @@ function BookingPage() {
                     {message && <p className="text-center mt-3">{message}</p>}
                 </>
             )}
+
+            {!token && (
+                <div
+                    className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
+                    style={{ zIndex: 10 }}
+                >
+                    <div className="bg-white p-4 rounded text-center" style={{ maxWidth: '600px' }}>
+                        <h5 className="mb-3 text-danger">Niste prijavljeni!</h5>
+                        <p className="text-dark">
+                            Da biste rezervisali termin, trebate imati svoj račun. <br />
+                            Molimo vas <Link to="/login" className="fw-bold">prijavite se</Link> ili{' '}
+                            <Link to="/registration" className="fw-bold">registrujte</Link>.
+                        </p>
+                    </div>
+                </div>
+            )} 
+
         </div>
     );
 }
