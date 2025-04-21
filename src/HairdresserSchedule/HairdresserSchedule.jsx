@@ -21,8 +21,16 @@ function HairdresserSchedule() {
     const [showWeeklyForm, setShowWeeklyForm] = useState(false);
     const [showDailyForm, setShowDailyForm] = useState(false);
     const [workingHours, setWorkingHours] = useState([]);
-    const [calendarId, setCalendarId] = useState(null);
     const [appointments, setAppointments] = useState([]);
+
+    const getStartOfWeek = (date) => {
+      const d = new Date(date);
+      const day = d.getDay(); // 0 (ned) - 6 (sub)
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1); // pomak do ponedjeljka
+      return new Date(d.setDate(diff));
+    }; 
+    
+    const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
 
     useEffect(() => {
         const fetchWorkingHours = async () => {
@@ -121,15 +129,14 @@ function HairdresserSchedule() {
             if (!Array.isArray(timeArray) || timeArray.length !== 2) return null;
             const [hour, minute] = timeArray;
             return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-        };
-  
-        const formatDateArray = (dateArray) => {
-            if (!Array.isArray(dateArray) || dateArray.length !== 3) return null;
-            const [year, month, day] = dateArray;
-            const date = new Date(year, month - 1, day);
-            return date.toLocaleDateString("bs-BA", { weekday: "long" }).toUpperCase(); // Vrati: "MONDAY", "TUESDAY", ...
-        };
-
+        };   
+        
+        const weekDates = Array.from({ length: 7 }, (_, i) => {
+          const d = new Date(currentWeekStart);
+          d.setDate(currentWeekStart.getDate() + i);
+          return d;
+        });
+        
     return (
         <div className="container mt-4">
             <h2 className="text-center mb-4">Frizerski Kalendar</h2>
@@ -160,9 +167,12 @@ function HairdresserSchedule() {
                     <thead className="table-light">
                         <tr>
                             <th>Vrijeme</th>
-                            {days.map(day => (
-                                <th key={day}>{day}</th>
-                            ))}
+                            {weekDates.map((date, index) => (
+                            <th key={index}>
+                              {dayLabels[index]} <br />
+                              {`${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.`}
+                            </th>
+                          ))}
                         </tr>
                     </thead>
                     <tbody>
