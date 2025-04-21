@@ -25,12 +25,15 @@ import AddSalonServices from "./Salons/AddSalonServices/AddSalonServices.jsx";
 import SalonServices from "./Salons/SalonServices/SalonServices";
 import BookingPage from "./BookingPage/BookingPage";
 import HairdresserSchedule from "./HairdresserSchedule/HairdresserSchedule";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   const role = localStorage.getItem("role");
 
   return (
     <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Router>
       <div className="app">
       <Header />
@@ -70,6 +73,7 @@ function App() {
        <Footer />
       </div>
     </Router>
+    </LocalizationProvider>
     </>
   )
 }
