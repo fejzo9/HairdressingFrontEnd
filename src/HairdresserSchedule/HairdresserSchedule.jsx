@@ -22,6 +22,7 @@ function HairdresserSchedule() {
     const [showDailyForm, setShowDailyForm] = useState(false);
     const [workingHours, setWorkingHours] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [calendarId, setCalendarId] = useState(null);
 
     const getStartOfWeek = (date) => {
       const d = new Date(date);
