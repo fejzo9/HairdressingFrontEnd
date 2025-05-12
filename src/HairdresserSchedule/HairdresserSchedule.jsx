@@ -33,6 +33,19 @@ function HairdresserSchedule() {
     
     const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
 
+    const goToPreviousWeek = () => {
+      const prevWeek = new Date(currentWeekStart);
+      prevWeek.setDate(currentWeekStart.getDate() - 7);
+      setCurrentWeekStart(prevWeek);
+    };
+
+    const goToNextWeek = () => {
+      const nextWeek = new Date(currentWeekStart);
+      nextWeek.setDate(currentWeekStart.getDate() + 7);
+      setCurrentWeekStart(nextWeek);
+    };
+
+
     useEffect(() => {
         const fetchWorkingHours = async () => {
             try {
@@ -162,6 +175,18 @@ function HairdresserSchedule() {
             {showDailyForm && (
             <DailyShiftForm onSubmit={handleDailySubmit} />
             )}
+
+            <div className="d-flex justify-content-between align-items-center mb-3">
+            <button className="btn btn-outline-secondary" onClick={goToPreviousWeek}>
+              ← Prethodna sedmica
+            </button>
+            <h5 className="m-0">
+              Sedmica od {currentWeekStart.toLocaleDateString("bs-BA")}
+            </h5>
+            <button className="btn btn-outline-secondary" onClick={goToNextWeek}>
+              Sljedeća sedmica →
+            </button>
+          </div>
 
             <div className="calendar-table-wrapper rounded-3 bg-light bg-opacity-25 shadow p-2">
                 <table className="table table-bordered calendar-table text-center">
