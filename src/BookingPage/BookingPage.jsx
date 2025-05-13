@@ -238,18 +238,28 @@ function BookingPage() {
                                 fontSize: '1.3rem',  // datumi: 1, 2, 3...
                                 width: 48,
                                 height: 48,
-                                margin: '3px'
+                                margin: '3px',
+                                marginBottom: '10px',
+                                padding: '10px',
                               },
                               '.MuiPickersCalendarHeader-label': {
                                 fontSize: '1.6rem', // mjesec i godina
                                 fontWeight: 'bold',
-                                color: 'black'
+                                color: 'black',
                               },
                               '.MuiPickersArrowSwitcher-button': {
                                 color: 'black' // strelice
                               },
                               '.MuiDayCalendar-monthContainer': {
                                 paddingBottom: '24px' // 👈 Daje prostor ispod zadnje sedmice
+                            },
+                            '.MuiDayCalendar-weekDayLabel': {
+                                fontSize: '1.6rem',
+                                fontWeight: 'bold',
+                                color: 'black',
+                                marginLeft: '18px',
+                                marginBottom: '10px',
+                                marginTop: '10px'
                                 }
                             }}
                         />
