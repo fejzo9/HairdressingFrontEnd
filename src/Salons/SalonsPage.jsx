@@ -49,7 +49,7 @@ function SalonsPage(){
   };
 
     return(    
-          <div className="container mg-3 bg-dark p-4 bg-opacity-50 rounded-4">
+          <div className="container mt-4 mg-3 bg-dark p-5 bg-opacity-50 rounded-4">
             <h1 className="text-center mb-4">Frizerski saloni</h1>
             <div className="row">
             {salons.length > 0 ? (
@@ -95,7 +95,7 @@ const styles = {
     backgroundColor: "rgba(0, 0, 0, 0.8)", // Tamnija crna pozadina sa većom transparentnošću
     fontSize: "24px",
     fontWeight: "bold",
-    marginBottom: "20px"
+    marginBottom: "15px"
   },
 };
 
