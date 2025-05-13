@@ -151,6 +151,15 @@ function HairdresserSchedule() {
           return d;
         });
         
+        const getAppointmentsForCurrentWeek = () => {
+        return appointments.filter(appt => {
+          const apptDate = new Date(appt.date[0], appt.date[1] - 1, appt.date[2]);
+          return apptDate >= currentWeekStart &&
+                apptDate < new Date(currentWeekStart.getTime() + 7 * 24 * 60 * 60 * 1000); // dodaj 7 dana
+        });
+      };
+
+
     return (
         <div className="container mt-4">
             <h2 className="text-center mb-4">Frizerski Kalendar</h2>
@@ -203,10 +212,10 @@ function HairdresserSchedule() {
                     </thead>
                     <tbody>
                         {timeSlots.map((slot, rowIndex) => (
-                            <tr key={rowIndex}>
+                          <tr key={rowIndex}>
                                 <td className="fw-bold">{slot}</td>
                                 {days.map((dayKey, colIndex) => {
-                                const wh = workingHours.find(w => w.dayOfWeek === dayKey);
+                                  const wh = workingHours.find(w => w.dayOfWeek === dayKey);
                                 const start = wh?.startTime;
                                 const end = wh?.endTime;
                                 const formattedStart = formatTimeArray(start);
@@ -215,15 +224,16 @@ function HairdresserSchedule() {
                                 const currentHour = slot;
 
                                 const isActive = formattedStart && formattedEnd &&
-                                    currentHour >= formattedStart && currentHour < formattedEnd;
-
+                                currentHour >= formattedStart && currentHour < formattedEnd;
+                                
+                                const appointmentsThisWeek = getAppointmentsForCurrentWeek();
                                 const appointment = appointments.find(appt => {
                                     const apptDate = new Date(appt.date[0], appt.date[1] - 1, appt.date[2]);
                                     const apptDay = apptDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
                                     const [apptHour, apptMin] = appt.startTime;
                                     const slotHour = parseInt(slot.split(":")[0]);
                                     const slotMin = parseInt(slot.split(":")[1]);
-                                  
+                                    
                                     return apptDay === dayKey && apptHour === slotHour && apptMin === slotMin;
                                   });
                                   
