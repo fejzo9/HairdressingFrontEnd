@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddUserForm.css";
+import API_BASE_URL from '../../config/api';
 
 function AddHairdresserPage() {
   const navigate = useNavigate(); // ✅ Navigacija omogućena
@@ -30,7 +31,7 @@ function AddHairdresserPage() {
     console.log("🚀 Slanje zahtjeva za dodavanje frizera...");
 
     try {
-      const response = await fetch("http://localhost:8080/users", {
+      const response = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

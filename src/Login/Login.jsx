@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ function LoginForm() {
     
     try {
       // Šaljemo POST zahtjev na backend s JSON podacima
-      const response = await fetch('http://localhost:8080/login', { 
+      const response = await fetch(`${API_BASE_URL}/login`, { 
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

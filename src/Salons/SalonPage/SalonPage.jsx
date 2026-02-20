@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SalonServices from "../SalonServices/SalonServices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SalonPage.css";
+import API_BASE_URL from '../../config/api';
 
 function SalonPage() {
     const { id } = useParams();
@@ -16,7 +17,7 @@ function SalonPage() {
     useEffect(() => {
         const fetchSalonDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons/${id}`);
+                const response = await fetch(`${API_BASE_URL}/salons/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setSalon(data);
@@ -34,7 +35,7 @@ function SalonPage() {
         const fetchEmployeesData = async (employeeUsernames) => {
             try {
                 const employeePromises = employeeUsernames.map(async (username) => {
-                    const response = await fetch(`http://localhost:8080/users/username/${username}`);
+                    const response = await fetch(`${API_BASE_URL}/users/username/${username}`);
                     if (response.ok) {
                         const employeeData = await response.json();
                         console.log("Employee Data:", employeeData); // Debug log
@@ -52,10 +53,10 @@ function SalonPage() {
         
         const fetchImages = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons/${id}/images`);
+                const response = await fetch(`${API_BASE_URL}/salons/${id}/images`);
                 if (response.ok) { 
                     const imageBlobs = await response.json();
-                    setImages(imageBlobs.map((blob, index) => `http://localhost:8080/salons/${id}/images/${index}`));
+                    setImages(imageBlobs.map((blob, index) => `${API_BASE_URL}/salons/${id}/images/${index}`));
                 }
             } catch (error) {
                 console.error("Greška pri dohvaćanju slika:", error);
@@ -102,7 +103,7 @@ function SalonPage() {
                         <div className="card text-center bg-dark bg-opacity-50 m-2 employee-card">
                             {/* ✅ Profilna slika */}
                             <img 
-                                src={`http://localhost:8080/users/${employee.id}/profile-picture`} 
+                                src={`${API_BASE_URL}/users/${employee.id}/profile-picture`} 
                                 className="card-img-top employee-image" 
                                 alt={employee.name || employee.username} 
                             />

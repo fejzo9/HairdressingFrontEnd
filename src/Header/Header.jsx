@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import API_BASE_URL from '../config/api';
 
 function Header(){
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
@@ -24,7 +25,7 @@ function Header(){
       const fetchProfilePicture = async () => {
         if (isLoggedIn) {
           try {
-            const response = await fetch(`http://localhost:8080/users/${localStorage.getItem("id")}/profile-picture`);
+            const response = await fetch(`${API_BASE_URL}/users/${localStorage.getItem("id")}/profile-picture`);
             if (response.ok) {
               const blob = await response.blob();
               setProfilePicture(URL.createObjectURL(blob));

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
 import './Registration.css'; 
+import API_BASE_URL from '../config/api';
 
 function RegistrationForm() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function RegistrationForm() {
     e.preventDefault();
     if (validate()) {
         try {
-            const response = await fetch('http://localhost:8080/registration', { 
+            const response = await fetch(`${API_BASE_URL}/registration`, { 
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

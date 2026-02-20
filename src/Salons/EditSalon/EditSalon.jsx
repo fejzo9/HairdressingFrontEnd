@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./EditSalon.css";
+import API_BASE_URL from '../../config/api';
 
 function EditSalon() {
     const { id } = useParams(); // Dohvati ID salona iz URL-a
@@ -23,7 +24,7 @@ function EditSalon() {
     useEffect(() => {
         const fetchSalonDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons/${id}`);
+                const response = await fetch(`${API_BASE_URL}/salons/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setSalon(data);
@@ -38,10 +39,10 @@ function EditSalon() {
 
         const fetchSalonImages = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons/${id}/images`);
+                const response = await fetch(`${API_BASE_URL}/salons/${id}/images`);
                 if (response.ok) {
                     const data = await response.json();
-                    setSalonImages(data.map((_, index) => `http://localhost:8080/salons/${id}/images/${index}`));
+                    setSalonImages(data.map((_, index) => `${API_BASE_URL}/salons/${id}/images/${index}`));
                 }
             } catch (error) {
                 console.error("❌ Greška pri dohvaćanju slika:", error);
@@ -50,7 +51,7 @@ function EditSalon() {
 
         const fetchHairdressers = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/role/HAIRDRESSER", {
+                const response = await fetch(`${API_BASE_URL}/users/role/HAIRDRESSER`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 if (response.ok) {
@@ -72,7 +73,7 @@ function EditSalon() {
     useEffect(() => {
         const fetchOwners = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/role/OWNER", {
+                const response = await fetch(`${API_BASE_URL}/users/role/OWNER`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 if (response.ok) {
@@ -96,7 +97,7 @@ function EditSalon() {
             try {
                 const token = localStorage.getItem("token");
                 const requests = salon.employeeNames.map(async (username) => {
-                    const response = await fetch(`http://localhost:8080/users/username/${username}`, {
+                    const response = await fetch(`${API_BASE_URL}/users/username/${username}`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
     
@@ -136,7 +137,7 @@ function EditSalon() {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/salons/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/salons/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -178,7 +179,7 @@ function EditSalon() {
     
             if (hairdresserIds.length === 1) {
                 // Ako je samo jedan frizer, koristi "/employees/add"
-                await fetch(`http://localhost:8080/salons/${salonId}/employees/add`, {
+                await fetch(`${API_BASE_URL}/salons/${salonId}/employees/add`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -188,7 +189,7 @@ function EditSalon() {
                 });
             } else if (hairdresserIds.length > 1) {
                 // Ako su više frizeri, koristi "/employees"
-                await fetch(`http://localhost:8080/salons/${salonId}/employees`, {
+                await fetch(`${API_BASE_URL}/salons/${salonId}/employees`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -205,7 +206,7 @@ function EditSalon() {
     const fetchHairdresserIds = async (usernames, token) => {
         try {
             const requests = usernames.map(async (username) => {
-                const response = await fetch(`http://localhost:8080/users/username/${username}`, {
+                const response = await fetch(`${API_BASE_URL}/users/username/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
     
@@ -238,7 +239,7 @@ function EditSalon() {
             const formData = new FormData();
             selectedImages.forEach((image) => formData.append("files", image));
 
-            const response = await fetch(`http://localhost:8080/salons/${id}/upload-images`, {
+            const response = await fetch(`${API_BASE_URL}/salons/${id}/upload-images`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
@@ -267,7 +268,7 @@ function EditSalon() {
         const token = localStorage.getItem("token");
 
         try {
-            const response = await fetch(`http://localhost:8080/salons/${id}/images/${imageIndex}`, {
+            const response = await fetch(`${API_BASE_URL}/salons/${id}/images/${imageIndex}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });

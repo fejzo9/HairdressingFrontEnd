@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
+import API_BASE_URL from '../../config/api';
 
 function SalonServices({salonId}){
     const { salonId: paramSalonId } = useParams(); // Dohvati salonId iz URL-a ako nema prop
@@ -13,7 +14,7 @@ function SalonServices({salonId}){
     useEffect(() => {
         const fetchServices = async () => {
             try{
-                const response = await fetch(`http://localhost:8080/services/salon/${finalSalonId}`);
+                const response = await fetch(`${API_BASE_URL}/services/salon/${finalSalonId}`);
                 if (!response.ok) {
                     throw new Error("❌ Greška pri dohvaćanju usluga.");
                 }
@@ -41,7 +42,7 @@ function SalonServices({salonId}){
     useEffect(() => {
         const fetchSalonOwner = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons/${finalSalonId}`);
+                const response = await fetch(`${API_BASE_URL}/salons/${finalSalonId}`);
                 if (!response.ok) {
                     throw new Error("❌ Greška pri dohvaćanju podataka o salonu.");
                 }
@@ -63,7 +64,7 @@ function SalonServices({salonId}){
         if(!confirmDelete) return;
 
         try{
-            const response = await fetch(`http://localhost:8080/services/salon/${finalSalonId}/${serviceId}`, {
+            const response = await fetch(`${API_BASE_URL}/services/salon/${finalSalonId}/${serviceId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`

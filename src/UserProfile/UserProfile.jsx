@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import API_BASE_URL from '../config/api';
 
 function UserProfile({ userId }) {
   const [profilePic, setProfilePic] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/users/${userId}/profile-picture`)
+    fetch(`${API_BASE_URL}/users/${userId}/profile-picture`)
       .then((response) => response.blob()) // 🔹 Konvertuje odgovor u binarni format
       .then((imageBlob) => {
         setProfilePic(URL.createObjectURL(imageBlob)); // 🔹 Kreira URL za prikaz slike
@@ -19,7 +20,7 @@ function UserProfile({ userId }) {
       const formData = new FormData();
       formData.append("file", file);
   
-      fetch(`http://localhost:8080/users/${userId}/upload-profile-picture`, {
+      fetch(`${API_BASE_URL}/users/${userId}/upload-profile-picture`, {
         method: "POST",
         body: formData,
       })

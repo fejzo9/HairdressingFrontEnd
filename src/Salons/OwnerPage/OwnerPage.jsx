@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SalonCard from "../SalonCard/SalonCard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import API_BASE_URL from '../../config/api';
 
 function OwnerPage() {
     const [salons, setSalons] = useState([]);
@@ -18,7 +19,7 @@ function OwnerPage() {
                     return;
                 }
 
-                const response = await fetch("http://localhost:8080/salons/owner", {
+                const response = await fetch(`${API_BASE_URL}/salons/owner`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -32,7 +33,7 @@ function OwnerPage() {
                     }
 
                     const fetchSalonDetails = data.map(salon =>
-                        fetch(`http://localhost:8080/salons/${salon.id}`)
+                        fetch(`${API_BASE_URL}/salons/${salon.id}`)
                             .then(res => res.json())
                             .then(details => ({ ...details, id: salon.id }))
                     );
@@ -60,7 +61,7 @@ function OwnerPage() {
     // Dohvaća sliku prvog salona (index 0)
     const fetchSalonImage = async (salonId) => {
         try {
-            const response = await fetch(`http://localhost:8080/salons/${salonId}/images/0`);
+            const response = await fetch(`${API_BASE_URL}/salons/${salonId}/images/0`);
             if (response.ok) {
                 const blob = await response.blob();  // Dohvati sliku kao Blob
                 const imageUrl = URL.createObjectURL(blob); // Kreiraj URL za sliku

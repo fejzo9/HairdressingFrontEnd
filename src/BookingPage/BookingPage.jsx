@@ -5,6 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs from 'dayjs';
+import API_BASE_URL from '../config/api';
 
 
 function BookingPage() {
@@ -27,7 +28,7 @@ function BookingPage() {
     useEffect(() => {
         const fetchCalendar = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/calendars/hairdresser/${hairdresserId}`);
+                const response = await fetch(`${API_BASE_URL}/calendars/hairdresser/${hairdresserId}`);
                 if (!response.ok) throw new Error("Neuspješno dohvaćanje kalendara.");
                 const data = await response.json();
                 setCalendar(data);
@@ -39,7 +40,7 @@ function BookingPage() {
         const fetchWorkingHours = async () => {
             try{
                 console.log("Hairdresser id: ", hairdresserId);
-                const response = await fetch(`http://localhost:8080/working-hours/hairdresser/${hairdresserId}`, {
+                const response = await fetch(`${API_BASE_URL}/working-hours/hairdresser/${hairdresserId}`, {
                     headers: {
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -60,7 +61,7 @@ function BookingPage() {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/services/salon/${salonId}`);
+                const response = await fetch(`${API_BASE_URL}/services/salon/${salonId}`);
                 if (!response.ok) throw new Error("Neuspješno dohvaćanje usluga.");
                 const data = await response.json();
                 setServices(data);
@@ -141,7 +142,7 @@ function BookingPage() {
                 startTime: selectedTime
             });
             
-            const response = await fetch(`http://localhost:8080/appointments/book?${params.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}/appointments/book?${params.toString()}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`
