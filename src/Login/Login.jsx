@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Login.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import ResendVerificationModal from '../Verification/ResendVerificationModal';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ function LoginForm() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showResendModal, setShowResendModal] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,10 +20,10 @@ function LoginForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Sprečava podrazumijevanu akciju HTML forme (reload stranice)
+    e.preventDefault();
+    setErrorMessage('');
     
     try {
-      // Šaljemo POST zahtjev na backend s JSON podacima
       const response = await fetch('http://localhost:8080/login', { 
           method: 'POST',
           headers: {
@@ -31,16 +34,19 @@ function LoginForm() {
       });
       
      if (!response.ok) {
-        throw new Error('Login Failed! Invalid login credentials.');
+        const text = await response.text();
+        if (response.status === 403 && text && text.toLowerCase().includes('verif')) {
+          setErrorMessage('Please verify your email first.');
+        } else {
+          setErrorMessage('Login Failed! Invalid login credentials.');
+        }
+        return;
     }
 
-      // Ovdje se čita odgovor koji backend šalje. 
-      // Ako backend ne vraća JSON ili vraća neispravan Content-Type, ovaj korak može izazvati grešku.
       const result = await response.json();
       console.log('Login successful:', result);
-      // Dodaj alert za uspešnu prijavu
       alert('Login successful! Welcome back, ' + result.username + '!');
-      navigate('/home'); // Preusmeravanje na glavnu stranicu nakon prijave
+      navigate('/home');
 
       localStorage.setItem("id", result.id);
       localStorage.setItem("username", result.username);
@@ -49,16 +55,31 @@ function LoginForm() {
       
   } catch (error) {
       console.error('Login error:', error);
-      alert('Login failed. Please check your credentials and try again.');
+      setErrorMessage('Login failed. Please check your credentials and try again.');
   }
 
     console.log('Logging in with:', formData);
-    // After successful login, redirect to home page
   };
 
   return (
     <div className="login-form">
       <h2>Login</h2>
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
+          {errorMessage.includes('verify your email') && (
+            <div className="mt-2">
+              <button
+                type="button"
+                className="btn btn-sm btn-warning"
+                onClick={() => setShowResendModal(true)}
+              >
+                Resend Verification Email
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -99,6 +120,10 @@ function LoginForm() {
           Don't have an account? <a href="/registration">Register</a>
         </p>
       </form>
+
+      {showResendModal && (
+        <ResendVerificationModal onClose={() => setShowResendModal(false)} />
+      )}
     </div>
   );
 }
