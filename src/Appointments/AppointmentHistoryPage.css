@@ -1,0 +1,30 @@
+.appointment-history-page {
+  min-height: 60vh;
+}
+
+.appointment-history-page .nav-tabs .nav-link {
+  font-weight: 500;
+}
+
+.appointment-history-page .card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.appointment-history-page .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2) !important;
+}
+
+.appointment-history-page .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6c757d;
+}
+
+.appointment-history-page .empty-state svg {
+  margin-bottom: 16px;
+  opacity: 0.4;
+}

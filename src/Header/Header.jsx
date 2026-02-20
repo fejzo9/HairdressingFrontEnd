@@ -114,6 +114,7 @@ function Header(){
                     {dropdownOpen && (
                       <div className="dropdown-content">
                         <Link className="profil" to="/profile">Profil</Link>
+                        <Link className="profil" to="/my-appointments">Moji termini</Link>
                         <Link className="changePW" to="/change-password">Promijeni lozinku</Link> 
                         <button onClick={handleLogout}>Odjava</button>
                       </div>
