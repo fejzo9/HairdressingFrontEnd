@@ -25,6 +25,7 @@ import AddSalonServices from "./Salons/AddSalonServices/AddSalonServices.jsx";
 import SalonServices from "./Salons/SalonServices/SalonServices";
 import BookingPage from "./BookingPage/BookingPage";
 import HairdresserSchedule from "./HairdresserSchedule/HairdresserSchedule";
+import AppointmentHistoryPage from "./AppointmentHistory/AppointmentHistoryPage";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/salon/:salonId/services" element={<SalonServices />} />
             <Route path="/rezervacija/:salonId/:hairdresserId" element={<BookingPage />} />
             <Route path="/schedule/:hairdresserId" element={<HairdresserSchedule />} />
+            <Route path="/my-appointments" element={<AppointmentHistoryPage />} />
              <Route
               path="/admin"
               element={
