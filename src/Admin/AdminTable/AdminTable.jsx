@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './AdminTable.css';
 import EditAdminForm from '../Edit/EditAdminForm';
 import AddAdminForm from '../Add/AddAdminForm';
+import API_BASE_URL from '../../config/api';
 
 function AdminTable({ admins, setAdmins }) {
   const [editingAdmin, setEditingAdmin] = useState(null); // Drži trenutno uređivanog admina
@@ -9,7 +10,7 @@ function AdminTable({ admins, setAdmins }) {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:8080/admins/${id}`, {
+      await fetch(`${API_BASE_URL}/admins/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`

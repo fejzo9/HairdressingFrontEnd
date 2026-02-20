@@ -1,8 +1,9 @@
+import API_BASE_URL from '../../config/api';
 export const fetchUsers = async () => {
   try {
       const token = localStorage.getItem("token"); // ✅ Dohvatanje tokena
 
-      const response = await fetch("http://localhost:8080/users", {
+      const response = await fetch(`${API_BASE_URL}/users`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json",
