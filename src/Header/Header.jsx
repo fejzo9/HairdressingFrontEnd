@@ -97,6 +97,11 @@ function Header(){
                                   </Link>
                                 </li>
                               )}
+                            {isLoggedIn && role === "USER" && (
+                                <li className="nav-item">
+                                  <Link className="nav-link" to="/my-appointments">My Appointments</Link>
+                                </li>
+                              )}
 
                         </ul>
                     </div>
