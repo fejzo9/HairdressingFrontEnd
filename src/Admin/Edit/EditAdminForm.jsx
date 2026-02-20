@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./EditAdminForm.css";
+import API_BASE_URL from '../../config/api';
 
 function EditAdminForm({ admin, onSave, onCancel }) {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function EditAdminForm({ admin, onSave, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8080/admins/${admin.id}`, {
+      const response = await fetch(`${API_BASE_URL}/admins/${admin.id}`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './AddAdminForm.css';
+import API_BASE_URL from '../../config/api';
 
 function AddAdminForm({ onSave, onCancel }) {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ function AddAdminForm({ onSave, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/admins", {
+      const response = await fetch(`${API_BASE_URL}/admins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

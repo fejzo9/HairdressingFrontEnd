@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from '../../config/api';
 
 function AddSalon() {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function AddSalon() {
     useEffect(() => {
         const fetchOwners = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/role/OWNER", {
+                const response = await fetch(`${API_BASE_URL}/users/role/OWNER`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 if (response.ok) {
@@ -33,7 +34,7 @@ function AddSalon() {
 
         const fetchHairdressers = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/role/HAIRDRESSER", {
+                const response = await fetch(`${API_BASE_URL}/users/role/HAIRDRESSER`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 if (response.ok) {
@@ -81,7 +82,7 @@ function AddSalon() {
 
         try {
             console.log("🔹 Šaljem zahtjev za kreiranje salona...");
-            const response = await fetch("http://localhost:8080/salons", {
+            const response = await fetch(`${API_BASE_URL}/salons`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -128,7 +129,7 @@ function AddSalon() {
     
             if (hairdresserIds.length === 1) {
                 // ✅ Ako je samo jedan frizer, koristimo "/employees/add"
-                await fetch(`http://localhost:8080/salons/${salonId}/employees/add`, {
+                await fetch(`${API_BASE_URL}/salons/${salonId}/employees/add`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -138,7 +139,7 @@ function AddSalon() {
                 });
             } else if (hairdresserIds.length > 1) {
                 // ✅ Ako su više frizeri, koristimo "/employees"
-                await fetch(`http://localhost:8080/salons/${salonId}/employees`, {
+                await fetch(`${API_BASE_URL}/salons/${salonId}/employees`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -155,7 +156,7 @@ function AddSalon() {
     const fetchHairdresserIds = async (usernames, token) => {
         try {
             const requests = usernames.map(async (username) => {
-                const response = await fetch(`http://localhost:8080/users/username/${username}`, {
+                const response = await fetch(`${API_BASE_URL}/users/username/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
     
@@ -180,7 +181,7 @@ function AddSalon() {
             const formData = new FormData();
             images.forEach((image) => formData.append("files", image));
 
-            const response = await fetch(`http://localhost:8080/salons/${salonId}/upload-images`, {
+            const response = await fetch(`${API_BASE_URL}/salons/${salonId}/upload-images`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,

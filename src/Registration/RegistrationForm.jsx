@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
-import './Registration.css'; 
+import './Registration.css';
+import ResendVerificationModal from '../Verification/ResendVerificationModal';
+import API_BASE_URL from '../config/api';
 
 function RegistrationForm() {
-  const navigate = useNavigate();
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [showResendModal, setShowResendModal] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -50,7 +52,7 @@ function RegistrationForm() {
     e.preventDefault();
     if (validate()) {
         try {
-            const response = await fetch('http://localhost:8080/registration', { 
+            const response = await fetch(`${API_BASE_URL}/registration`, { 
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -64,20 +66,37 @@ function RegistrationForm() {
            
             const result = await response.json();
             console.log('Registration successful:', result);
-            alert("Uspješno ste se registrovali, čestitam! Molimo Vas prijavite se.")
-            navigate('/home');
+            setVerificationSent(true);
           } catch (error) {
             console.error('Registration error:', error);
             alert(error);
           } 
-           
-            navigate('/login');
     }
   };
 
   return (
     <div className="registration-form">
       <h2>Registration Form</h2>
+
+      {verificationSent && (
+        <div className="alert alert-success" role="alert">
+          <strong>Verification email sent.</strong> Check your inbox to verify your account.
+          <br />
+          <button
+            type="button"
+            className="btn btn-sm btn-link alert-link p-0 mt-1"
+            onClick={() => setShowResendModal(true)}
+          >
+            Resend Verification Email
+          </button>
+        </div>
+      )}
+
+      {showResendModal && (
+        <ResendVerificationModal onClose={() => setShowResendModal(false)} />
+      )}
+
+      {!verificationSent && (
       <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label>
@@ -214,6 +233,7 @@ function RegistrationForm() {
           Already has an account? <a href="/login">Login</a>
         </p>
       </form>
+      )}
     </div>
   );
 }

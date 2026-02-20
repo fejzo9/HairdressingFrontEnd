@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './UserTable.css';
 import EditUserForm from "../Edit/EditUserForm";
 import AddUserForm from "../Add/AddUserForm";
+import API_BASE_URL from '../../config/api';
 
 function UserTable({ users, setUsers }) {
   const [editingUser, setEditingUser] = useState(null);
@@ -9,7 +10,7 @@ function UserTable({ users, setUsers }) {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:8080/users/${id}`, {
+      await fetch(`${API_BASE_URL}/users/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,

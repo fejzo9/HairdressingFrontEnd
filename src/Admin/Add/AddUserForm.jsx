@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddUserForm.css";
+import API_BASE_URL from '../../config/api';
 
 function AddUserForm({ onSave, onCancel }) {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ function AddUserForm({ onSave, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/users", {
+      const response = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

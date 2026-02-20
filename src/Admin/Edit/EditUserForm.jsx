@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./EditUserForm.css";
+import API_BASE_URL from '../../config/api';
 
 function EditUserForm({ user, onSave, onCancel }) {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ function EditUserForm({ user, onSave, onCancel }) {
   useEffect(() => {
     const fetchProfilePicture = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/users/${user.id}/profile-picture`, {
+            const response = await fetch(`${API_BASE_URL}/users/${user.id}/profile-picture`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
 
@@ -67,7 +68,7 @@ function EditUserForm({ user, onSave, onCancel }) {
     formData.append("file", selectedImage);
 
     try {
-      const response = await fetch(`http://localhost:8080/users/${user.id}/upload-profile-picture`, {
+      const response = await fetch(`${API_BASE_URL}/users/${user.id}/upload-profile-picture`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -91,7 +92,7 @@ function EditUserForm({ user, onSave, onCancel }) {
     
     try {
       // 1️⃣ Prvo ažuriraj korisničke podatke
-      const response = await fetch(`http://localhost:8080/users/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './ChangePasswordForm.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 function ChangePasswordForm() {
   const [oldPassword, setOldPassword] = useState("");
@@ -31,7 +32,7 @@ function ChangePasswordForm() {
       return;
     }
 
-    const response = await fetch("http://localhost:8080/users/change-password", {
+    const response = await fetch(`${API_BASE_URL}/users/change-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
