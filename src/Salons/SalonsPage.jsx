@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SalonCard from "./SalonCard/SalonCard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import API_BASE_URL from '../config/api';
 
 function SalonsPage(){
     const [salons, setSalons] = useState([]);
@@ -9,7 +10,7 @@ function SalonsPage(){
     useEffect(() => {
         const fetchSalons = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/salons`);
+                const response = await fetch(`${API_BASE_URL}/salons`);
                 if (response.ok) {
                   const data = await response.json();
                   setSalons(data);
@@ -27,7 +28,7 @@ function SalonsPage(){
 
     const fetchSalonImage = async (salonId) => {
       try{
-        const response = await fetch(`http://localhost:8080/salons/${salonId}/images/0`);
+        const response = await fetch(`${API_BASE_URL}/salons/${salonId}/images/0`);
         if(response.ok){
           const blob = await response.blob();  // Dohvati sliku kao Blob
           const imageUrl = URL.createObjectURL(blob); // Kreiraj URL za sliku

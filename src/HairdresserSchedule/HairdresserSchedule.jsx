@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import WeeklyShiftForm from "./WeeklyShiftForm";
 import DailyShiftForm from "./DailyShiftForm";
 import "./HairdresserSchedule.css";
+import API_BASE_URL from '../config/api';
 
 const days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 const dayLabels = ["PON", "UTO", "SRI", "ČET", "PET", "SUB", "NED"];
@@ -49,7 +50,7 @@ function HairdresserSchedule() {
     useEffect(() => {
         const fetchWorkingHours = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/working-hours/hairdresser/${hairdresserId}`, {
+                const response = await fetch(`${API_BASE_URL}/working-hours/hairdresser/${hairdresserId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 if (!response.ok) throw new Error("Greška pri dohvaćanju radnih sati");
@@ -64,7 +65,7 @@ function HairdresserSchedule() {
         const fetchCalendarAndAppointments = async () => {
             try {
               // 1. Dohvati calendar ID
-              const calendarRes = await fetch(`http://localhost:8080/calendars/hairdresser/${hairdresserId}`, {
+              const calendarRes = await fetch(`${API_BASE_URL}/calendars/hairdresser/${hairdresserId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
               });
         
@@ -73,7 +74,7 @@ function HairdresserSchedule() {
               setCalendarId(calendarData.id);
         
               // 2. Dohvati sve termine za taj kalendar
-              const appointmentRes = await fetch(`http://localhost:8080/appointments/calendar/${calendarData.id}`, {
+              const appointmentRes = await fetch(`${API_BASE_URL}/appointments/calendar/${calendarData.id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
               });
         
@@ -92,7 +93,7 @@ function HairdresserSchedule() {
 
     const handleWeeklySubmit = async (weeklyData) => {
         try {
-          const response = await fetch(`http://localhost:8080/working-hours/hairdresser/${hairdresserId}/weekly`, {
+          const response = await fetch(`${API_BASE_URL}/working-hours/hairdresser/${hairdresserId}/weekly`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -118,7 +119,7 @@ function HairdresserSchedule() {
         try {
 
             console.log("📦 Podaci koji se šalju:", dailyData);
-            const response = await fetch(`http://localhost:8080/working-hours/hairdresser/day/${hairdresserId}`, {
+            const response = await fetch(`${API_BASE_URL}/working-hours/hairdresser/day/${hairdresserId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

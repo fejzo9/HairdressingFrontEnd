@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./SalonCard.css";
+import API_BASE_URL from '../../config/api';
 
 function SalonCard({id, pic, name, address, phone, email, ownerName, onDelete }) {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ function SalonCard({id, pic, name, address, phone, email, ownerName, onDelete })
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:8080/salons/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/salons/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

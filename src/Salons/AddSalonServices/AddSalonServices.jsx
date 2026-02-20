@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./AddSalonServices.css";
+import API_BASE_URL from '../../config/api';
 
 function AddSalonServices(){
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ function AddSalonServices(){
         }
 
         try{
-            const response = await fetch(`http://localhost:8080/services/salon/${salonId}`, {
+            const response = await fetch(`${API_BASE_URL}/services/salon/${salonId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

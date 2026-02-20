@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
+import API_BASE_URL from '../config/api';
 
 function Profile() {
   const [userData, setUserData] = useState({
@@ -33,7 +34,7 @@ function Profile() {
 
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/users/${userId}`);
+        const response = await fetch(`${API_BASE_URL}/users/${userId}`);
         if (response.ok) {
           const data = await response.json();
           setUserData(data);
@@ -47,7 +48,7 @@ function Profile() {
     const fetchProfilePicture = async () => {
       if (isLoggedIn) {
         try {
-          const response = await fetch(`http://localhost:8080/users/${localStorage.getItem("id")}/profile-picture`);
+          const response = await fetch(`${API_BASE_URL}/users/${localStorage.getItem("id")}/profile-picture`);
           if (response.ok) {
             const blob = await response.blob();
             setNewProfilePicture(URL.createObjectURL(blob));
@@ -61,7 +62,7 @@ function Profile() {
 
     const fetchAdminData = async (adminUsername) => {
       try {
-        const response = await fetch(`http://localhost:8080/admins/${adminUsername}`, {
+        const response = await fetch(`${API_BASE_URL}/admins/${adminUsername}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -92,7 +93,7 @@ function Profile() {
 
     try {
         // 1️⃣ Prvo ažuriramo korisničke podatke (email, telefon)
-        const userUpdateResponse = await fetch(`http://localhost:8080/users/${userData.id}`, {
+        const userUpdateResponse = await fetch(`${API_BASE_URL}/users/${userData.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -113,7 +114,7 @@ function Profile() {
             const formData = new FormData();
             formData.append("file", newProfilePicture);
 
-            const imageResponse = await fetch(`http://localhost:8080/users/${userData.id}/upload-profile-picture`, {
+            const imageResponse = await fetch(`${API_BASE_URL}/users/${userData.id}/upload-profile-picture`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -144,7 +145,7 @@ function Profile() {
       <h2>Profil</h2>
       {console.log("🔍 Profilna slika URL:", userData.profilePicture)}
       <img src={userData.profilePicture 
-           ? `http://localhost:8080/users/${userData.id}/profile-picture?timestamp=${new Date().getTime()}` 
+           ? `${API_BASE_URL}/users/${userData.id}/profile-picture?timestamp=${new Date().getTime()}` 
            : "/user-photo.png"} 
      alt="Profilna slika" 
      className="profile-image" />
