@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-const apiKey = "AIzaSyDglKhMNLblxJ8wmtB9LnolZ8s1H8ciLr8"; 
+const apiKey = "AIzaSyDglKhMNLblxJ8wmtB9LnolZ8s1H8ciLr8";
 
 const mapContainerStyle = {
   width: "100%",
@@ -9,31 +9,34 @@ const mapContainerStyle = {
 };
 
 const center = {
-  lat: 41.01384, // Postavi početnu latitudu i longitudu (npr. za određeni grad)
-  lng: 28.979530,
+  lat: 44.5375, // Centar Bosne i Hercegovine (prilagodite po potrebi)
+  lng: 18.6667,
 };
-
-const radius = 5000; // Radijus pretrage u metrima (5 km)
 
 function SalonMap() {
   const [salons, setSalons] = useState([]);
+  const [selectedSalon, setSelectedSalon] = useState(null);
 
   useEffect(() => {
-    // Funkcija za dohvaćanje frizerskih salona pomoću Places API
+    // Funkcija za dohvaćanje frizerskih salona sa backenda
     const fetchSalons = async () => {
-      const service = new window.google.maps.places.PlacesService(
-        document.createElement("div")
-      );
-      const request = {
-        location: new window.google.maps.LatLng(center.lat, center.lng),
-        radius: radius,
-        type: ["hair_care", "hair_dressers", "hair_style"], // Tip pretrage - frizerski saloni
-      };
-      service.nearbySearch(request, (results, status) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          setSalons(results);
+      try {
+        const response = await fetch("http://localhost:8080/salons", {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}` // Ako je potrebna autentifikacija
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          // Filtriraj salone koji nemaju koordinate
+          const validSalons = data.filter(salon => salon.latitude && salon.longitude);
+          setSalons(validSalons);
+        } else {
+          console.error("Failed to fetch salons");
         }
-      });
+      } catch (error) {
+        console.error("Error fetching salons:", error);
+      }
     };
 
     fetchSalons();
@@ -41,20 +44,38 @@ function SalonMap() {
 
   return (
     <div>
-    <LoadScript googleMapsApiKey={apiKey} libraries={["places"]}>
-      <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={13}>
-        {salons.map((salon) => (
-          <Marker
-            key={salon.place_id}
-            position={{
-              lat: salon.geometry.location.lat(),
-              lng: salon.geometry.location.lng(),
-            }}
-            title={salon.name}
-          />
-        ))}
-      </GoogleMap>
-    </LoadScript>
+      <LoadScript googleMapsApiKey={apiKey}>
+        <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={7}>
+          {salons.map((salon) => (
+            <Marker
+              key={salon.id}
+              position={{
+                lat: salon.latitude,
+                lng: salon.longitude,
+              }}
+              title={salon.name}
+              onClick={() => setSelectedSalon(salon)}
+            />
+          ))}
+
+          {selectedSalon && (
+            <InfoWindow
+              position={{
+                lat: selectedSalon.latitude,
+                lng: selectedSalon.longitude,
+              }}
+              onCloseClick={() => setSelectedSalon(null)}
+            >
+              <div>
+                <h3>{selectedSalon.name}</h3>
+                <p>{selectedSalon.address}</p>
+                <p>{selectedSalon.phoneNumber}</p>
+                {/* Dodajte link za rezervaciju ili detalje */}
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </LoadScript>
     </div>
   );
 }
