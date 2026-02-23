@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-const apiKey = "AIzaSyDglKhMNLblxJ8wmtB9LnolZ8s1H8ciLr8";
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const mapContainerStyle = {
   width: "100%",
